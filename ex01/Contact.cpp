@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 01:08:49 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/25 04:27:43 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/28 18:30:25 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ static std::string	sb_handle_output(std::string str, bool isTrunc)
 	std::string		res = "";
 	size_t			len = str.length();
 
-	if (!isTrunc || len == 10)
-		return str;
+	if (!isTrunc || len == 10){ return str; }
 	if (len < 10)
 	{
 		res.assign(10 - len, ' ');
