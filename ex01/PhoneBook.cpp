@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 02:49:06 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/28 20:30:46 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/31 05:25:29 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,42 +85,48 @@ static void	sb_display_table(Contact *contact_list)
 	}
 }
 
+static int	sb_is_index_correct(std::string num, Contact *contact_list)
+{
+	std::stringstream	tmp;
+	int					n;
+	
+	for (size_t i = 0; i < num.length(); i++)
+	{
+		if (!isdigit(num[i]))
+		{
+			std::cout << "There is non-number charactor in index input" << std::endl;
+			return -1;
+		}
+	}
+	tmp << num;
+	tmp >> n;
+	if (n > 8 || n < 1)
+	{
+		std::cout << "Index is out of contact list's bound" << std::endl;
+		return -1;
+	}
+	n--;
+	if (contact_list[n].isempty())
+	{
+		std::cout << "This Index (" << n + 1 << ") is empty" << std::endl;
+		return -1;
+	}
+	return n - 1;
+}
+
 bool	PhoneBook::search()
 {
 	std::string			input;
-	std::stringstream	tmp;
-	int					n = 0;
+	int					n;
 
 	// Print table & choose index
 	sb_display_table(PhoneBook::contact_list);
 	RETURN_GETLINE_IF_EOF(ft_prompt("Index : ", input))
 
-	// Check index input
-	if (input.length() != 1)
-	{
-		std::cout << "Input too long" << std::endl;
-		return true;
-	}
-	if (!isdigit(input[0]))
-	{
-		std::cout << "There is non-number charactor(s) here" << std::endl;
-		return true;
-	}
-
 	// String to integer
-	tmp << input;
-	tmp >> n;
-	n--;
-	if (n >= 8)
-	{
-		std::cout << "Out of range" << std::endl;
+	n = sb_is_index_correct(input, PhoneBook::contact_list);
+	if (n < 0)
 		return true;
-	}
-	if (PhoneBook::contact_list[n].isempty())
-	{
-		std::cout << "Out of range" << std::endl;
-		return true;
-	}
 
 	// Display information
 	std::cout << "First Name     : " << PhoneBook::contact_list[n].get_firstname(false) << std::endl;
@@ -139,6 +145,14 @@ bool	PhoneBook::get_command(std::string cmd)
 		return PhoneBook::add();
 	else if (cmd == "SEARCH")
 		return PhoneBook::search();
+	else
+	{
+		std::cout << "WRONG OPTION (There is only 3 option)" << std::endl;
+		std::cout << "ADD    : add people's information to phonebook" << std::endl;
+		std::cout << "SEARCH : search people's information on phonebook" << std::endl;
+		std::cout << "EXIT   : exit phonebook program" << std::endl;
+		std::cout << "-------------------------------------------------" << std::endl;
+	}
 	return true;
 }
 

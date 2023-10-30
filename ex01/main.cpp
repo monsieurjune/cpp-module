@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 00:07:00 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/28 20:33:50 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/31 05:12:08 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 int	main()
 {
 	bool			isRun;
+	size_t			first;
+	size_t			last;
 	PhoneBook		yellow;
 	std::string		cmd;
 
@@ -29,7 +31,9 @@ int	main()
 		{
 			return (0);
 		}
-		isRun = yellow.get_command(cmd);
+		first = cmd.find_first_not_of(' ');
+		last = cmd.find_last_not_of(' ');
+		isRun = yellow.get_command(cmd.substr(first, last - first + 1));
 	} while (isRun);
 	return (0);
 }
