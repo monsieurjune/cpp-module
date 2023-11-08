@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 02:49:06 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/09 02:14:39 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/11/09 03:02:11 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,23 @@
 PhoneBook::PhoneBook()
 {
 	PhoneBook::index = 0;
+}
+
+static bool	sb_input_phone_num(std::string &num)
+{
+	for (int i = 0; i < READ_NO; i++)
+	{
+		ft_prompt("Phone Number : ", num);
+		if (num.empty())
+			continue;
+		if (!ft_is_number(num))
+		{
+			std::cout << "There is non-digit charactor(s) in Phone-Number" << std::endl;
+		}
+		else
+			return true;
+	}
+	return false;
 }
 
 void	PhoneBook::add()
@@ -29,14 +46,7 @@ void	PhoneBook::add()
 	if (!ft_userinput("First Name : ", first)) {return;}
 	if (!ft_userinput("Last Name : ", last)) {return;}
 	if (!ft_userinput("Nickname : ", nick)) {return;}
-
-	// Check number error
-	if (!ft_userinput("Phone Number : ", num)) {return;}
-	if (!ft_is_number(num))
-	{
-		std::cout << "There is non-digit charactor(s) in Phone-Number" << std::endl;
-		return;
-	}
+	if (!sb_input_phone_num(num)) {return;}
 	if (!ft_userinput("Darkest Secret : ", secret)) {return;}
 
 	// Initialize contact list
@@ -83,28 +93,40 @@ static bool	sb_check_index_bound(Contact *list, int n)
 	return true;
 }
 
+static bool	sb_input_index(int &n)
+{
+	std::string		input;
+
+	for (int i = 0; i < READ_NO; i++)
+	{
+		ft_prompt("Index : ", input);
+		if (input.empty())
+			continue;
+		if (!ft_is_number(input))
+		{
+			std::cout << "There is non-digit charactor(s) in Index" << std::endl;
+			continue;
+		}
+		if (!ft_convert_index(input, n))
+		{
+			std::cout << "Index is TOO LONG" << std::endl;
+			continue;
+		}
+		else
+			return true;
+	}
+	return false;
+}
+
 void	PhoneBook::search()
 {
-	std::string			input;
-	int					n;
+	int	n;
 
 	// Print table & choose index
 	sb_display_table(PhoneBook::contact_list);
 
 	// String to integer
-	if (!ft_userinput("Index : ", input)) {return;}
-	if (!ft_is_number(input))
-	{
-		std::cout << "There is non-digit charactor(s) in Index" << std::endl;
-		return;
-	}
-	if (!ft_convert_index(input, n))
-	{
-		std::cout << "Index is TOO LONG" << std::endl;
-		return;
-	}
-
-	// Check index bound
+	if (!sb_input_index(n)) {return;}
 	n -= 1;
 	if (!sb_check_index_bound(PhoneBook::contact_list, n)) {return;}
 

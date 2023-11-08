@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 00:36:10 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/09 02:19:20 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/11/09 02:46:33 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,16 @@ void	ft_prompt(std::string prmpt, std::string &line)
 
 	std::cout << prmpt;
 	if (!std::getline(std::cin, line))
-		exit(0);
+		throw std::istream::failure ("STDOUT-EOF");
 	if (line.empty())
 		return;
 	first = line.find_first_not_of(' ');
 	last = line.find_last_not_of(' ');
+	if (first > line.length())
+	{
+		line = "";
+		return;
+	}
 	line = line.substr(first, last - first + 1);
 }
 
@@ -54,7 +59,12 @@ bool	ft_convert_index(std::string str, int &num)
 	size_t				first;
 
 	first = str.find_first_not_of('0');
-	str = str.substr(first);
+	if (first > str.length())
+	{
+		num = 0;
+		return true;
+	}
+	str = str.substr(first, str.length() - first);
 	if (str.length() > 1)
 		return false;
 	tmp << str;

@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 00:07:00 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/09 02:13:05 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/11/09 02:27:10 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,17 @@ int	main()
 	std::string		cmd;
 
 	sb_tutorial_popup();
-	do
+	try
 	{
-		ft_prompt("PHONEBOOK> ", cmd);
-		isRun = yellow.get_command(cmd);
-	} while (isRun);
+		do
+		{
+			ft_prompt("PHONEBOOK> ", cmd);
+			isRun = yellow.get_command(cmd);
+		} while (isRun);
+	}
+	catch (std::istream::failure &cout_err)
+	{
+		std::cout << "\nCtrl-D Activate, Exit Program" << std::endl;
+	}
 	return (0);
 }
