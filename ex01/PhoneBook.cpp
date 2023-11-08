@@ -6,29 +6,18 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 02:49:06 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/31 05:25:29 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/11/09 02:14:39 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
 
-static bool	sb_isn_number(std::string num)
+PhoneBook::PhoneBook()
 {
-	for (size_t	i = 0; i < num.length(); i++)
-	{
-		if (!isdigit(num[i]))
-			return true;
-	}
-	return false;
+	PhoneBook::index = 0;
 }
 
-bool	ft_prompt(std::string prmpt, std::string &line)
-{
-	std::cout << prmpt;
-	return !std::getline(std::cin, line);
-}
-
-bool	PhoneBook::add()
+void	PhoneBook::add()
 {
 	std::string		first;
 	std::string		last;
@@ -37,23 +26,18 @@ bool	PhoneBook::add()
 	std::string		secret;
 
 	// Input
-	RETURN_GETLINE_IF_EOF(ft_prompt("First Name : ", first))
-	RETURN_GETLINE_IF_EOF(ft_prompt("Last Name : ", last))
-	RETURN_GETLINE_IF_EOF(ft_prompt("Nickname : ", nick))
-	RETURN_GETLINE_IF_EOF(ft_prompt("Phone Number : ", num));
-	RETURN_GETLINE_IF_EOF(ft_prompt("Darkest Secret : ", secret));
+	if (!ft_userinput("First Name : ", first)) {return;}
+	if (!ft_userinput("Last Name : ", last)) {return;}
+	if (!ft_userinput("Nickname : ", nick)) {return;}
 
-	// Print if one of input isn't valid
-	if (first.empty() || last.empty() || nick.empty() || num.empty() || secret.empty())
+	// Check number error
+	if (!ft_userinput("Phone Number : ", num)) {return;}
+	if (!ft_is_number(num))
 	{
-		std::cout << "User didn't input some of information" << std::endl;
-		return true;
+		std::cout << "There is non-digit charactor(s) in Phone-Number" << std::endl;
+		return;
 	}
-	if (sb_isn_number(num))
-	{
-		std::cout << "Input Phone number isn't valid number" << std::endl;
-		return true;
-	}
+	if (!ft_userinput("Darkest Secret : ", secret)) {return;}
 
 	// Initialize contact list
 	PhoneBook::contact_list[PhoneBook::index].set_firstname(first);
@@ -65,7 +49,6 @@ bool	PhoneBook::add()
 	// Toggle index
 	PhoneBook::index += 1;
 	PhoneBook::index = PhoneBook::index >= 8 ? 0:PhoneBook::index;
-	return true;
 }
 
 static void	sb_display_table(Contact *contact_list)
@@ -85,48 +68,45 @@ static void	sb_display_table(Contact *contact_list)
 	}
 }
 
-static int	sb_is_index_correct(std::string num, Contact *contact_list)
+static bool	sb_check_index_bound(Contact *list, int n)
 {
-	std::stringstream	tmp;
-	int					n;
-	
-	for (size_t i = 0; i < num.length(); i++)
+	if (n < 0 || n > 7)
 	{
-		if (!isdigit(num[i]))
-		{
-			std::cout << "There is non-number charactor in index input" << std::endl;
-			return -1;
-		}
+		std::cout << "Index is out of range" << std::endl;
+		return false;
 	}
-	tmp << num;
-	tmp >> n;
-	if (n > 8 || n < 1)
+	if (list[n].isempty())
 	{
-		std::cout << "Index is out of contact list's bound" << std::endl;
-		return -1;
+		std::cout << "Index is out of range" << std::endl;
+		return false;
 	}
-	n--;
-	if (contact_list[n].isempty())
-	{
-		std::cout << "This Index (" << n + 1 << ") is empty" << std::endl;
-		return -1;
-	}
-	return n - 1;
+	return true;
 }
 
-bool	PhoneBook::search()
+void	PhoneBook::search()
 {
 	std::string			input;
 	int					n;
 
 	// Print table & choose index
 	sb_display_table(PhoneBook::contact_list);
-	RETURN_GETLINE_IF_EOF(ft_prompt("Index : ", input))
 
 	// String to integer
-	n = sb_is_index_correct(input, PhoneBook::contact_list);
-	if (n < 0)
-		return true;
+	if (!ft_userinput("Index : ", input)) {return;}
+	if (!ft_is_number(input))
+	{
+		std::cout << "There is non-digit charactor(s) in Index" << std::endl;
+		return;
+	}
+	if (!ft_convert_index(input, n))
+	{
+		std::cout << "Index is TOO LONG" << std::endl;
+		return;
+	}
+
+	// Check index bound
+	n -= 1;
+	if (!sb_check_index_bound(PhoneBook::contact_list, n)) {return;}
 
 	// Display information
 	std::cout << "First Name     : " << PhoneBook::contact_list[n].get_firstname(false) << std::endl;
@@ -134,7 +114,6 @@ bool	PhoneBook::search()
 	std::cout << "Nickname       : " << PhoneBook::contact_list[n].get_nickname(false) << std::endl;
 	std::cout << "Phone Number   : " << PhoneBook::contact_list[n].get_phone_number() << std::endl;
 	std::cout << "Darkest Secret : " << PhoneBook::contact_list[n].get_secret() << std::endl;
-	return true;
 }
 
 bool	PhoneBook::get_command(std::string cmd)
@@ -142,9 +121,9 @@ bool	PhoneBook::get_command(std::string cmd)
 	if (cmd == "EXIT")
 		return false;
 	if (cmd == "ADD")
-		return PhoneBook::add();
+		PhoneBook::add();
 	else if (cmd == "SEARCH")
-		return PhoneBook::search();
+		PhoneBook::search();
 	else
 	{
 		std::cout << "WRONG OPTION (There is only 3 option)" << std::endl;
@@ -154,9 +133,4 @@ bool	PhoneBook::get_command(std::string cmd)
 		std::cout << "-------------------------------------------------" << std::endl;
 	}
 	return true;
-}
-
-PhoneBook::PhoneBook()
-{
-	PhoneBook::index = 0;
 }

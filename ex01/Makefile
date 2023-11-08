@@ -6,22 +6,24 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 02:44:48 by tponutha          #+#    #+#              #
-#    Updated: 2023/10/25 03:19:48 by tponutha         ###   ########.fr        #
+#    Updated: 2023/11/09 02:20:04 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= phonebook
 
 CXX		= c++
-CFLAG	= -Wall -Werror -Wextra -std=c++98
+CFLAG	= -Wall -Werror -Wextra -std=c++98 -g
 
 DIR		= ./
 HEADER	= PhoneBook.hpp \
-			Contact.hpp
+			Contact.hpp \
+			utils.hpp
 
 SRC		= main.cpp \
 			PhoneBook.cpp \
-			Contact.cpp
+			Contact.cpp \
+			utils.cpp
 
 HEADERS	= $(addprefix $(DIR), $(HEADER))
 SRCS	= $(addprefix $(DIR), $(SRC))
