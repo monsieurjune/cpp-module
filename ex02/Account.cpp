@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 05:39:14 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/09 03:12:27 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/11/09 10:54:12 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	sb_increment_date(int *v1, int max)
 {
 	if (*v1 >= max)
 	{
-		*v1 = 0;
+		*v1 = *v1 - max;
 		return 1;
 	}
 	return 0;
