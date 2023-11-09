@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 00:36:10 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/09 02:46:33 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/11/09 10:40:59 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,14 @@ void	ft_prompt(std::string prmpt, std::string &line)
 	line = line.substr(first, last - first + 1);
 }
 
-bool	ft_userinput(std::string prmpt, std::string &line)
+bool	ft_is_alphabet(std::string str)
 {
-	for (int i = 0; i < READ_NO; i++)
+	for (size_t i = 0; i < str.length(); i++)
 	{
-		ft_prompt(prmpt, line);
-		if (!line.empty())
-			return true;
+		if (!isalpha(str[i]))
+			return false;
 	}
-	return false;
+	return true;
 }
 
 bool	ft_is_number(std::string str)

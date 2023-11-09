@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 00:07:00 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/09 02:27:10 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/11/09 10:47:50 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	sb_tutorial_popup()
 {
 	std::cout << "Welocom to PhoneBook (There is 3 option)" << std::endl;
+	std::cout << "-------------------------------------------------" << std::endl;
 	std::cout << "ADD    : add people's information to phonebook" << std::endl;
 	std::cout << "SEARCH : search people's information on phonebook" << std::endl;
 	std::cout << "EXIT   : exit phonebook program" << std::endl;
@@ -34,11 +35,13 @@ int	main()
 		{
 			ft_prompt("PHONEBOOK> ", cmd);
 			isRun = yellow.get_command(cmd);
-		} while (isRun);
+		}
+		while (isRun);
+		std::cout << "EXIT COMMAND IS ACTIVATED, EXIT PROGRAM" << std::endl;
 	}
 	catch (std::istream::failure &cout_err)
 	{
-		std::cout << "\nCtrl-D Activate, Exit Program" << std::endl;
+		std::cout << "\nCtrl-D is Activated, Exit Program" << std::endl;
 	}
 	return (0);
 }

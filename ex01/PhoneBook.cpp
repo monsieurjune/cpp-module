@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 02:49:06 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/09 03:02:11 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/11/09 10:51:36 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ PhoneBook::PhoneBook()
 {
 	PhoneBook::index = 0;
 }
+
+// ADD
 
 static bool	sb_input_phone_num(std::string &num)
 {
@@ -31,6 +33,28 @@ static bool	sb_input_phone_num(std::string &num)
 		else
 			return true;
 	}
+	std::cout << "Wrong input " << READ_NO << " time already, run command again" << std::endl;
+	return false;
+}
+
+static bool	sb_userinput(std::string prmpt, std::string &line)
+{
+	for (int i = 0; i < READ_NO; i++)
+	{
+		ft_prompt(prmpt, line);
+		if (line.empty())
+		{
+			std::cout << "Empty line input !!!" << std::endl;
+			continue;
+		}
+		if (!ft_is_alphabet(line))
+		{
+			std::cout << "There is non-alphabet charactor(s) in user's input" << std::endl;
+		}
+		else
+			return true;
+	}
+	std::cout << "Wrong input " << READ_NO << " time already, run command again" << std::endl;
 	return false;
 }
 
@@ -43,11 +67,11 @@ void	PhoneBook::add()
 	std::string		secret;
 
 	// Input
-	if (!ft_userinput("First Name : ", first)) {return;}
-	if (!ft_userinput("Last Name : ", last)) {return;}
-	if (!ft_userinput("Nickname : ", nick)) {return;}
+	if (!sb_userinput("First Name : ", first)) {return;}
+	if (!sb_userinput("Last Name : ", last)) {return;}
+	if (!sb_userinput("Nickname : ", nick)) {return;}
 	if (!sb_input_phone_num(num)) {return;}
-	if (!ft_userinput("Darkest Secret : ", secret)) {return;}
+	if (!sb_userinput("Darkest Secret : ", secret)) {return;}
 
 	// Initialize contact list
 	PhoneBook::contact_list[PhoneBook::index].set_firstname(first);
@@ -60,6 +84,8 @@ void	PhoneBook::add()
 	PhoneBook::index += 1;
 	PhoneBook::index = PhoneBook::index >= 8 ? 0:PhoneBook::index;
 }
+
+// SEARCH
 
 static void	sb_display_table(Contact *contact_list)
 {
@@ -101,7 +127,10 @@ static bool	sb_input_index(int &n)
 	{
 		ft_prompt("Index : ", input);
 		if (input.empty())
+		{
+			std::cout << "Empty line input !!!" << std::endl;
 			continue;
+		}
 		if (!ft_is_number(input))
 		{
 			std::cout << "There is non-digit charactor(s) in Index" << std::endl;
@@ -115,6 +144,7 @@ static bool	sb_input_index(int &n)
 		else
 			return true;
 	}
+	std::cout << "Wrong input " << READ_NO << " time already, run command again" << std::endl;
 	return false;
 }
 
@@ -148,6 +178,7 @@ bool	PhoneBook::get_command(std::string cmd)
 		PhoneBook::search();
 	else
 	{
+		std::cout << "-------------------------------------------------" << std::endl;
 		std::cout << "WRONG OPTION (There is only 3 option)" << std::endl;
 		std::cout << "ADD    : add people's information to phonebook" << std::endl;
 		std::cout << "SEARCH : search people's information on phonebook" << std::endl;
