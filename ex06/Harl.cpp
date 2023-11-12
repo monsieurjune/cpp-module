@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 03:19:04 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/09 04:24:18 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/11/12 16:57:25 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	Harl::complain(std::string level)
 	}
 }
 
-static void	sb_print_levvel(std::string level)
+static void	sb_print_header(std::string level)
 {
 	for (size_t i = 0; i < level.length(); i++)
 	{
@@ -59,8 +59,6 @@ static void	sb_print_levvel(std::string level)
 
 void	Harl::filter(std::string level)
 {
-	Harl			tmp;
-	cmd_set			set[]	= {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
 	std::string		cmds[]	= {"debug", "info", "warning", "error"};
 	size_t			size	= 4;
 
@@ -70,8 +68,8 @@ void	Harl::filter(std::string level)
 		{
 			for (size_t j = i; j < size; j++)
 			{
-				sb_print_levvel(cmds[j]);
-				(tmp.*set[j])();
+				sb_print_header(cmds[j]);
+				Harl::complain(cmds[j]);
 				std::cout << std::endl;
 			}
 			return;
