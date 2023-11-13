@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 17:13:25 by tponutha          #+#    #+#              #
-#    Updated: 2023/11/13 17:22:35 by tponutha         ###   ########.fr        #
+#    Updated: 2023/11/13 23:52:44 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ OBJ		= $(SRCS:.cpp=.o)
 
 all:	$(NAME)
 
-$(NAME):	$(OBJ)
+$(NAME):	$(OBJ) $(HEADERS)
 	$(CXX) $(CFLAG) $(OBJ) -o $(NAME)
 
 clean:
