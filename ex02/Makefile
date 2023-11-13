@@ -6,11 +6,11 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 17:13:25 by tponutha          #+#    #+#              #
-#    Updated: 2023/11/13 20:12:35 by tponutha         ###   ########.fr        #
+#    Updated: 2023/11/13 20:53:41 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= ClapTrap
+NAME	= FragTrap
 
 CXX		= c++
 CFLAG	= -Wall -Werror -Wextra -std=c++98

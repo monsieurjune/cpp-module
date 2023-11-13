@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 20:12:42 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/13 20:19:22 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/11/13 20:42:33 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ FragTrap::FragTrap(std::string name) : ClapTrap(name)
 
 FragTrap::~FragTrap()
 {
-	std::cout << "FragTrap " << name << " is die with " 
+	std::cout << "FragTrap " << FragTrap::name << " is die with " 
 			<< FragTrap::HitPoint << " HitPoint, "
 			<< FragTrap::EnergyPoint << " EnergyPoint, "
 			<< FragTrap::AttackDamage << " AttackDamage" << std::endl;
