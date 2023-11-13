@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:13:13 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/13 18:26:12 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/11/13 20:42:50 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ ClapTrap::ClapTrap(std::string name)
 
 ClapTrap::~ClapTrap()
 {
-	std::cout << "ClapTrap " << name << " is die with " 
+	std::cout << "ClapTrap " << ClapTrap::name << " is die with " 
 			<< ClapTrap::HitPoint << " HitPoint, "
 			<< ClapTrap::EnergyPoint << " EnergyPoint, "
 			<< ClapTrap::AttackDamage << " AttackDamage" << std::endl;
