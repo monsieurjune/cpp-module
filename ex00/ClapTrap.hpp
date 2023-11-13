@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:13:19 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/13 17:58:46 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/11/13 18:25:19 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ class ClapTrap
 {
 	public:
 		ClapTrap(std::string name);
+		~ClapTrap();
 		void	attack(const std::string& target);
 		void	takeDamage(unsigned int amount);
 		void	beRepaired(unsigned int amount);
