@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 23:39:48 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/14 00:21:08 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/13 00:23:40 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ class Cat : public Animal
 	public:
 		Cat();
 		~Cat();
-		void	makeSound();
+		void	makeSound() const;
 };
 
 #endif

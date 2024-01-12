@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 23:39:59 by tponutha          #+#    #+#              #
-#    Updated: 2023/11/13 23:51:29 by tponutha         ###   ########.fr        #
+#    Updated: 2024/01/13 05:59:37 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,11 +20,15 @@ DIR		= ./
 SRC		= main.cpp\
 			Animal.cpp\
 			Cat.cpp\
-			Dog.cpp
+			Dog.cpp\
+			WrongAnimal.cpp\
+			WrongCat.cpp
 
 HEADER	= Animal.hpp\
 			Cat.hpp\
-			Dog.hpp
+			Dog.hpp\
+			WrongAnimal.hpp\
+			WrongCat.hpp
 
 SRCS	= $(addprefix $(DIR), $(SRC))
 HEADERS	= $(addprefix $(DIR), $(HEADER))

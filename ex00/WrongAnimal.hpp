@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cat.cpp                                            :+:      :+:    :+:   */
+/*   WrongAnimal.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/13 23:39:46 by tponutha          #+#    #+#             */
-/*   Updated: 2024/01/13 05:28:42 by tponutha         ###   ########.fr       */
+/*   Created: 2024/01/13 05:29:43 by tponutha          #+#    #+#             */
+/*   Updated: 2024/01/13 05:39:57 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cat.hpp"
+#ifndef WRONGANIMAL_HPP
+# define WRONGANIMAL_HPP
+# include <iostream>
 
-Cat::Cat() : Animal("Cat")
+class WrongAnimal
 {
-	std::cout << "Cat is born" << std::endl; 
-}
+	public:
+		WrongAnimal();
+		WrongAnimal(std::string type);
+		virtual	~WrongAnimal();
+		std::string		getType()	const;
+		virtual void	makeSound()	const;
 
-Cat::~Cat()
-{
-	std::cout << "Cat is die" << std::endl;
-}
+	protected:
+		std::string	type;
+};
 
-void	Cat::makeSound() const
-{
-	std::cout << "Meow !!!" << std::endl;
-}
+#endif
