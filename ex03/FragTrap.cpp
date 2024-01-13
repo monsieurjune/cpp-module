@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 20:12:42 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/13 20:19:22 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/13 22:50:55 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,33 @@ FragTrap::FragTrap(std::string name) : ClapTrap(name)
 			<< FragTrap::AttackDamage << " AttackDamage" << std::endl;
 }
 
+FragTrap::FragTrap(const FragTrap& object) : ClapTrap(object)
+{
+	FragTrap::HitPoint = object.HitPoint;
+	FragTrap::EnergyPoint = object.EnergyPoint;
+	FragTrap::AttackDamage = object.AttackDamage;
+	std::cout << "FragTrap " << name << " is cloning via Copy Constructor " 
+			<< FragTrap::HitPoint << " HitPoint, "
+			<< FragTrap::EnergyPoint << " EnergyPoint, "
+			<< FragTrap::AttackDamage << " AttackDamage" << std::endl;
+}
+
+FragTrap&	FragTrap::operator=(const FragTrap& object)
+{
+	FragTrap::name = object.name;
+	FragTrap::HitPoint = object.HitPoint;
+	FragTrap::EnergyPoint = object.EnergyPoint;
+	FragTrap::AttackDamage = object.AttackDamage;
+	std::cout << "FragTrap " << name << " is cloning via Copy Assignment " 
+			<< FragTrap::HitPoint << " HitPoint, "
+			<< FragTrap::EnergyPoint << " EnergyPoint, "
+			<< FragTrap::AttackDamage << " AttackDamage" << std::endl;
+	return *this;
+}
+
 FragTrap::~FragTrap()
 {
-	std::cout << "FragTrap " << name << " is die with " 
+	std::cout << "FragTrap " << FragTrap::name << " is die with " 
 			<< FragTrap::HitPoint << " HitPoint, "
 			<< FragTrap::EnergyPoint << " EnergyPoint, "
 			<< FragTrap::AttackDamage << " AttackDamage" << std::endl;

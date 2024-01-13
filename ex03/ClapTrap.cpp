@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:13:13 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/13 20:42:18 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/13 17:03:56 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,31 @@ ClapTrap::ClapTrap(std::string name)
 			<< ClapTrap::HitPoint << " HitPoint, "
 			<< ClapTrap::EnergyPoint << " EnergyPoint, "
 			<< ClapTrap::AttackDamage << " AttackDamage" << std::endl;
+}
+
+ClapTrap::ClapTrap(const ClapTrap& object)
+{
+	ClapTrap::name = object.name;
+	ClapTrap::AttackDamage = object.AttackDamage;
+	ClapTrap::EnergyPoint = object.EnergyPoint;
+	ClapTrap::HitPoint = object.HitPoint;
+	std::cout << "ClapTrap " << name << " is cloning via Copy Constructor with " 
+			<< ClapTrap::HitPoint << " HitPoint, "
+			<< ClapTrap::EnergyPoint << " EnergyPoint, "
+			<< ClapTrap::AttackDamage << " AttackDamage" << std::endl;
+}
+
+ClapTrap&	ClapTrap::operator=(const ClapTrap& object)
+{
+	ClapTrap::name = object.name;
+	ClapTrap::AttackDamage = object.AttackDamage;
+	ClapTrap::EnergyPoint = object.EnergyPoint;
+	ClapTrap::HitPoint = object.HitPoint;
+	std::cout << "ClapTrap " << name << " is cloning via Copy Assignment with " 
+			<< ClapTrap::HitPoint << " HitPoint, "
+			<< ClapTrap::EnergyPoint << " EnergyPoint, "
+			<< ClapTrap::AttackDamage << " AttackDamage" << std::endl;
+	return *this;
 }
 
 ClapTrap::~ClapTrap()
@@ -45,7 +70,14 @@ void	ClapTrap::takeDamage(unsigned int amount)
 {
 	if (ClapTrap::HitPoint <= 0 || ClapTrap::EnergyPoint <= 0)
 		return;
-	ClapTrap::HitPoint -= amount;
+
+	if (ClapTrap::HitPoint <= amount) {
+		ClapTrap::HitPoint = 0;
+	}
+	else {
+		ClapTrap::HitPoint -= amount;
+	}
+
 	std::cout << "ClapTrap " << ClapTrap::name << " take " << amount << " damage, "
 			<< "causing ClapTrap " << ClapTrap::name << " has " << ClapTrap::HitPoint
 			<< " Hitpoint left " << std::endl;

@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:13:22 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/13 20:49:52 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/13 23:07:25 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,31 @@ int	main()
 		d.beRepaired(100);
 		d.attack("Itself");
 		d.whoAmI();
+	}
+
+	std::cout << "----------------------------------" << std::endl;
+	{
+		DiamondTrap	f("F");
+
+		f.takeDamage(1);
+		f.beRepaired(1);
+		f.attack("EveryWhere");
+		f.highFivesGuys();
+	}
+
+	std::cout << "----------------------------------" << std::endl;
+	{
+		DiamondTrap	e1("E1");
+		DiamondTrap	e2("E2");
+
+		e2 = e1;
+		e1.takeDamage(7667832);
+		e1.whoAmI();
+		e1.guardGate();
+		e1.highFivesGuys();
+		e2.whoAmI();
+		e2.guardGate();
+		e2.highFivesGuys();
 	}
 	return 0;
 }

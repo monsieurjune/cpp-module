@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 20:27:43 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/13 20:34:37 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/13 15:53:19 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include "ScavTrap.hpp"
 # include "FragTrap.hpp"
 
-class DiamondTrap : public ScavTrap, FragTrap
+class DiamondTrap : public ScavTrap, public FragTrap
 {
 	public:
 		DiamondTrap(std::string name);

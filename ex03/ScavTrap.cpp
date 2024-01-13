@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:17:39 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/13 20:18:24 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/13 16:44:33 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,33 @@ ScavTrap::ScavTrap(std::string name) : ClapTrap(name)
 			<< ScavTrap::AttackDamage << " AttackDamage" << std::endl;
 }
 
+ScavTrap::ScavTrap(const ScavTrap& object) : ClapTrap(object)
+{
+	ScavTrap::AttackDamage = object.AttackDamage;
+	ScavTrap::EnergyPoint = object.EnergyPoint;
+	ScavTrap::HitPoint = object.HitPoint;
+	std::cout << "ScavTrap " << name << " is cloning via Copy Constructor " 
+			<< ScavTrap::HitPoint << " HitPoint, "
+			<< ScavTrap::EnergyPoint << " EnergyPoint, "
+			<< ScavTrap::AttackDamage << " AttackDamage" << std::endl;
+}
+
+ScavTrap&	ScavTrap::operator=(const ScavTrap& object)
+{
+	ScavTrap::name = object.name;
+	ScavTrap::EnergyPoint = object.EnergyPoint;
+	ScavTrap::HitPoint = object.HitPoint;
+	ScavTrap::AttackDamage = object.AttackDamage;
+	std::cout << "ScavTrap " << name << " is cloning via Copy Assignment " 
+			<< ScavTrap::HitPoint << " HitPoint, "
+			<< ScavTrap::EnergyPoint << " EnergyPoint, "
+			<< ScavTrap::AttackDamage << " AttackDamage" << std::endl;
+	return *this;
+}
+
 ScavTrap::~ScavTrap()
 {
-	std::cout << "ScavTrap " << name << " is die with " 
+	std::cout << "ScavTrap " << ScavTrap::name << " is die with " 
 			<< ScavTrap::HitPoint << " HitPoint, "
 			<< ScavTrap::EnergyPoint << " EnergyPoint, "
 			<< ScavTrap::AttackDamage << " AttackDamage" << std::endl;
