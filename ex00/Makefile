@@ -6,11 +6,11 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 23:39:59 by tponutha          #+#    #+#              #
-#    Updated: 2024/01/13 05:59:37 by tponutha         ###   ########.fr        #
+#    Updated: 2024/01/13 14:15:01 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= ./Seaturtle
+NAME	= ./Animal
 
 CXX		= c++
 CFLAG	= -Wall -Werror -Wextra -std=c++98
