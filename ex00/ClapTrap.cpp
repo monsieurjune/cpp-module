@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:13:13 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/13 20:43:00 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/13 16:18:20 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,31 @@ ClapTrap::ClapTrap(std::string name)
 			<< ClapTrap::HitPoint << " HitPoint, "
 			<< ClapTrap::EnergyPoint << " EnergyPoint, "
 			<< ClapTrap::AttackDamage << " AttackDamage" << std::endl;
+}
+
+ClapTrap::ClapTrap(const ClapTrap& object)
+{
+	ClapTrap::name = object.name;
+	ClapTrap::AttackDamage = object.AttackDamage;
+	ClapTrap::EnergyPoint = object.EnergyPoint;
+	ClapTrap::HitPoint = object.HitPoint;
+	std::cout << "ClapTrap " << name << " is cloning via Copy Constructor with " 
+			<< ClapTrap::HitPoint << " HitPoint, "
+			<< ClapTrap::EnergyPoint << " EnergyPoint, "
+			<< ClapTrap::AttackDamage << " AttackDamage" << std::endl;
+}
+
+ClapTrap&	ClapTrap::operator=(const ClapTrap& object)
+{
+	ClapTrap::name = object.name;
+	ClapTrap::AttackDamage = object.AttackDamage;
+	ClapTrap::EnergyPoint = object.EnergyPoint;
+	ClapTrap::HitPoint = object.HitPoint;
+	std::cout << "ClapTrap " << name << " is cloning via Copy Assignment with " 
+			<< ClapTrap::HitPoint << " HitPoint, "
+			<< ClapTrap::EnergyPoint << " EnergyPoint, "
+			<< ClapTrap::AttackDamage << " AttackDamage" << std::endl;
+	return *this;
 }
 
 ClapTrap::~ClapTrap()
