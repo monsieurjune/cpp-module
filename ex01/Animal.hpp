@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 23:39:42 by tponutha          #+#    #+#             */
-/*   Updated: 2024/01/13 06:42:33 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/14 05:49:54 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ class Animal
 {
 	public:
 		Animal();
+		Animal(const Animal& object);
 		Animal(std::string type);
 		virtual	~Animal();
+		Animal&			operator=(const Animal& object);
 		std::string		getType()	const;
-		virtual void	makeSound()	const;
+		void			makeSound()	const;
 
 	protected:
 		std::string	type;

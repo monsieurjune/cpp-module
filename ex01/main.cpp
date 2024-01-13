@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 23:39:56 by tponutha          #+#    #+#             */
-/*   Updated: 2024/01/13 07:05:57 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/14 05:52:38 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ int main()
 	catch (std::bad_alloc &alloc_error) {}
 	
 	for (int i = 0; i < amout; i++)
-		{
-			delete herd[i];
-		}
-		delete [] herd;
+	{
+		delete herd[i];
+	}
+	delete [] herd;
 	return 0;
 }

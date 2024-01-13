@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 23:39:54 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/14 00:28:06 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/14 04:05:43 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ class Dog : public Animal
 {
 	public:
 		Dog();
+		Dog(const Dog& object);
 		~Dog();
+		Dog&	operator=(const Dog& object);
 		void	makeSound()	const;
 };
 
