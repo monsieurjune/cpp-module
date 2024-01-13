@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 23:39:54 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/14 00:28:06 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/13 14:13:00 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define DOG_HPP
 # include "Animal.hpp"
 
-class Dog : public Animal
+class Dog : public A_Animal
 {
 	public:
 		Dog();

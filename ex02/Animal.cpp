@@ -6,29 +6,29 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 23:39:39 by tponutha          #+#    #+#             */
-/*   Updated: 2024/01/13 07:23:03 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/13 14:12:28 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Animal.hpp"
 
-Animal::Animal(std::string type)
+A_Animal::A_Animal(std::string type)
 {
-	Animal::type = type;
-	Animal::myBrain = new Brain;
+	A_Animal::type = type;
+	A_Animal::myBrain = new Brain;
 }
 
-Animal::Animal()
+A_Animal::A_Animal()
 {
-	Animal::type = "{ Unidentify Animal Type }";
+	A_Animal::type = "{ Unidentify Animal Type }";
 }
 
-std::string	Animal::getType()	const
+std::string	A_Animal::getType()	const
 {
-	return Animal::type;
+	return A_Animal::type;
 }
 
-Animal::~Animal()
+A_Animal::~A_Animal()
 {
-	delete Animal::myBrain;
+	delete A_Animal::myBrain;
 }

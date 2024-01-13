@@ -6,13 +6,13 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 23:39:46 by tponutha          #+#    #+#             */
-/*   Updated: 2024/01/13 06:41:39 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/13 14:12:41 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cat.hpp"
 
-Cat::Cat() : Animal("Cat")
+Cat::Cat() : A_Animal("Cat")
 {
 	std::cout << "Cat is born" << std::endl; 
 }

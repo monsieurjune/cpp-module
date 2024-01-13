@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 23:39:56 by tponutha          #+#    #+#             */
-/*   Updated: 2024/01/13 07:05:57 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/13 14:14:24 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 int main()
 {
 	int		amout	= 101;
-	Animal	**herd	= NULL;
+	A_Animal	**herd	= NULL;
 
 	try
 	{
-		herd = new Animal* [amout]();
+		herd = new A_Animal* [amout]();
 		for (int i = 0; i < amout; i++)
 		{
 			herd[i] = NULL;

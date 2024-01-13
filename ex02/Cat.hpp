@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 23:39:48 by tponutha          #+#    #+#             */
-/*   Updated: 2024/01/13 00:23:40 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/13 14:12:49 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CAT_HPP
 # include "Animal.hpp"
 
-class Cat : public Animal
+class Cat : public A_Animal
 {
 	public:
 		Cat();
