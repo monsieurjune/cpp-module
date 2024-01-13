@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:13:13 by tponutha          #+#    #+#             */
-/*   Updated: 2024/01/13 16:18:20 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/13 17:03:56 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,14 @@ void	ClapTrap::takeDamage(unsigned int amount)
 {
 	if (ClapTrap::HitPoint <= 0 || ClapTrap::EnergyPoint <= 0)
 		return;
-	ClapTrap::HitPoint -= amount;
+
+	if (ClapTrap::HitPoint <= amount) {
+		ClapTrap::HitPoint = 0;
+	}
+	else {
+		ClapTrap::HitPoint -= amount;
+	}
+
 	std::cout << "ClapTrap " << ClapTrap::name << " take " << amount << " damage, "
 			<< "causing ClapTrap " << ClapTrap::name << " has " << ClapTrap::HitPoint
 			<< " Hitpoint left " << std::endl;
