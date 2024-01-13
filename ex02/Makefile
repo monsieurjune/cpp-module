@@ -6,11 +6,11 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 23:39:59 by tponutha          #+#    #+#              #
-#    Updated: 2024/01/13 14:14:38 by tponutha         ###   ########.fr        #
+#    Updated: 2024/01/14 05:25:41 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= ./A_Animal
+NAME	= ./Animal
 
 CXX		= c++
 CFLAG	= -Wall -Werror -Wextra -std=c++98

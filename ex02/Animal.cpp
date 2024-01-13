@@ -6,29 +6,43 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 23:39:39 by tponutha          #+#    #+#             */
-/*   Updated: 2024/01/13 14:12:28 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/14 05:54:09 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Animal.hpp"
 
-A_Animal::A_Animal(std::string type)
+Animal::Animal()
 {
-	A_Animal::type = type;
-	A_Animal::myBrain = new Brain;
+	std::cout << "Animal is born" << std::endl;
+	Animal::type = "{ Unidentify Animal Type }";
 }
 
-A_Animal::A_Animal()
+Animal::Animal(std::string type)
 {
-	A_Animal::type = "{ Unidentify Animal Type }";
+	std::cout << "Animal is born" << std::endl;
+	Animal::type = type;
 }
 
-std::string	A_Animal::getType()	const
+Animal::Animal(const Animal& object)
 {
-	return A_Animal::type;
+	std::cout << "Animal Cloning via Copy Constructor" << std::endl;
+	Animal::type = object.type;
 }
 
-A_Animal::~A_Animal()
+Animal&	Animal::operator=(const Animal& object)
 {
-	delete A_Animal::myBrain;
+	std::cout << "Animal Cloning via Copy Assignment" << std::endl;
+	Animal::type = object.type;
+	return *this;
+}
+
+std::string	Animal::getType()	const
+{
+	return Animal::type;
+}
+
+Animal::~Animal()
+{
+	std::cout << "Animal is die" << std::endl;
 }
