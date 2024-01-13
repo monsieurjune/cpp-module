@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 23:39:56 by tponutha          #+#    #+#             */
-/*   Updated: 2024/01/13 06:03:07 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/14 05:18:11 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int main()
 	const Animal* meta = new Animal();
 	const Animal* j = new Dog();
 	const Animal* i = new Cat();
+	const Animal* i_clone = new Animal(*i);
 	
 	std::cout << meta->getType() << " " << std::endl;
 	std::cout << j->getType() << " " << std::endl;
@@ -33,6 +34,9 @@ int main()
 	delete meta;
 	delete i;
 	delete j;
+
+	i_clone->makeSound();
+	delete i_clone;
 
 	std::cout << "test wrong Animal" << std::endl;
 

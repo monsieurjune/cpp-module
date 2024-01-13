@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 05:29:34 by tponutha          #+#    #+#             */
-/*   Updated: 2024/01/13 06:03:50 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/14 05:12:42 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,17 @@
 WrongCat::WrongCat() : WrongAnimal("WrongCat")
 {
 	std::cout << "WrongCat's dad going to buy a milk" << std::endl;
+}
+
+WrongCat::WrongCat(const WrongCat& object) : WrongAnimal(object)
+{
+	WrongCat::type = object.type;
+}
+
+WrongCat&	WrongCat::operator=(const WrongCat& object)
+{
+	WrongCat::type = object.type;
+	return *this;
 }
 
 WrongCat::~WrongCat()
