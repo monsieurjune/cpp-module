@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:13:22 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/13 20:19:31 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/13 22:54:27 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,24 @@ int	main()
 		b.beRepaired(10);
 		b.attack("A");
 		b.highFivesGuys();
+	}
+
+	std::cout << "----------------------------------" << std::endl;
+	{
+		FragTrap	c("C");
+		FragTrap	d("D");
+		FragTrap	e("E");
+
+		d = c;
+		c.highFivesGuys();
+		d.highFivesGuys();
+		c.takeDamage(112333);
+		for (int i = 0; i < 10; i++)
+		{
+			d.attack("C");
+		}
+		d = e;
+		d.takeDamage(50);
 	}
 	return 0;
 }

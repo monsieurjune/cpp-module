@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 20:08:42 by tponutha          #+#    #+#             */
-/*   Updated: 2023/11/13 20:13:42 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/13 22:40:44 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ class FragTrap : public ClapTrap
 {
 	public:
 		FragTrap(std::string name);
+		FragTrap(const FragTrap& object);
 		~FragTrap();
+		FragTrap&	operator=(const FragTrap& object);
 		void	highFivesGuys(void);
 };
 
