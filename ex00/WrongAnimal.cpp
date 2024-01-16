@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 05:29:47 by tponutha          #+#    #+#             */
-/*   Updated: 2024/01/14 05:36:50 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/16 07:30:53 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,28 @@ WrongAnimal::WrongAnimal()
 	WrongAnimal::type = "Not a Animal";
 }
 
-WrongAnimal::WrongAnimal(std::string type)
+WrongAnimal::WrongAnimal(std::string input_type)
 {
 	std::cout << "WrongAnimal exist" << std::endl;
-	WrongAnimal::type = type;
+	type = input_type;
 }
 
 WrongAnimal::WrongAnimal(const WrongAnimal& object)
 {
 	std::cout << "WrongAnimal exist via Copy Constructor" << std::endl;
-	WrongAnimal::type = object.type;
+	type = object.type;
 }
 
 WrongAnimal&	WrongAnimal::operator=(const WrongAnimal& object)
 {
 	std::cout << "WrongAnimal exist via Copy Assignment" << std::endl;
-	WrongAnimal::type = object.type;
+	type = object.type;
 	return *this;
 }
 
 std::string	WrongAnimal::getType()	const
 {
-	return WrongAnimal::type;
+	return type;
 }
 
 void	WrongAnimal::makeSound()	const
