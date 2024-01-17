@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 23:39:56 by tponutha          #+#    #+#             */
-/*   Updated: 2024/01/14 05:18:11 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/18 02:31:31 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int main()
 	const Animal* meta = new Animal();
 	const Animal* j = new Dog();
 	const Animal* i = new Cat();
-	const Animal* i_clone = new Animal(*i);
+	const Animal* i_clone1 = new Cat(*i);
+	const Animal* j_clone1 = new Dog(*j);
 	
 	std::cout << meta->getType() << " " << std::endl;
 	std::cout << j->getType() << " " << std::endl;
@@ -35,13 +36,19 @@ int main()
 	delete i;
 	delete j;
 
-	i_clone->makeSound();
-	delete i_clone;
+	std::cout << "\nClone Activities" << std::endl;
+	i_clone1->makeSound();
+	j_clone1->makeSound();
+	
+	delete i_clone1;
+	delete j_clone1;
 
-	std::cout << "test wrong Animal" << std::endl;
+	std::cout << "\ntest wrong Animal" << std::endl;
 
 	const WrongAnimal* meta2 = new WrongAnimal();
-	const WrongCat* l = new WrongCat();
+	const WrongAnimal* l = new WrongCat();
+	const WrongAnimal* l_clone = new WrongCat(*l);
+
 	std::cout << meta2->getType() << std::endl;
 	std::cout << l->getType() << std::endl;
 
@@ -50,6 +57,11 @@ int main()
 
 	delete l;
 	delete meta2;
+
+	std::cout << "\nClone Activities" << std::endl;
+	l_clone->makeSound();
+
+	delete l_clone;
 
 	return 0;
 }

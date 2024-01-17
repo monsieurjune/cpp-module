@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 23:39:46 by tponutha          #+#    #+#             */
-/*   Updated: 2024/01/16 07:30:17 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/18 02:20:58 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,25 @@ Cat::Cat(const Cat& object) : Animal(object)
 	type = object.type;
 }
 
+Cat::Cat(const Animal& object) : Animal(object)
+{
+	std::cout << type << " become Cat via Copy Constructor" << std::endl;
+	type = "Cat";
+}
+
 Cat&	Cat::operator=(const Cat& object)
 {
 	std::cout << "Cat is cloning via Copy Assignment" << std::endl;
 	type = object.type;
 	return *this;
 }
+
+// Cat&	Cat::operator=(const Animal& object)
+// {
+// 	std::cout << type << " become Cat. via Copy Assignment" << std::endl;
+// 	type = "Cat";
+// 	return *this;
+// }
 
 Cat::~Cat()
 {
