@@ -6,14 +6,14 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 23:39:59 by tponutha          #+#    #+#              #
-#    Updated: 2024/01/18 22:46:26 by tponutha         ###   ########.fr        #
+#    Updated: 2024/01/19 01:16:58 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= ./Animal
 
 CXX		= c++
-CFLAG	= -Wall -Werror -Wextra -std=c++98
+CFLAG	= -Wall -Werror -Wextra -std=c++98 -g
 RM		= rm -f
 
 DIR		= ./

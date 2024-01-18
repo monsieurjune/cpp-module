@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 06:16:14 by tponutha          #+#    #+#             */
-/*   Updated: 2024/01/14 05:44:19 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/19 00:15:42 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,18 @@ Brain&	Brain::operator=(const Brain& object)
 Brain::~Brain()
 {
 	std::cout << "Brain died" << std::endl;
+}
+
+std::string	Brain::getIdea(size_t i)	const
+{
+	if (i >= 100)
+		return "{Out of Ideas}";
+	return ideas[i];
+}
+
+void	Brain::setIdea(size_t i, std::string idea)
+{
+	if (i >= 100)
+		return;
+	ideas[i] = idea;
 }

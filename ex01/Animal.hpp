@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 23:39:42 by tponutha          #+#    #+#             */
-/*   Updated: 2024/01/18 22:53:55 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/19 00:14:13 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ class Animal
 		Animal&				operator=(const Animal& object);
 		std::string			getType()	const;
 		virtual void		makeSound()	const;
-		virtual void		setIdea(size_t i, std::string idea) = 0;
-		virtual std::string	getIdea(size_t i)	const = 0;
 
 	protected:
 		std::string	type;
