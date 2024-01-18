@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 23:39:51 by tponutha          #+#    #+#             */
-/*   Updated: 2024/01/18 02:25:10 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/18 23:50:37 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ Dog::Dog() : Animal("Dog")
 Dog::Dog(const Dog& object) : Animal(object)
 {
 	std::cout << "Dog is cloning via Copy Constructor" << std::endl;
-	Dog::type = object.type;
+	type = object.type;
 }
 
 Dog::Dog(const Animal& object) : Animal(object)

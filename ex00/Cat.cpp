@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 23:39:46 by tponutha          #+#    #+#             */
-/*   Updated: 2024/01/18 02:20:58 by tponutha         ###   ########.fr       */
+/*   Updated: 2024/01/18 23:50:59 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ Cat::Cat() : Animal("Cat")
 Cat::Cat(const Cat& object) : Animal(object)
 {
 	std::cout << "Cat is cloning via Copy Constructor" << std::endl;
-	type = object.type;
 }
 
 Cat::Cat(const Animal& object) : Animal(object)
