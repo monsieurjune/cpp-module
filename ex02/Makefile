@@ -6,38 +6,38 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 23:39:59 by tponutha          #+#    #+#              #
-#    Updated: 2024/01/14 05:25:41 by tponutha         ###   ########.fr        #
+#    Updated: 2024/01/19 21:14:43 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= ./Animal
 
 CXX		= c++
-CFLAG	= -Wall -Werror -Wextra -std=c++98
+CFLAG	= -Wall -Werror -Wextra -std=c++98 -g
 RM		= rm -f
 
 DIR		= ./
 SRC		= main.cpp\
-			Animal.cpp\
+			A_Animal.cpp\
 			Cat.cpp\
 			Dog.cpp\
-			Brain.cpp
+			Brain.cpp\
 
-HEADER	= Animal.hpp\
+HEADER	= A_Animal.hpp\
 			Cat.hpp\
 			Dog.hpp\
-			Brain.hpp
+			Brain.hpp\
 
 SRCS	= $(addprefix $(DIR), $(SRC))
 HEADERS	= $(addprefix $(DIR), $(HEADER))
 OBJ		= $(SRCS:.cpp=.o)
 
-.cpp.o:
+%.o: %.cpp $(HEADERS) Makefile
 	$(CXX) $(CFLAG) -c $< -o $(<:.cpp=.o)
 
 all:	$(NAME)
 
-$(NAME):	$(OBJ) $(HEADERS)
+$(NAME):	$(OBJ)
 	$(CXX) $(CFLAG) $(OBJ) -o $(NAME)
 
 clean:
