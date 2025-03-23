@@ -6,15 +6,35 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:53:02 by tponutha          #+#    #+#             */
-/*   Updated: 2025/03/23 04:21:38 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/03/24 03:34:47 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __BUREAUCRAT_HPP__
 #define __BUREAUCRAT_HPP__
-#include <iostream>
-#include <exception>
+
+// Project Header
+#include "GradeOutOfBoundException.hpp"
+
+// CPP Header
+#include <iosfwd>
 #include <string>
+
+#ifndef __BUREAUCRAT_HIGHEST_GRADE__
+#define __BUREAUCRAT_HIGHEST_GRADE__ 1
+#endif
+
+#ifndef __BUREAUCRAT_LOWEST_GRADE__
+#define __BUREAUCRAT_LOWEST_GRADE__ 150
+#endif
+
+#ifndef __BUREAUCRAT_DEFAULT_NAME__
+#define __BUREAUCRAT_DEFAULT_NAME__ "bureaucratic moment"
+#endif
+
+#ifndef __BUREAUCRAT_DEFAULT_GRADE__
+#define __BUREAUCRAT_DEFAULT_GRADE__ __BUREAUCRAT_LOWEST_GRADE__
+#endif
 
 class Bureaucrat
 {
@@ -31,27 +51,17 @@ class Bureaucrat
 
         // Exception
         // Grade Too High
-        class GradeTooHighException : public std::exception
+        class GradeTooHighException : public GradeOutOfBoundException
         {
-            private:
-                std::string const   _msg;
-            
             public:
-                GradeTooHighException();
-                virtual ~GradeTooHighException() throw();
-                virtual const char* what() const throw();
+                explicit GradeTooHighException(std::string const& name, int grade);
         };
 
         // Grade Too Low
-        class GradeTooLowException : public std::exception
+        class GradeTooLowException : public GradeOutOfBoundException
         {
-            private:
-                std::string const   _msg;
-
             public:
-                GradeTooLowException();
-                virtual ~GradeTooLowException() throw();
-                virtual const char* what() const throw();
+                explicit GradeTooLowException(std::string const& name, int grade);
         };
 
         // Getter

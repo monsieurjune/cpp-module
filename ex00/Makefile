@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 23:39:59 by tponutha          #+#    #+#              #
-#    Updated: 2025/03/23 03:55:03 by tponutha         ###   ########.fr        #
+#    Updated: 2025/03/24 03:46:23 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME	:= ./Bureaucrat
 
 # Compiler Properties
 CXX			:= c++
-CXX_WFLAG	:= -Wall -Werror -Wextra
+CXX_WFLAG	:= -Wall -Werror -Wextra -g
 CXX_STDFLAG	:= -std=c++98
 CFLAG		:= $(CXX_WFLAG) $(CXX_STDFLAG)
 RM			:= rm -f
@@ -23,8 +23,12 @@ RM			:= rm -f
 # Project
 DIR		:= ./
 SRC		:= main.cpp \
-			Bureaucrat.cpp
-HEADER	:= Bureaucrat.hpp
+			Bureaucrat.cpp \
+			ft_std.cpp \
+			GradeOutOfBoundException.cpp
+HEADER	:= Bureaucrat.hpp \
+			ft_std.hpp \
+			GradeOutOfBoundException.hpp
 SRCS	:= $(addprefix $(DIR), $(SRC))
 HEADERS	:= $(addprefix $(DIR), $(HEADER))
 
