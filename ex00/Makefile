@@ -6,50 +6,59 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 23:39:59 by tponutha          #+#    #+#              #
-#    Updated: 2025/03/24 03:46:23 by tponutha         ###   ########.fr        #
+#    Updated: 2025/03/24 05:35:04 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Project Name & Properties
 NAME	:= ./Bureaucrat
+RM		:= rm -f
+RMDIR	:= rm -r
+MKDIR	:= mkdir -p
 
 # Compiler Properties
 CXX			:= c++
-CXX_WFLAG	:= -Wall -Werror -Wextra -g
+CXX_WFLAG	:= -Wall -Werror -Wextra
+CXX_MFLAG	:= -MP -MD
 CXX_STDFLAG	:= -std=c++98
 CFLAG		:= $(CXX_WFLAG) $(CXX_STDFLAG)
-RM			:= rm -f
 
-# Project
-DIR		:= ./
+# Directories
+BUILD_DIR	:= ./build
+SRC_DIR		:= ./
+INCLUDE_DIR	:= ./
+
+# Source
 SRC		:= main.cpp \
 			Bureaucrat.cpp \
 			ft_std.cpp \
 			GradeOutOfBoundException.cpp
-HEADER	:= Bureaucrat.hpp \
-			ft_std.hpp \
-			GradeOutOfBoundException.hpp
-SRCS	:= $(addprefix $(DIR), $(SRC))
-HEADERS	:= $(addprefix $(DIR), $(HEADER))
+SRCS	:= $(addprefix $(SRC_DIR), $(SRC))
 
-# Objects
-OBJ		:= $(SRCS:.cpp=.o)
+# Objects & Dependencies File
+OBJS	:= $(SRCS:%.cpp=$(BUILD_DIR)/%.o)
+DEPS	:= $(OBJS:.o=.d)
 
 # Main Rules
 .PHONY:	all clean fclean re
 
 all:	$(NAME)
 
-$(NAME):	$(OBJ)
-	$(CXX) $(CFLAG) $(OBJ) -o $(NAME)
+$(NAME):	$(OBJS)
+	$(CXX) $(CFLAG) $(OBJS) -o $(NAME)
 
-%.o: %.cpp $(HEADERS) Makefile
-	$(CXX) $(CFLAG) -c $< -o $(<:.cpp=.o)
+$(BUILD_DIR)/%.o:	%.cpp
+	$(MKDIR) $(@D)
+	$(CXX) $(CXXFLAG) $(CXX_MFLAG) -I$(INCLUDE_DIR) -c $< -o $@
 
 clean:
-	$(RM) $(OBJ)
+	$(RM) $(OBJS)
+	$(RM) $(DEPS)
+	$(RMDIR) $(BUILD_DIR)
 
 fclean:	clean
 	$(RM) $(NAME)
 
 re:	fclean all
+
+-include $(DEPS)
