@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 06:07:17 by tponutha          #+#    #+#             */
-/*   Updated: 2025/03/24 19:59:30 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/03/24 20:12:34 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,12 @@
 #define __FORM_DEFAULT_NAME__ "unknown form"
 #endif
 
-#ifndef __FORM_DEFAULT_GRADE__
-#define __FORM_DEFAULT_GRADE__ __BUREAUCRAT_LOWEST_GRADE__
+#ifndef __FORM_DEFAULT_SIGN_GRADE__
+#define __FORM_DEFAULT_SIGN_GRADE__ __BUREAUCRAT_LOWEST_GRADE__
+#endif
+
+#ifndef __FORM_DEFAULT_EXECUTE_GRADE__
+#define __FORM_DEFAULT_EXECUTE_GRADE__ __BUREAUCRAT_LOWEST_GRADE__
 #endif
 
 class Form
@@ -74,7 +78,7 @@ class Form
         int                 getExecuteGradeThreshold();
 
         // Signed
-        bool    beSigned(Bureaucrat const& person);
+        bool    beSigned(Bureaucrat const& signer);
 };
 
 std::ostream&   operator<<(std::ostream& out, Form const& rhs);
