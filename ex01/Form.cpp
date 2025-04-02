@@ -6,12 +6,13 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 06:07:44 by tponutha          #+#    #+#             */
-/*   Updated: 2025/04/02 15:04:26 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:24:17 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // Project Header
 #include "Form.hpp"
+#include "Bureaucrat.hpp"
 
 // CPP Header
 #include <iostream>
@@ -143,6 +144,25 @@ int Form::getSignGradeThreshold() const
 int Form::getExecuteGradeThreshold() const
 {
     return _executeGradeThreshold;
+}
+
+// Sign
+
+bool    Form::beSigned(Bureaucrat const& signer)
+{
+    if (_isSigned)
+    {
+        return false;
+    }
+
+    if (signer.getGrade() > _signGradeThreshold)
+    {
+        throw Form::GradeTooLowException("sign");
+    }
+
+    _isSigned = true;
+    
+    return true;
 }
 
 // Exception

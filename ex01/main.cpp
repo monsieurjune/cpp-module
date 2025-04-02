@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:53:09 by tponutha          #+#    #+#             */
-/*   Updated: 2025/04/02 15:45:07 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:31:34 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@
 
 int main()
 {
-    Form    fDefault;
-    Form    f1("Outside #1", 100, 98);
+    Bureaucrat  unknown("Unknown", 1);
+    Form        fDefault;
+    Form        f1("Outside #1", 100, 98);
 
     // Deep Copy
+    std::cout << std::endl;
     std::cout << "======= DEEP COPY =========" << std::endl;
     {
         Form    fd1(f1);
@@ -31,10 +33,21 @@ int main()
         fd2 = f1;
 
         std::cout << std::endl;
+        std::cout << "=== BEFORE ===" << std::endl;
         std::cout << "Original: " << f1 << std::endl;
         std::cout << "Clone: " << fd1 << std::endl;
         std::cout << "Copy: " << fd2 << std::endl;
+        std::cout << std::endl;
+
+        unknown.signForm(fd1);
+
+        std::cout << "=== AFTER ===" << std::endl;
+        std::cout << "Original: " << f1 << std::endl;
+        std::cout << "Clone: " << fd1 << std::endl;
+        std::cout << "Copy: " << fd2 << std::endl;
+        std::cout << std::endl;
     }
+    std::cout << std::endl;
     std::cout << "Original: " << f1 << std::endl;
     std::cout << "===========================" << std::endl;
     std::cout << std::endl;
@@ -87,6 +100,23 @@ int main()
     std::cout << std::endl;
 
     // Sign
+    std::cout << "======== SIGN FORM ========" << std::endl;
+
+    Bureaucrat  b1("John Doe", 1);
+    Bureaucrat  b2("Jane Doe", 150);
+
+    std::cout << std::endl;
+    std::cout << "Before: " << f1 << std::endl;
+    std::cout << std::endl;
+
+    b2.signForm(f1);
+    b1.signForm(f1);
+    b1.signForm(f1);
+
+    std::cout << std::endl;
+    std::cout << "After: " << f1 << std::endl;
+    std::cout << "===========================" << std::endl;
+    std::cout << std::endl;
 
     return 0;
 }

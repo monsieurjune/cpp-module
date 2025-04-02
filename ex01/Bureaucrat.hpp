@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:53:02 by tponutha          #+#    #+#             */
-/*   Updated: 2025/04/02 12:23:06 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:19:14 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ class Bureaucrat
         void    decrementGrade();
 
         // Form
-        void    signForm(Form const& form);
+        void    signForm(Form& form);
 };
 
 std::ostream&   operator<<(std::ostream& out, Bureaucrat const& rhs);

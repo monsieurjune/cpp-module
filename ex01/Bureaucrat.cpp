@@ -6,12 +6,13 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:52:52 by tponutha          #+#    #+#             */
-/*   Updated: 2025/04/02 12:12:11 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:26:30 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // Project Header
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 
 // CPP Header
 #include <iostream>
@@ -106,6 +107,31 @@ void    Bureaucrat::decrementGrade()
 
     sb_check_grade_too_low(tmp_grade);
     _grade = tmp_grade;
+}
+
+// Sign
+
+void    Bureaucrat::signForm(Form& form)
+{
+    const char* msg = "it's already signed";
+    bool        ret = false;
+
+    try
+    {
+        ret = form.beSigned(*this);
+    }
+    catch (Form::GradeTooLowException const& e)
+    {
+        std::cout << _name << " couldn't sign " << form.getName() << " because " << e.what() << std::endl;
+        return;
+    }
+
+    if (ret)
+    {
+        std::cout << _name << " signed " << form.getName() << std::endl;
+        return;
+    }
+    std::cout << _name << " couldn't sign " << form.getName() << " because it's already signed" << std::endl;
 }
 
 // Exception
