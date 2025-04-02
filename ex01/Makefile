@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 23:39:59 by tponutha          #+#    #+#              #
-#    Updated: 2025/03/24 06:07:54 by tponutha         ###   ########.fr        #
+#    Updated: 2025/04/02 12:24:40 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,9 +31,8 @@ INCLUDE_DIR	:= ./
 # Source
 SRC		:= main.cpp \
 			Bureaucrat.cpp \
-			ft_std.cpp \
-			GradeOutOfBoundException.cpp \
-			Form.cpp
+			Form.cpp \
+			GradeOutOfBoundException.cpp
 SRCS	:= $(addprefix $(SRC_DIR), $(SRC))
 
 # Objects & Dependencies File

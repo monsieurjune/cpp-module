@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:53:02 by tponutha          #+#    #+#             */
-/*   Updated: 2025/03/24 03:34:47 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:23:06 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@
 #define __BUREAUCRAT_DEFAULT_GRADE__ __BUREAUCRAT_LOWEST_GRADE__
 #endif
 
+// Declaration (avoid circular include)
+class Form;
+
 class Bureaucrat
 {
     private:
@@ -54,14 +57,14 @@ class Bureaucrat
         class GradeTooHighException : public GradeOutOfBoundException
         {
             public:
-                explicit GradeTooHighException(std::string const& name, int grade);
+                explicit GradeTooHighException();
         };
 
         // Grade Too Low
         class GradeTooLowException : public GradeOutOfBoundException
         {
             public:
-                explicit GradeTooLowException(std::string const& name, int grade);
+                explicit GradeTooLowException();
         };
 
         // Getter
@@ -71,6 +74,9 @@ class Bureaucrat
         // Grade Changer
         void    incrementGrade();
         void    decrementGrade();
+
+        // Form
+        void    signForm(Form const& form);
 };
 
 std::ostream&   operator<<(std::ostream& out, Bureaucrat const& rhs);

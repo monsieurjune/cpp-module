@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 06:07:17 by tponutha          #+#    #+#             */
-/*   Updated: 2025/03/24 20:12:34 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:24:13 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 // Project Header
 #include "GradeOutOfBoundException.hpp"
-#include "Bureaucrat.hpp"
 
 // CPP Header
 #include <iosfwd>
@@ -41,6 +40,9 @@
 #define __FORM_DEFAULT_EXECUTE_GRADE__ __BUREAUCRAT_LOWEST_GRADE__
 #endif
 
+// Declaration (avoid circular include)
+class Bureaucrat;
+
 class Form
 {
     private:
@@ -61,14 +63,14 @@ class Form
         class GradeTooHighException : public GradeOutOfBoundException
         {
             public:
-                explicit GradeTooHighException(std::string const& name, int grade);
+                explicit GradeTooHighException(const char* grade_type);
         };
 
         // Grade Too Low
         class GradeTooLowException : public GradeOutOfBoundException
         {
             public:
-                explicit GradeTooLowException(std::string const& name, int grade);
+                explicit GradeTooLowException(const char* grade_type);
         };
 
         // Getter

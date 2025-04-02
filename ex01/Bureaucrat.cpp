@@ -6,57 +6,31 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:52:52 by tponutha          #+#    #+#             */
-/*   Updated: 2025/03/24 04:23:22 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:12:11 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // Project Header
 #include "Bureaucrat.hpp"
-#include "ft_std.hpp"
 
 // CPP Header
 #include <iostream>
 
 // Helper
 
-static inline std::string   sb_grade_exception_formatter(
-                                std::string const& name, 
-                                int const grade, 
-                                const char* cause,
-                                const char* minmax,
-                                int minmax_val
-                            )
-{
-    std::string str;
-
-    str.append("Bureaucrat <");
-    str.append(name);
-    str.append("> (");
-    str.append(ft_std::itoa(grade));
-    str.append("): Grade is ");
-    str.append(cause);
-    str.append(" (");
-    str.append(minmax);
-    str.append(" grade is ");
-    str.append(ft_std::itoa(minmax_val));
-    str.append(")");
-
-    return str;
-}
-
-static inline void  sb_check_grade_too_low(std::string const& name, int grade)
+static inline void  sb_check_grade_too_low(int grade)
 {
     if (grade > __BUREAUCRAT_LOWEST_GRADE__)
     {
-        throw Bureaucrat::GradeTooLowException(name, grade);
+        throw Bureaucrat::GradeTooLowException();
     }
 }
 
-static inline void  sb_check_grade_too_high(std::string const& name, int grade)
+static inline void  sb_check_grade_too_high(int grade)
 {
     if (grade < __BUREAUCRAT_HIGHEST_GRADE__)
     {
-        throw Bureaucrat::GradeTooHighException(name, grade);
+        throw Bureaucrat::GradeTooHighException();
     }
 }
 
@@ -65,8 +39,8 @@ static inline void  sb_check_grade_too_high(std::string const& name, int grade)
 Bureaucrat::Bureaucrat() : _name(__BUREAUCRAT_DEFAULT_NAME__), _grade(__BUREAUCRAT_DEFAULT_GRADE__)
 {
     // In case of miss configuration
-    sb_check_grade_too_low(_name, _grade);
-    sb_check_grade_too_high(_name, _grade);
+    sb_check_grade_too_low(_grade);
+    sb_check_grade_too_high(_grade);
 
     std::cout << "Bureaucrat <" << _name << "> (" << _grade 
                 << ") is applied via default constructor program" << std::endl;
@@ -74,8 +48,8 @@ Bureaucrat::Bureaucrat() : _name(__BUREAUCRAT_DEFAULT_NAME__), _grade(__BUREAUCR
 
 Bureaucrat::Bureaucrat(std::string const name, int const grade) : _name(name), _grade(grade)
 {
-    sb_check_grade_too_low(_name, _grade);
-    sb_check_grade_too_high(_name, _grade);
+    sb_check_grade_too_low(_grade);
+    sb_check_grade_too_high(_grade);
 
     std::cout << "Bureaucrat <" << _name << "> (" << _grade 
                 << ") is applied via constructor program" << std::endl;
@@ -122,7 +96,7 @@ void    Bureaucrat::incrementGrade()
 {
     int tmp_grade = _grade - 1;
 
-    sb_check_grade_too_high(_name, tmp_grade);
+    sb_check_grade_too_high(tmp_grade);
     _grade = tmp_grade;
 }
 
@@ -130,25 +104,15 @@ void    Bureaucrat::decrementGrade()
 {
     int tmp_grade = _grade + 1;
 
-    sb_check_grade_too_low(_name, tmp_grade);
+    sb_check_grade_too_low(tmp_grade);
     _grade = tmp_grade;
 }
 
 // Exception
 
-Bureaucrat::GradeTooHighException::GradeTooHighException(
-    std::string const& name, 
-    int grade
-) : GradeOutOfBoundException(
-    sb_grade_exception_formatter(name, grade, "too high", "max", __BUREAUCRAT_HIGHEST_GRADE__)
-) {}
+Bureaucrat::GradeTooHighException::GradeTooHighException() : GradeOutOfBoundException("Bureaucrat's grade is too high") {}
 
-Bureaucrat::GradeTooLowException::GradeTooLowException(
-    std::string const& name, 
-    int grade
-) : GradeOutOfBoundException(
-    sb_grade_exception_formatter(name, grade, "too low", "min", __BUREAUCRAT_LOWEST_GRADE__)
-) {}
+Bureaucrat::GradeTooLowException::GradeTooLowException() : GradeOutOfBoundException("Bureaucrat's grade is too low") {}
 
 // ostream
 
