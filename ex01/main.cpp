@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:53:09 by tponutha          #+#    #+#             */
-/*   Updated: 2025/04/02 15:01:10 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/04/02 15:45:07 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,55 @@ int main()
     std::cout << "Original: " << f1 << std::endl;
     std::cout << "===========================" << std::endl;
     std::cout << std::endl;
+
+    // Too Low Create
+    std::cout << "======== CREATE EXCEPTION ========" << std::endl;
+    try
+    {
+        Form    flow1("Too Low #1", 151, 50);
+
+        std::cout << "(This line won't show) " << flow1 << std::endl;
+    }
+    catch (Form::GradeTooLowException const& e)
+    {
+        std::cout << "[Too low sign grade]: " << e.what() << std::endl;
+    }
+    try
+    {
+        Form    flow1("Too Low #2", 15, 151);
+
+        std::cout << "(This line won't show) " << flow1 << std::endl;
+    }
+    catch (Form::GradeTooLowException const& e)
+    {
+        std::cout << "[Too low execute grade]: " << e.what() << std::endl;
+    }
+
+    // Too High Create
+    try
+    {
+        Form    fhigh1("Too Low #1", 0, 50);
+
+        std::cout << "(This line won't show) " << fhigh1 << std::endl;
+    }
+    catch (Form::GradeTooHighException const& e)
+    {
+        std::cout << "[Too high sign grade]: " << e.what() << std::endl;
+    }
+    try
+    {
+        Form    fhigh1("Too Low #2", 15, 0);
+
+        std::cout << "(This line won't show) " << fhigh1 << std::endl;
+    }
+    catch (Form::GradeTooHighException const& e)
+    {
+        std::cout << "[Too high execute grade]: " << e.what() << std::endl;
+    }
+    std::cout << "==================================" << std::endl;
+    std::cout << std::endl;
+
+    // Sign
 
     return 0;
 }
