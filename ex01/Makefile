@@ -6,12 +6,12 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 23:39:59 by tponutha          #+#    #+#              #
-#    Updated: 2025/04/02 12:24:40 by tponutha         ###   ########.fr        #
+#    Updated: 2025/04/02 15:04:43 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Project Name & Properties
-NAME	:= ./Bureaucrat
+NAME	:= ./Form
 RM		:= rm -f
 RMDIR	:= rm -r
 MKDIR	:= mkdir -p

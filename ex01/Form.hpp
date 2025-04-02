@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 06:07:17 by tponutha          #+#    #+#             */
-/*   Updated: 2025/04/02 12:24:13 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:41:27 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 // Project Header
 #include "GradeOutOfBoundException.hpp"
+#include "Bureaucrat.hpp"
 
 // CPP Header
 #include <iosfwd>
@@ -74,10 +75,10 @@ class Form
         };
 
         // Getter
-        std::string const&  getName();
-        bool                getIsSigned();
-        int                 getSignGradeThreshold();
-        int                 getExecuteGradeThreshold();
+        std::string const&  getName() const;
+        bool                getIsSigned() const;
+        int                 getSignGradeThreshold() const;
+        int                 getExecuteGradeThreshold() const;
 
         // Signed
         bool    beSigned(Bureaucrat const& signer);
