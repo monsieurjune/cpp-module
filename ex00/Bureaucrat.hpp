@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:53:02 by tponutha          #+#    #+#             */
-/*   Updated: 2025/03/24 03:34:47 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:08:33 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ class Bureaucrat
         class GradeTooHighException : public GradeOutOfBoundException
         {
             public:
-                explicit GradeTooHighException(std::string const& name, int grade);
+                explicit GradeTooHighException();
         };
 
         // Grade Too Low
         class GradeTooLowException : public GradeOutOfBoundException
         {
             public:
-                explicit GradeTooLowException(std::string const& name, int grade);
+                explicit GradeTooLowException();
         };
 
         // Getter
