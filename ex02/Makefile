@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 23:39:59 by tponutha          #+#    #+#              #
-#    Updated: 2025/04/03 11:28:39 by tponutha         ###   ########.fr        #
+#    Updated: 2025/04/03 14:07:28 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,9 @@ INCLUDE_DIR	:= ./
 SRC		:= main.cpp \
 			Bureaucrat.cpp \
 			AForm.cpp \
+			ShrubberyCreationForm.cpp \
+			RobotomyRequestForm.cpp \
+			PresidentialPardonForm.cpp \
 			BaseBureaucraticException.cpp
 SRCS	:= $(addprefix $(SRC_DIR), $(SRC))
 
