@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 08:36:37 by tponutha          #+#    #+#             */
-/*   Updated: 2025/04/03 11:28:58 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/04/03 12:24:55 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,10 @@ AForm::GradeTooLowException::GradeTooLowException(const char* grade_type)
             std::string(grade_type) + 
             std::string(" grade is too low")
         ) {}
+
+AForm::ExecutionFailedException::ExecutionFailedException(const char* msg) : BaseBureaucraticException(msg) {}
+
+AForm::UnsignedFormException::UnsignedFormException() : BaseBureaucraticException("This form is unsigned") {}
 
 // ostream
 
