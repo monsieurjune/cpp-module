@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 23:39:59 by tponutha          #+#    #+#              #
-#    Updated: 2025/04/02 12:11:28 by tponutha         ###   ########.fr        #
+#    Updated: 2025/05/11 04:28:23 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ CXX			:= c++
 CXX_WFLAG	:= -Wall -Werror -Wextra
 CXX_MFLAG	:= -MP -MD
 CXX_STDFLAG	:= -std=c++98
-CFLAG		:= $(CXX_WFLAG) $(CXX_STDFLAG)
+CXXFLAG		:= $(CXX_WFLAG) $(CXX_STDFLAG)
 
 # Directories
 BUILD_DIR	:= ./build
@@ -44,7 +44,7 @@ DEPS	:= $(OBJS:.o=.d)
 all:	$(NAME)
 
 $(NAME):	$(OBJS)
-	$(CXX) $(CFLAG) $(OBJS) -o $(NAME)
+	$(CXX) $(CXXFLAG) $(OBJS) -o $(NAME)
 
 $(BUILD_DIR)/%.o:	%.cpp
 	$(MKDIR) $(@D)
