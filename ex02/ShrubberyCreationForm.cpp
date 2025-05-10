@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:08:18 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/02 17:02:16 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/10 16:52:45 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ ShrubberyCreationForm::ShrubberyCreationForm()
                                 __SHRUBBERY_CREATION_FORM_EXECUTE_GRADE__
                             )
 {
-    std::cout << "Presidential Pardon Form <" << this->getName() << "> (" 
+    std::cout << "Shruberry Creation Form <" << this->getName() << "> (" 
                 << this->getSignGradeThreshold() << "," << this->getExecuteGradeThreshold() 
                 << ") (" << (this->getIsSigned() ? "signed" : "unsigned") 
                 << ") is created from default constructor program" << std::endl;
@@ -37,7 +37,7 @@ ShrubberyCreationForm::ShrubberyCreationForm(std::string const& target)
                                 __SHRUBBERY_CREATION_FORM_EXECUTE_GRADE__
                             )
 {
-    std::cout << "Presidential Pardon Form <" << this->getName() << "> (" 
+    std::cout << "Shruberry Creation Form <" << this->getName() << "> (" 
                 << this->getSignGradeThreshold() << "," << this->getExecuteGradeThreshold() 
                 << ") (" << (this->getIsSigned() ? "signed" : "unsigned") 
                 << ") is created from default constructor program" << std::endl;
@@ -45,7 +45,7 @@ ShrubberyCreationForm::ShrubberyCreationForm(std::string const& target)
 
 ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const& obj) : AForm(obj)
 {
-    std::cout << "Presidential Pardon Form <" << this->getName() << "> (" 
+    std::cout << "Shruberry Creation Form <" << this->getName() << "> (" 
             << this->getSignGradeThreshold() << "," << this->getExecuteGradeThreshold() 
             << ") (" << (this->getIsSigned() ? "signed" : "unsigned") 
             << ") is copied" << std::endl;
@@ -53,7 +53,7 @@ ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const& obj) :
 
 ShrubberyCreationForm::~ShrubberyCreationForm()
 {
-    std::cout << "Presidential Pardon Form <" << this->getName() << "> (" 
+    std::cout << "Shruberry Creation Form <" << this->getName() << "> (" 
             << this->getSignGradeThreshold() << "," << this->getExecuteGradeThreshold() 
             << ") (" << (this->getIsSigned() ? "signed" : "unsigned") 
             << ") is discarded" << std::endl;
@@ -61,7 +61,7 @@ ShrubberyCreationForm::~ShrubberyCreationForm()
 
 ShrubberyCreationForm   ShrubberyCreationForm::operator=(ShrubberyCreationForm const& rhs)
 {
-    std::cout << "Copy Signature of Presidential Pardon Form <" 
+    std::cout << "Copy Signature of Shruberry Creation Form <" 
                 << rhs.getName() << "> (" << rhs.getSignGradeThreshold() 
                 << "," << rhs.getExecuteGradeThreshold() 
                 << ") (" << (rhs.getIsSigned() ? "signed" : "unsigned") 
@@ -101,7 +101,7 @@ void    ShrubberyCreationForm::execute(Bureaucrat const& executor) const
                 );
     }
 
-    // create ascii tree
+    // create ascii tree (no throw when error)
     shrubbery << "          &&& &&  & &&" << std::endl;
     shrubbery << "      && &\\/&\\|& ()|/ @, &&" << std::endl;
     shrubbery << "      &\\/(/&/&||/& /_/)_&/_&" << std::endl;

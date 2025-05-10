@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 06:07:44 by tponutha          #+#    #+#             */
-/*   Updated: 2025/04/02 17:24:17 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/02 13:09:17 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,9 @@ Form::~Form()
 
 Form&   Form::operator=(Form const& rhs)
 {
-    std::cout << "Copy Signature of Form <" << _name << "> (" 
-                << _signGradeThreshold << "," << _executeGradeThreshold 
-                << ") (" << (_isSigned ? "signed" : "unsigned") 
+    std::cout << "Copy Signature of Form <" << rhs.getName() << "> (" 
+                << rhs.getSignGradeThreshold() << "," << rhs.getExecuteGradeThreshold() 
+                << ") (" << (rhs.getIsSigned() ? "signed" : "unsigned") 
                 << ") to Form <" << _name << "> (" 
                 << _signGradeThreshold << "," << _executeGradeThreshold 
                 << ") (" << (_isSigned ? "signed" : "unsigned") << ")" << std::endl;
