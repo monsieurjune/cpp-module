@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 08:17:20 by tponutha          #+#    #+#             */
-/*   Updated: 2025/04/03 08:20:56 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/10 20:16:56 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <exception>
 #include <string>
 
-class BaseBureaucraticException
+class BaseBureaucraticException : public std::exception
 {
     private:
         std::string _msg;
