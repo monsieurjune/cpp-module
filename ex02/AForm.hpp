@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:41:33 by tponutha          #+#    #+#             */
-/*   Updated: 2025/04/04 14:53:04 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/10 17:32:20 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,7 @@ class AForm
         // Execute
         virtual void    execute(Bureaucrat const& executor) const = 0;
 };
+
+std::ostream&   operator<<(std::ostream& out, AForm const& rhs);
 
 #endif
