@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:07:57 by tponutha          #+#    #+#             */
-/*   Updated: 2025/04/04 14:29:45 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/10 22:34:32 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void    RobotomyRequestForm::execute(Bureaucrat const& executor) const
     // lower in reverse way
     if (executor.getGrade() > this->getExecuteGradeThreshold())
     {
-        throw AForm::GradeTooLowException("execute");
+        throw Bureaucrat::GradeTooLowException();
     }
 
     std::srand(std::time(NULL));

@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:08:18 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/10 16:52:45 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/10 22:42:55 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void    ShrubberyCreationForm::execute(Bureaucrat const& executor) const
     // lower in reverse way
     if (executor.getGrade() > this->getExecuteGradeThreshold())
     {
-        throw AForm::GradeTooLowException("execute");
+        throw Bureaucrat::GradeTooLowException();
     }
 
     // execute
@@ -102,19 +102,19 @@ void    ShrubberyCreationForm::execute(Bureaucrat const& executor) const
     }
 
     // create ascii tree (no throw when error)
-    shrubbery << "          &&& &&  & &&" << std::endl;
-    shrubbery << "      && &\\/&\\|& ()|/ @, &&" << std::endl;
-    shrubbery << "      &\\/(/&/&||/& /_/)_&/_&" << std::endl;
-    shrubbery << "   &() &\\/&|()|/&\\/ '%\" & ()" << std::endl;
-    shrubbery << "  &_\\_&&_\\ |& |&&/&__%_/_& &&" << std::endl;
-    shrubbery << "&&   && & &| &| /& & % ()& /&&" << std::endl;
-    shrubbery << " ()&_---()&\\&\\|&&-&&--%---()~" << std::endl;
-    shrubbery << "     &&     \\|||" << std::endl;
-    shrubbery << "             |||" << std::endl;
-    shrubbery << "             |||" << std::endl;
-    shrubbery << "             |||" << std::endl;
-    shrubbery << "       , -=-~  .-^- _" << std::endl;
-    shrubbery << "ejm97         `" << std::endl;
+    shrubbery << "          &&& &&  & &&"           << std::endl;
+    shrubbery << "      && &\\/&\\|& ()|/ @, &&"    << std::endl;
+    shrubbery << "      &\\/(/&/&||/& /_/)_&/_&"    << std::endl;
+    shrubbery << "   &() &\\/&|()|/&\\/ '%\" & ()"  << std::endl;
+    shrubbery << "  &_\\_&&_\\ |& |&&/&__%_/_& &&"  << std::endl;
+    shrubbery << "&&   && & &| &| /& & % ()& /&&"   << std::endl;
+    shrubbery << " ()&_---()&\\&\\|&&-&&--%---()~"  << std::endl;
+    shrubbery << "     &&     \\|||"                << std::endl;
+    shrubbery << "             |||"                 << std::endl;
+    shrubbery << "             |||"                 << std::endl;
+    shrubbery << "             |||"                 << std::endl;
+    shrubbery << "       , -=-~  .-^- _"            << std::endl;
+    shrubbery << "ejm97         `"                  << std::endl;
 
     // check fail & bad bits
     if (shrubbery.fail())

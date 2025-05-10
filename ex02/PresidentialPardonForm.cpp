@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:07:54 by tponutha          #+#    #+#             */
-/*   Updated: 2025/04/04 14:37:07 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/10 22:01:03 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void    PresidentialPardonForm::execute(Bureaucrat const& executor) const
     // lower in reverse way
     if (executor.getGrade() > this->getExecuteGradeThreshold())
     {
-        throw AForm::GradeTooLowException("execute");
+        throw Bureaucrat::GradeTooLowException();
     }
 
     std::cout << this->getName() << " has been pardoned by Zaphod Beeblebrox." << std::endl;
