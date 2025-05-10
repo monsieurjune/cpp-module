@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:52:52 by tponutha          #+#    #+#             */
-/*   Updated: 2025/04/03 10:52:16 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/10 20:29:18 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void    Bureaucrat::decrementGrade()
     _grade = tmp_grade;
 }
 
-// Sign
+// Form
 
 void    Bureaucrat::signForm(AForm& form)
 {
@@ -132,6 +132,19 @@ void    Bureaucrat::signForm(AForm& form)
         return;
     }
     std::cout << _name << " couldn't sign " << form.getName() << " because it's already signed" << std::endl;
+}
+
+void    Bureaucrat::executeForm(AForm const& form) const
+{
+    try
+    {
+        form.execute(*this);
+        std::cout << _name << " executed " << form.getName() << std::endl;
+    }
+    catch (std::exception const& e)
+    {
+        std::cout << "Execution Error: " << e.what() << std::endl;
+    }
 }
 
 // Exception
