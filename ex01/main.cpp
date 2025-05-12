@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:53:09 by tponutha          #+#    #+#             */
-/*   Updated: 2025/04/02 17:31:34 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:22:16 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int main()
 
         std::cout << "(This line won't show) " << flow1 << std::endl;
     }
-    catch (Form::GradeTooLowException const& e)
+    catch (std::exception const& e)
     {
         std::cout << "[Too low sign grade]: " << e.what() << std::endl;
     }
@@ -70,7 +70,7 @@ int main()
 
         std::cout << "(This line won't show) " << flow1 << std::endl;
     }
-    catch (Form::GradeTooLowException const& e)
+    catch (std::exception const& e)
     {
         std::cout << "[Too low execute grade]: " << e.what() << std::endl;
     }
@@ -82,7 +82,7 @@ int main()
 
         std::cout << "(This line won't show) " << fhigh1 << std::endl;
     }
-    catch (Form::GradeTooHighException const& e)
+    catch (std::exception const& e)
     {
         std::cout << "[Too high sign grade]: " << e.what() << std::endl;
     }
@@ -92,7 +92,7 @@ int main()
 
         std::cout << "(This line won't show) " << fhigh1 << std::endl;
     }
-    catch (Form::GradeTooHighException const& e)
+    catch (std::exception const& e)
     {
         std::cout << "[Too high execute grade]: " << e.what() << std::endl;
     }

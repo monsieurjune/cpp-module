@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 06:07:17 by tponutha          #+#    #+#             */
-/*   Updated: 2025/04/02 17:18:23 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:20:51 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 #endif
 
 #ifndef __FORM_DEFAULT_NAME__
-#define __FORM_DEFAULT_NAME__ "unknown form"
+#define __FORM_DEFAULT_NAME__ "XXXX"
 #endif
 
 #ifndef __FORM_DEFAULT_SIGN_GRADE__
@@ -48,7 +48,7 @@ class Form
 {
     private:
         std::string const   _name;
-        bool                _isSigned = false;
+        bool                _isSigned;
         int const           _signGradeThreshold;
         int const           _executeGradeThreshold;
     
@@ -64,14 +64,14 @@ class Form
         class GradeTooHighException : public GradeOutOfBoundException
         {
             public:
-                explicit GradeTooHighException(const char* grade_type);
+                explicit GradeTooHighException(const char* msg);
         };
 
         // Grade Too Low
         class GradeTooLowException : public GradeOutOfBoundException
         {
             public:
-                explicit GradeTooLowException(const char* grade_type);
+                explicit GradeTooLowException(const char* msg);
         };
 
         // Getter
@@ -81,7 +81,7 @@ class Form
         int                 getExecuteGradeThreshold() const;
 
         // Signed
-        bool    beSigned(Bureaucrat const& signer);
+        void    beSigned(Bureaucrat const& signer);
 };
 
 std::ostream&   operator<<(std::ostream& out, Form const& rhs);

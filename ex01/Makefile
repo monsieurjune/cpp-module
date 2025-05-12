@@ -6,14 +6,14 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 23:39:59 by tponutha          #+#    #+#              #
-#    Updated: 2025/04/02 15:04:43 by tponutha         ###   ########.fr        #
+#    Updated: 2025/05/12 17:25:50 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Project Name & Properties
 NAME	:= ./Form
 RM		:= rm -f
-RMDIR	:= rm -r
+RMDIR	:= rm -rf
 MKDIR	:= mkdir -p
 
 # Compiler Properties
@@ -21,7 +21,7 @@ CXX			:= c++
 CXX_WFLAG	:= -Wall -Werror -Wextra
 CXX_MFLAG	:= -MP -MD
 CXX_STDFLAG	:= -std=c++98
-CFLAG		:= $(CXX_WFLAG) $(CXX_STDFLAG)
+CXXFLAG		:= $(CXX_WFLAG) $(CXX_STDFLAG)
 
 # Directories
 BUILD_DIR	:= ./build
@@ -45,7 +45,7 @@ DEPS	:= $(OBJS:.o=.d)
 all:	$(NAME)
 
 $(NAME):	$(OBJS)
-	$(CXX) $(CFLAG) $(OBJS) -o $(NAME)
+	$(CXX) $(CXXFLAG) $(OBJS) -o $(NAME)
 
 $(BUILD_DIR)/%.o:	%.cpp
 	$(MKDIR) $(@D)

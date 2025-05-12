@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 06:07:44 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/02 13:09:17 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:24:43 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static inline void  sb_check_sign_grade_too_low(int grade)
 {
     if (grade > __FORM_LOWEST_GRADE__)
     {
-        throw Form::GradeTooLowException("sign");
+        throw Form::GradeTooLowException("Form's sign grade is too low");
     }
 }
 
@@ -31,7 +31,7 @@ static inline void  sb_check_sign_grade_too_high(int grade)
 {
     if (grade < __FORM_HIGHEST_GRADE__)
     {
-        throw Form::GradeTooHighException("sign");
+        throw Form::GradeTooHighException("Form's sign grade is too high");
     }
 }
 
@@ -39,7 +39,7 @@ static inline void  sb_check_execute_grade_too_low(int grade)
 {
     if (grade > __FORM_LOWEST_GRADE__)
     {
-        throw Form::GradeTooLowException("execute");
+        throw Form::GradeTooLowException("Form's execute grade is too low");
     }
 }
 
@@ -47,13 +47,14 @@ static inline void  sb_check_execute_grade_too_high(int grade)
 {
     if (grade < __FORM_HIGHEST_GRADE__)
     {
-        throw Form::GradeTooHighException("execute");
+        throw Form::GradeTooHighException("Form's execute grade is too high");
     }
 }
 
 // Orthodox
 
 Form::Form() : _name(__FORM_DEFAULT_NAME__), \
+                _isSigned(false), \
                 _signGradeThreshold(__FORM_DEFAULT_SIGN_GRADE__), \
                 _executeGradeThreshold(__FORM_DEFAULT_EXECUTE_GRADE__)
 {
@@ -74,6 +75,7 @@ Form::Form() : _name(__FORM_DEFAULT_NAME__), \
 
 Form::Form(std::string const& name, int const signGrade, int const executeGrade)
                 : _name(name), \
+                _isSigned(false), \
                 _signGradeThreshold(signGrade), \
                 _executeGradeThreshold(executeGrade)
 {
@@ -148,38 +150,26 @@ int Form::getExecuteGradeThreshold() const
 
 // Sign
 
-bool    Form::beSigned(Bureaucrat const& signer)
+void    Form::beSigned(Bureaucrat const& signer)
 {
     if (_isSigned)
     {
-        return false;
+        return;
     }
 
     if (signer.getGrade() > _signGradeThreshold)
     {
-        throw Form::GradeTooLowException("sign");
+        throw Form::GradeTooLowException("Signer's grade is too low");
     }
 
     _isSigned = true;
-    
-    return true;
 }
 
 // Exception
 
-Form::GradeTooHighException::GradeTooHighException(const char* grade_type)
-        : GradeOutOfBoundException(
-            std::string("Form's ") +
-            std::string(grade_type) + 
-            std::string(" grade is too high")
-        ) {}
+Form::GradeTooHighException::GradeTooHighException(const char* msg) : GradeOutOfBoundException(msg) {}
 
-Form::GradeTooLowException::GradeTooLowException(const char* grade_type)
-        : GradeOutOfBoundException(
-            std::string("Form's ") +
-            std::string(grade_type) + 
-            std::string(" grade is too low")
-        ) {}
+Form::GradeTooLowException::GradeTooLowException(const char* msg) : GradeOutOfBoundException(msg) {}
 
 // ostream
 
