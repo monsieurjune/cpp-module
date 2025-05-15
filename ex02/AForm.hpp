@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:41:33 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/10 17:32:20 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:58:02 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 #endif
 
 #ifndef __FORM_DEFAULT_NAME__
-#define __FORM_DEFAULT_NAME__ "unknown form"
+#define __FORM_DEFAULT_NAME__ "XXXX"
 #endif
 
 #ifndef __FORM_DEFAULT_SIGN_GRADE__
@@ -48,10 +48,10 @@ class AForm
 {
     private:
         std::string const   _name;
-        bool                _isSigned = false;
+        bool                _isSigned;
         int const           _signGradeThreshold;
         int const           _executeGradeThreshold;
-    
+
     public:
         AForm();
         AForm(std::string const& name, int const signGrade, int const executeGrade);
@@ -64,21 +64,20 @@ class AForm
         class GradeTooHighException : public BaseBureaucraticException
         {
             public:
-                explicit GradeTooHighException(const char* grade_type);
+                explicit GradeTooHighException(std::string const& msg);
         };
 
         // Grade Too Low
         class GradeTooLowException : public BaseBureaucraticException
         {
             public:
-                explicit GradeTooLowException(const char* grade_type);
+                explicit GradeTooLowException(std::string const& msg);
         };
 
         // Execution failed
         class ExecutionFailedException : public BaseBureaucraticException
         {
             public:
-                explicit ExecutionFailedException(const char* msg);
                 explicit ExecutionFailedException(std::string const& msg);
         };
 
@@ -96,7 +95,7 @@ class AForm
         int                 getExecuteGradeThreshold() const;
 
         // Sign
-        bool    beSigned(Bureaucrat const& signer);
+        void    beSigned(Bureaucrat const& signer);
 
         // Execute
         virtual void    execute(Bureaucrat const& executor) const = 0;

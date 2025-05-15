@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 08:36:37 by tponutha          #+#    #+#             */
-/*   Updated: 2025/04/04 14:53:38 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:58:25 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static inline void  sb_check_sign_grade_too_low(int grade)
 {
     if (grade > __FORM_LOWEST_GRADE__)
     {
-        throw AForm::GradeTooLowException("sign");
+        throw AForm::GradeTooLowException("Form's sign grade is too low");
     }
 }
 
@@ -31,7 +31,7 @@ static inline void  sb_check_sign_grade_too_high(int grade)
 {
     if (grade < __FORM_HIGHEST_GRADE__)
     {
-        throw AForm::GradeTooHighException("sign");
+        throw AForm::GradeTooHighException("Form's sign grade is too high");
     }
 }
 
@@ -39,7 +39,7 @@ static inline void  sb_check_execute_grade_too_low(int grade)
 {
     if (grade > __FORM_LOWEST_GRADE__)
     {
-        throw AForm::GradeTooLowException("execute");
+        throw AForm::GradeTooLowException("Form's execute grade is too low");
     }
 }
 
@@ -47,13 +47,14 @@ static inline void  sb_check_execute_grade_too_high(int grade)
 {
     if (grade < __FORM_HIGHEST_GRADE__)
     {
-        throw AForm::GradeTooHighException("execute");
+        throw AForm::GradeTooHighException("Form's execute grade is too high");
     }
 }
 
 // Orthodox
 
 AForm::AForm() : _name(__FORM_DEFAULT_NAME__), \
+                    _isSigned(false), \
                     _signGradeThreshold(__FORM_DEFAULT_SIGN_GRADE__), \
                     _executeGradeThreshold(__FORM_DEFAULT_EXECUTE_GRADE__)
 {
@@ -69,6 +70,7 @@ AForm::AForm() : _name(__FORM_DEFAULT_NAME__), \
 
 AForm::AForm(std::string const& name, int const signGrade, int const executeGrade)
                 : _name(name), \
+                _isSigned(false), \
                 _signGradeThreshold(signGrade), \
                 _executeGradeThreshold(executeGrade)
 {
@@ -122,40 +124,26 @@ int AForm::getExecuteGradeThreshold() const
 
 // Sign
 
-bool    AForm::beSigned(Bureaucrat const& signer)
+void    AForm::beSigned(Bureaucrat const& signer)
 {
     if (_isSigned)
     {
-        return false;
+        return;
     }
 
     if (signer.getGrade() > _signGradeThreshold)
     {
-        throw AForm::GradeTooLowException("sign");
+        throw AForm::GradeTooLowException("Signer's grade is too low");
     }
 
     _isSigned = true;
-
-    return true;
 }
 
 // Exception
 
-AForm::GradeTooHighException::GradeTooHighException(const char* grade_type)
-        : BaseBureaucraticException(
-            std::string("Form's ") +
-            std::string(grade_type) + 
-            std::string(" grade is too high")
-        ) {}
+AForm::GradeTooHighException::GradeTooHighException(std::string const& msg) : BaseBureaucraticException(msg) {}
 
-AForm::GradeTooLowException::GradeTooLowException(const char* grade_type)
-        : BaseBureaucraticException(
-            std::string("Form's ") +
-            std::string(grade_type) + 
-            std::string(" grade is too low")
-        ) {}
-
-AForm::ExecutionFailedException::ExecutionFailedException(const char* msg) : BaseBureaucraticException(msg) {}
+AForm::GradeTooLowException::GradeTooLowException(std::string const& msg) : BaseBureaucraticException(msg) {}
 
 AForm::ExecutionFailedException::ExecutionFailedException(std::string const& msg) : BaseBureaucraticException(msg) {}
 

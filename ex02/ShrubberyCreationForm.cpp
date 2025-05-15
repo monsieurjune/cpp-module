@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:08:18 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/10 22:42:55 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/11 04:17:51 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,10 @@ void    ShrubberyCreationForm::execute(Bureaucrat const& executor) const
     }
 
     // execute
+    std::string     name = this->getName() + "_shrubbery";
     std::ofstream   shrubbery(
-                        this->getName() + "_shrubbery", 
-                        std::ios::out | std::ios::trunc
+                        name.c_str(), 
+                        std::ios_base::out | std::ios_base::trunc
                     );
 
     if (!shrubbery)
