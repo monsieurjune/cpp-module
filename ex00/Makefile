@@ -6,14 +6,14 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 23:39:59 by tponutha          #+#    #+#              #
-#    Updated: 2025/05/11 04:28:23 by tponutha         ###   ########.fr        #
+#    Updated: 2025/05/12 17:25:57 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Project Name & Properties
 NAME	:= ./Bureaucrat
 RM		:= rm -f
-RMDIR	:= rm -r
+RMDIR	:= rm -rf
 MKDIR	:= mkdir -p
 
 # Compiler Properties
