@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:52:52 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/12 17:41:23 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/15 08:53:27 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ Bureaucrat::Bureaucrat() : _name(__BUREAUCRAT_DEFAULT_NAME__), _grade(__BUREAUCR
     sb_check_grade_too_high(_grade);
 
     std::cout << "Bureaucrat <" << _name << "> (" << _grade 
-                << ") is applied via default constructor program" << std::endl;
+                << ") is applied via default constructor program" 
+                << std::endl;
 }
 
 Bureaucrat::Bureaucrat(std::string const name, int const grade) : _name(name), _grade(grade)
@@ -53,26 +54,30 @@ Bureaucrat::Bureaucrat(std::string const name, int const grade) : _name(name), _
     sb_check_grade_too_high(_grade);
 
     std::cout << "Bureaucrat <" << _name << "> (" << _grade 
-                << ") is applied via constructor program" << std::endl;
+                << ") is applied via constructor program" 
+                << std::endl;
 }
 
 Bureaucrat::Bureaucrat(Bureaucrat const& obj) : _name(obj.getName()), _grade(obj.getGrade())
 {
     std::cout << "Bureaucrat <" << _name << "> (" << _grade 
-                << ") is splited via copy constructor technology" << std::endl;
+                << ") is splited via copy constructor technology" 
+                << std::endl;
 }
 
 Bureaucrat::~Bureaucrat()
 {
     std::cout << "Bureaucrat <" << _name << "> (" << _grade 
-                << ") is retired via deconstructor program" << std::endl;
+                << ") is retired via deconstructor program" 
+                << std::endl;
 }
 
 Bureaucrat& Bureaucrat::operator=(Bureaucrat const& rhs)
 {
     std::cout << "Bureaucrat <" << rhs.getName() << "> (" << rhs.getGrade() << ")" 
                 << " applied grade to Bureaucrat <" << _name << "> (" << _grade << ")" 
-                << " with Grade " << rhs.getGrade() << std::endl;
+                << " with Grade " << rhs.getGrade() 
+                << std::endl;
 
     _grade = rhs.getGrade();
 
@@ -116,7 +121,8 @@ void    Bureaucrat::signForm(AForm& form)
     if (form.getIsSigned())
     {
         std::cout << _name << " couldn't sign " << form.getName() 
-                    << " because it's already signed" << std::endl;
+                    << " because it's already signed" 
+                    << std::endl;
         return;
     }
 

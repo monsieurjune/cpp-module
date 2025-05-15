@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:08:18 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/11 04:17:51 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/15 08:52:44 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,55 +19,62 @@
 
 ShrubberyCreationForm::ShrubberyCreationForm()
                             : AForm(
+                                "ShrubberyCreationForm",
                                 __SHRUBBERY_CREATION_FORM_DEFAULT_NAME__,
                                 __SHRUBBERY_CREATION_FORM_SIGN_GRADE__,
                                 __SHRUBBERY_CREATION_FORM_EXECUTE_GRADE__
                             )
 {
-    std::cout << "Shruberry Creation Form <" << this->getName() << "> (" 
+    std::cout << "Shruberry Creation Form <" << this->getTarget() << "> (" 
                 << this->getSignGradeThreshold() << "," << this->getExecuteGradeThreshold() 
                 << ") (" << (this->getIsSigned() ? "signed" : "unsigned") 
-                << ") is created from default constructor program" << std::endl;
+                << ") is created from default constructor program" 
+                << std::endl;
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(std::string const& target)
                             : AForm(
+                                "ShrubberyCreationForm",
                                 target,
                                 __SHRUBBERY_CREATION_FORM_SIGN_GRADE__,
                                 __SHRUBBERY_CREATION_FORM_EXECUTE_GRADE__
                             )
 {
-    std::cout << "Shruberry Creation Form <" << this->getName() << "> (" 
+    std::cout << "Shruberry Creation Form <" << this->getTarget() << "> (" 
                 << this->getSignGradeThreshold() << "," << this->getExecuteGradeThreshold() 
                 << ") (" << (this->getIsSigned() ? "signed" : "unsigned") 
-                << ") is created from default constructor program" << std::endl;
+                << ") is created from default constructor program" 
+                << std::endl;
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const& obj) : AForm(obj)
 {
-    std::cout << "Shruberry Creation Form <" << this->getName() << "> (" 
+    std::cout << "Shruberry Creation Form <" << this->getTarget() << "> (" 
             << this->getSignGradeThreshold() << "," << this->getExecuteGradeThreshold() 
             << ") (" << (this->getIsSigned() ? "signed" : "unsigned") 
-            << ") is copied" << std::endl;
+            << ") is copied"
+            << std::endl;
 }
 
 ShrubberyCreationForm::~ShrubberyCreationForm()
 {
-    std::cout << "Shruberry Creation Form <" << this->getName() << "> (" 
+    std::cout << "Shruberry Creation Form <" << this->getTarget() << "> (" 
             << this->getSignGradeThreshold() << "," << this->getExecuteGradeThreshold() 
             << ") (" << (this->getIsSigned() ? "signed" : "unsigned") 
-            << ") is discarded" << std::endl;
+            << ") is discarded" 
+            << std::endl;
 }
 
 ShrubberyCreationForm   ShrubberyCreationForm::operator=(ShrubberyCreationForm const& rhs)
 {
     std::cout << "Copy Signature of Shruberry Creation Form <" 
-                << rhs.getName() << "> (" << rhs.getSignGradeThreshold() 
+                << rhs.getTarget() << "> (" << rhs.getSignGradeThreshold() 
                 << "," << rhs.getExecuteGradeThreshold() 
                 << ") (" << (rhs.getIsSigned() ? "signed" : "unsigned") 
-                << ") to Form <" << this->getName() << "> (" 
+                << ") to Form <" << this->getTarget() << "> (" 
                 << this->getSignGradeThreshold() << "," << this->getExecuteGradeThreshold() 
-                << ") (" << (this->getIsSigned() ? "signed" : "unsigned") << ")" << std::endl;
+                << ") (" << (this->getIsSigned() ? "signed" : "unsigned") << ")" 
+                << std::endl;
 
     AForm::operator=(rhs);
 
@@ -89,7 +96,7 @@ void    ShrubberyCreationForm::execute(Bureaucrat const& executor) const
     }
 
     // execute
-    std::string     name = this->getName() + "_shrubbery";
+    std::string     name = this->getTarget() + "_shrubbery";
     std::ofstream   shrubbery(
                         name.c_str(), 
                         std::ios_base::out | std::ios_base::trunc
@@ -98,7 +105,7 @@ void    ShrubberyCreationForm::execute(Bureaucrat const& executor) const
     if (!shrubbery)
     {
         throw AForm::ExecutionFailedException(
-                    "Can\'t open " + this->getName() + "_shrubbery"
+                    "Can\'t open " + this->getTarget() + "_shrubbery"
                 );
     }
 
@@ -122,7 +129,7 @@ void    ShrubberyCreationForm::execute(Bureaucrat const& executor) const
     {
         shrubbery.close();
         throw AForm::ExecutionFailedException(
-                "IO Error occured when writing " + this->getName() + "_shrubbery"
+                "IO Error occured when writing " + this->getTarget() + "_shrubbery"
             );
     }
 

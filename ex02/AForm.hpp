@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:41:33 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/12 17:58:02 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/15 08:43:58 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,14 @@ class AForm
 {
     private:
         std::string const   _name;
+        std::string const   _target;
         bool                _isSigned;
         int const           _signGradeThreshold;
         int const           _executeGradeThreshold;
 
     public:
         AForm();
-        AForm(std::string const& name, int const signGrade, int const executeGrade);
+        AForm(std::string const& name, std::string const& target, int const signGrade, int const executeGrade);
         AForm(AForm const& obj);
         virtual ~AForm();
         AForm&  operator=(AForm const& rhs);
@@ -90,6 +91,7 @@ class AForm
 
         // Getter
         std::string const&  getName() const;
+        std::string const&  getTarget() const;
         bool                getIsSigned() const;
         int                 getSignGradeThreshold() const;
         int                 getExecuteGradeThreshold() const;

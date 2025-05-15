@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:07:54 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/10 22:01:03 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/15 08:49:32 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,55 +18,62 @@
 
 PresidentialPardonForm::PresidentialPardonForm()
                             : AForm(
+                                    "PresidentialPardonForm",
                                     __PRESIDENTIAL_PARDON_FORM_DEFAULT_NAME__,
                                     __PRESIDENTIAL_PARDON_FORM_SIGN_GRADE__,
                                     __PRESIDENTIAL_PARDON_FORM_EXECUTE_GRADE__
                                 )
 {
-    std::cout << "Presidential Pardon Form <" << this->getName() << "> (" 
+    std::cout << "Presidential Pardon Form <" << this->getTarget() << "> (" 
                 << this->getSignGradeThreshold() << "," << this->getExecuteGradeThreshold() 
                 << ") (" << (this->getIsSigned() ? "signed" : "unsigned") 
-                << ") is created from default constructor program" << std::endl;
+                << ") is created from default constructor program" 
+                << std::endl;
 }
 
 PresidentialPardonForm::PresidentialPardonForm(std::string const& target)
                             : AForm(
+                                    "PresidentialPardonForm",
                                     target,
                                     __PRESIDENTIAL_PARDON_FORM_SIGN_GRADE__,
                                     __PRESIDENTIAL_PARDON_FORM_EXECUTE_GRADE__
                                 )
 {
-    std::cout << "Presidential Pardon Form <" << this->getName() << "> (" 
+    std::cout << "Presidential Pardon Form <" << this->getTarget() << "> (" 
                 << this->getSignGradeThreshold() << "," << this->getExecuteGradeThreshold() 
                 << ") (" << (this->getIsSigned() ? "signed" : "unsigned") 
-                << ") is created from default constructor program" << std::endl;
+                << ") is created from default constructor program" 
+                << std::endl;
 }
 
 PresidentialPardonForm::PresidentialPardonForm(PresidentialPardonForm const& obj) : AForm(obj)
 {
-    std::cout << "Presidential Pardon Form <" << this->getName() << "> (" 
+    std::cout << "Presidential Pardon Form <" << this->getTarget() << "> (" 
             << this->getSignGradeThreshold() << "," << this->getExecuteGradeThreshold() 
             << ") (" << (this->getIsSigned() ? "signed" : "unsigned") 
-            << ") is copied" << std::endl;
+            << ") is copied" 
+            << std::endl;
 }
 
 PresidentialPardonForm::~PresidentialPardonForm()
 {
-    std::cout << "Presidential Pardon Form <" << this->getName() << "> (" 
+    std::cout << "Presidential Pardon Form <" << this->getTarget() << "> (" 
             << this->getSignGradeThreshold() << "," << this->getExecuteGradeThreshold() 
             << ") (" << (this->getIsSigned() ? "signed" : "unsigned") 
-            << ") is discarded" << std::endl;
+            << ") is discarded" 
+            << std::endl;
 }
 
 PresidentialPardonForm& PresidentialPardonForm::operator=(PresidentialPardonForm const& rhs)
 {
     std::cout << "Copy Signature of Presidential Pardon Form <" 
-                << rhs.getName() << "> (" << rhs.getSignGradeThreshold() 
+                << rhs.getTarget() << "> (" << rhs.getSignGradeThreshold() 
                 << "," << rhs.getExecuteGradeThreshold() 
                 << ") (" << (rhs.getIsSigned() ? "signed" : "unsigned") 
-                << ") to Form <" << this->getName() << "> (" 
+                << ") to Form <" << this->getTarget() << "> (" 
                 << this->getSignGradeThreshold() << "," << this->getExecuteGradeThreshold() 
-                << ") (" << (this->getIsSigned() ? "signed" : "unsigned") << ")" << std::endl;
+                << ") (" << (this->getIsSigned() ? "signed" : "unsigned") << ")" 
+                << std::endl;
 
     AForm::operator=(rhs);
 
@@ -87,5 +94,5 @@ void    PresidentialPardonForm::execute(Bureaucrat const& executor) const
         throw Bureaucrat::GradeTooLowException();
     }
 
-    std::cout << this->getName() << " has been pardoned by Zaphod Beeblebrox." << std::endl;
+    std::cout << this->getTarget() << " has been pardoned by Zaphod Beeblebrox." << std::endl;
 }
