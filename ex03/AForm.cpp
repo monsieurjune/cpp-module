@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 08:36:37 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/15 08:56:28 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:53:14 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,13 @@ AForm::AForm() : _name(__FORM_DEFAULT_NAME__), \
     // execute
     sb_check_execute_grade_too_low(_executeGradeThreshold);
     sb_check_execute_grade_too_high(_executeGradeThreshold);
+
+    // log
+    std::cout << _name << " <" << _target << "> (" 
+                << _signGradeThreshold << "," << _executeGradeThreshold
+                << ") (" << (_isSigned ? "signed" : "unsigned") 
+                << ") is created from default constructor" 
+                << std::endl;
 }
 
 AForm::AForm(std::string const& name, std::string const& target, int const signGrade, int const executeGrade)
@@ -83,6 +90,13 @@ AForm::AForm(std::string const& name, std::string const& target, int const signG
     // execute
     sb_check_execute_grade_too_low(_executeGradeThreshold);
     sb_check_execute_grade_too_high(_executeGradeThreshold);
+
+    // log
+    std::cout << _name << " <" << _target << "> (" 
+                << _signGradeThreshold << "," << _executeGradeThreshold
+                << ") (" << (_isSigned ? "signed" : "unsigned") 
+                << ") is created from constructor" 
+                << std::endl;
 }
 
 AForm::AForm(AForm const& obj) : _name(obj.getName()), \
@@ -91,13 +105,36 @@ AForm::AForm(AForm const& obj) : _name(obj.getName()), \
                                     _signGradeThreshold(obj.getSignGradeThreshold()), \
                                     _executeGradeThreshold(obj.getExecuteGradeThreshold())
 {
-    // nothing
+    // log
+    std::cout << _name << " <" << _target << "> (" 
+                << _signGradeThreshold << "," << _executeGradeThreshold
+                << ") (" << (_isSigned ? "signed" : "unsigned")
+                << ") is copied" 
+                << std::endl;
 }
 
-AForm::~AForm() {}
+AForm::~AForm()
+{
+    // log
+    std::cout << _name << " <" << _target << "> (" 
+                << _signGradeThreshold << "," << _executeGradeThreshold
+                << ") (" << (_isSigned ? "signed" : "unsigned") 
+                << ") is discard" 
+                << std::endl;
+}
 
 AForm&  AForm::operator=(AForm const& rhs)
 {
+    // log
+    std::cout << rhs.getName() << " <" << rhs.getTarget() << "> ("
+                << rhs.getSignGradeThreshold() << rhs.getExecuteGradeThreshold()
+                << ") (" << (rhs.getIsSigned() ? "signed" : "unsigned") << ")"
+                << " -> " << _name << " <" << _target << "> ("
+                << _signGradeThreshold << "," << _executeGradeThreshold
+                << ") (" << (_isSigned ? "signed" : "unsigned") << ")"
+                << std::endl;
+
+    // assign
     _isSigned = rhs.getIsSigned();
 
     return *this;
@@ -161,10 +198,8 @@ AForm::UnsignedFormException::UnsignedFormException() : BaseBureaucraticExceptio
 
 std::ostream&   operator<<(std::ostream& out, AForm const& rhs)
 {
-    out << rhs.getName()
-        << " <" << rhs.getTarget() << ">"
-        << ", form grade (" 
-        << rhs.getSignGradeThreshold() << "," 
+    out << rhs.getName() << " <" << rhs.getTarget() << ">"
+        << ", form grade (" << rhs.getSignGradeThreshold() << "," 
         << rhs.getExecuteGradeThreshold() << ") (" 
         << (rhs.getIsSigned() ? "signed" : "unsigned") << ")";
 

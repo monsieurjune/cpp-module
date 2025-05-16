@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:53:09 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/15 08:46:36 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:55:11 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,14 @@ int main()
     std::cout << "======= DEEP COPY =========" << std::endl;
     {
         // Since All of Object use same method of copy
+        PresidentialPardonForm  tmp("Temp");
         PresidentialPardonForm  copied_form_0 = form_president_1;
         RobotomyRequestForm     copied_form_1 = RobotomyRequestForm(form_robotomy_1);
 
-        // Assgin
-        copied_form_0 = form_president_1;
+        // Assign
+        b0.signForm(tmp);
+        tmp = form_president_1;
+        std::cout << tmp << std::endl;
 
         // Sign Form
         b0.signForm(copied_form_0);
