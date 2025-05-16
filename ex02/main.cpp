@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:53:09 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/16 19:55:11 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:33:36 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ int main()
 
     std::cout << std::endl;
     std::cout << "Create Form" << std::endl;
+    PresidentialPardonForm  form_president_default;
     PresidentialPardonForm  form_president_1("Unknown Person");
+    RobotomyRequestForm     form_robotomy_default;
     RobotomyRequestForm     form_robotomy_1("Servitor");
+    ShrubberyCreationForm   form_shruberry_default;
     ShrubberyCreationForm   form_shruberry_1("Bonzai");
 
     // Deep Copy

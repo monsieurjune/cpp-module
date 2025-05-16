@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 14:34:07 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/16 18:24:34 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:28:57 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "PresidentialPardonForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "ShrubberyCreationForm.hpp"
+
+#include <iostream>
 
 Intern::Intern() {}
 
@@ -39,18 +41,27 @@ AForm* Intern::makeForm(std::string const& name, std::string const& target)
                 };
 
     // Linear Search
-    for (int i = 0; i < sizeof(pairSet) / sizeof(t_pair); i++)
+    for (size_t i = 0; i < sizeof(pairSet) / sizeof(t_pair); i++)
     {
         if (name == pairSet[i].name)
         {
-            return (this->*pairSet[i].create)(target);
+            try
+            {
+                std::cout << "Intern creates " << name << std::endl;
+                return (pairSet[i].create)(target);
+            }
+            catch (std::bad_alloc const&)
+            {
+                break;
+            }
         }
     }
 
+    std::cout << "Intern can\'t create " << name << std::endl;
     return NULL;
 }
 
-Intern::t_pair  Intern::makePair(std::string const& name, AForm* (Intern::*fn)(std::string const&))
+Intern::t_pair  Intern::makePair(std::string const& name, AForm* (*fn)(std::string const&))
 {
     t_pair  pair;
 
