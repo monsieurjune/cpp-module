@@ -6,15 +6,12 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:53:02 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/10 20:23:17 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/16 21:12:36 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __BUREAUCRAT_HPP__
 #define __BUREAUCRAT_HPP__
-
-// Project Header
-#include "BaseBureaucraticException.hpp"
 
 // CPP Header
 #include <iosfwd>
@@ -54,17 +51,27 @@ class Bureaucrat
 
         // Exception
         // Grade Too High
-        class GradeTooHighException : public BaseBureaucraticException
+        class GradeTooHighException : public std::exception
         {
+            private:
+                std::string _msg;
+
             public:
                 explicit GradeTooHighException();
+                virtual ~GradeTooHighException() throw();
+                virtual const char* what() const throw();
         };
 
         // Grade Too Low
-        class GradeTooLowException : public BaseBureaucraticException
+        class GradeTooLowException : public std::exception
         {
+            private:
+                std::string _msg;
+
             public:
                 explicit GradeTooLowException();
+                virtual ~GradeTooLowException() throw();
+                virtual const char* what() const throw();
         };
 
         // Getter

@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:53:09 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/16 20:33:36 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/16 21:13:22 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 int main()
 {
-    std::cout << "Create Bureuacrats" << std::endl;
+    std::cout << "====== Create Bureuacrats ======" << std::endl;
     Bureaucrat  b0("Super Entities", __FORM_HIGHEST_GRADE__);
     Bureaucrat  b1("Trainee", __FORM_LOWEST_GRADE__);
     Bureaucrat  b2("Vice President", __PRESIDENTIAL_PARDON_FORM_SIGN_GRADE__);
@@ -30,7 +30,7 @@ int main()
     Bureaucrat  b4("Gardener", __SHRUBBERY_CREATION_FORM_SIGN_GRADE__);
 
     std::cout << std::endl;
-    std::cout << "Create Form" << std::endl;
+    std::cout << "====== Create Form ======" << std::endl;
     PresidentialPardonForm  form_president_default;
     PresidentialPardonForm  form_president_1("Unknown Person");
     RobotomyRequestForm     form_robotomy_default;
