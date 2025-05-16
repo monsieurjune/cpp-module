@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:52:52 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/16 20:06:39 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:59:55 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,10 +132,21 @@ void    Bureaucrat::signForm(Form& form)
 }
 
 // Exception
+// Too High
 
-Bureaucrat::GradeTooHighException::GradeTooHighException() : GradeOutOfBoundException("Bureaucrat's grade is too high") {}
+Bureaucrat::GradeTooHighException::GradeTooHighException() : _msg("Bureaucrat's grade is too high") {}
 
-Bureaucrat::GradeTooLowException::GradeTooLowException() : GradeOutOfBoundException("Bureaucrat's grade is too low") {}
+Bureaucrat::GradeTooHighException::~GradeTooHighException() throw() {}
+
+const char* Bureaucrat::GradeTooHighException::what() const throw() { return _msg.c_str(); }
+
+// Too Low
+
+Bureaucrat::GradeTooLowException::GradeTooLowException() : _msg("Bureaucrat's grade is too low") {}
+
+Bureaucrat::GradeTooLowException::~GradeTooLowException() throw() {}
+
+const char* Bureaucrat::GradeTooLowException::what() const throw() { return _msg.c_str(); }
 
 // ostream
 

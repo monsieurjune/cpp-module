@@ -6,19 +6,17 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:53:02 by tponutha          #+#    #+#             */
-/*   Updated: 2025/04/02 17:19:14 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:56:36 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __BUREAUCRAT_HPP__
 #define __BUREAUCRAT_HPP__
 
-// Project Header
-#include "GradeOutOfBoundException.hpp"
-
 // CPP Header
 #include <iosfwd>
 #include <string>
+#include <exception>
 
 #ifndef __BUREAUCRAT_HIGHEST_GRADE__
 #define __BUREAUCRAT_HIGHEST_GRADE__ 1
@@ -54,17 +52,27 @@ class Bureaucrat
 
         // Exception
         // Grade Too High
-        class GradeTooHighException : public GradeOutOfBoundException
+        class GradeTooHighException : public std::exception
         {
+            private:
+                std::string _msg;
+
             public:
                 explicit GradeTooHighException();
+                virtual ~GradeTooHighException() throw();
+                virtual const char* what() const throw();
         };
 
         // Grade Too Low
-        class GradeTooLowException : public GradeOutOfBoundException
+        class GradeTooLowException : public std::exception
         {
+            private:
+                std::string _msg;
+
             public:
                 explicit GradeTooLowException();
+                virtual ~GradeTooLowException() throw();
+                virtual const char* what() const throw();
         };
 
         // Getter

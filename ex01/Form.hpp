@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 06:07:17 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/12 17:20:51 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:59:32 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #define __FORM_HPP__
 
 // Project Header
-#include "GradeOutOfBoundException.hpp"
 #include "Bureaucrat.hpp"
 
 // CPP Header
 #include <iosfwd>
 #include <string>
+#include <exception>
 
 #ifndef __FORM_HIGHEST_GRADE__
 #define __FORM_HIGHEST_GRADE__ __BUREAUCRAT_HIGHEST_GRADE__
@@ -61,17 +61,27 @@ class Form
 
         // Exception
         // Grade Too High
-        class GradeTooHighException : public GradeOutOfBoundException
+        class GradeTooHighException : public std::exception
         {
+            private:
+                std::string _msg;
+
             public:
-                explicit GradeTooHighException(const char* msg);
+                explicit GradeTooHighException(std::string const& msg);
+                virtual ~GradeTooHighException() throw();
+                virtual const char* what() const throw();
         };
 
         // Grade Too Low
-        class GradeTooLowException : public GradeOutOfBoundException
+        class GradeTooLowException : public std::exception
         {
+            private:
+                std::string _msg;
+
             public:
-                explicit GradeTooLowException(const char* msg);
+                explicit GradeTooLowException(std::string const& msg);
+                virtual ~GradeTooLowException() throw();
+                virtual const char* what() const throw();
         };
 
         // Getter

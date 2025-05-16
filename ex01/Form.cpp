@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 06:07:44 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/12 17:24:43 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/16 21:00:53 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,10 +166,21 @@ void    Form::beSigned(Bureaucrat const& signer)
 }
 
 // Exception
+// Too High
 
-Form::GradeTooHighException::GradeTooHighException(const char* msg) : GradeOutOfBoundException(msg) {}
+Form::GradeTooHighException::GradeTooHighException(std::string const& msg) : _msg(msg) {}
 
-Form::GradeTooLowException::GradeTooLowException(const char* msg) : GradeOutOfBoundException(msg) {}
+Form::GradeTooHighException::~GradeTooHighException() throw() {}
+
+const char* Form::GradeTooHighException::what() const throw() { return _msg.c_str(); }
+
+// Too Low
+
+Form::GradeTooLowException::GradeTooLowException(std::string const& msg) : _msg(msg) {}
+
+Form::GradeTooLowException::~GradeTooLowException() throw() {}
+
+const char* Form::GradeTooLowException::what() const throw() { return _msg.c_str(); }
 
 // ostream
 
