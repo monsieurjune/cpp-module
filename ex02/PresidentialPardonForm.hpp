@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 11:41:26 by tponutha          #+#    #+#             */
-/*   Updated: 2025/04/03 16:18:40 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:57:53 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 #define __PRESIDENTIAL_PARDON_FORM_HPP__
 #include "AForm.hpp"
 
-#ifndef __PRESIDENTIAL_PARDON_FORM_DEFAULT_NAME__
-#define __PRESIDENTIAL_PARDON_FORM_DEFAULT_NAME__ "Secret Order"
+#ifndef __PRESIDENTIAL_PARDON_FORM_NAME__
+#define __PRESIDENTIAL_PARDON_FORM_NAME__ "presidential pardon"
+#endif
+
+#ifndef __PRESIDENTIAL_PARDON_FORM_DEFAULT_TARGET__
+#define __PRESIDENTIAL_PARDON_FORM_DEFAULT_TARGET__ "Name Surname"
 #endif
 
 #ifndef __PRESIDENTIAL_PARDON_FORM_SIGN_GRADE__
