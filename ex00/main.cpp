@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:53:09 by tponutha          #+#    #+#             */
-/*   Updated: 2025/04/02 12:11:41 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:53:47 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int main()
     Bureaucrat  bDefault;
 
     // Deep Copy
+    std::cout << std::endl;
     std::cout << "======= DEEP COPY =========" << std::endl;
     {
         Bureaucrat  bd1(b0);
