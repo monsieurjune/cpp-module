@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 08:36:37 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/16 19:53:14 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/16 21:12:09 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,14 +185,37 @@ void    AForm::beSigned(Bureaucrat const& signer)
 }
 
 // Exception
+// Too High
 
-AForm::GradeTooHighException::GradeTooHighException(std::string const& msg) : BaseBureaucraticException(msg) {}
+AForm::GradeTooHighException::GradeTooHighException(std::string const& msg) : _msg(msg) {}
 
-AForm::GradeTooLowException::GradeTooLowException(std::string const& msg) : BaseBureaucraticException(msg) {}
+AForm::GradeTooHighException::~GradeTooHighException() throw() {}
 
-AForm::ExecutionFailedException::ExecutionFailedException(std::string const& msg) : BaseBureaucraticException(msg) {}
+const char* AForm::GradeTooHighException::what() const throw() { return _msg.c_str(); }
 
-AForm::UnsignedFormException::UnsignedFormException() : BaseBureaucraticException("This form is unsigned") {}
+// Too Low
+
+AForm::GradeTooLowException::GradeTooLowException(std::string const& msg) : _msg(msg) {}
+
+AForm::GradeTooLowException::~GradeTooLowException() throw() {}
+
+const char* AForm::GradeTooLowException::what() const throw() { return _msg.c_str(); }
+
+// Execution Failed
+
+AForm::ExecutionFailedException::ExecutionFailedException(std::string const& msg) : _msg(msg) {}
+
+AForm::ExecutionFailedException::~ExecutionFailedException() throw() {}
+
+const char* AForm::ExecutionFailedException::what() const throw() { return _msg.c_str(); }
+
+// Unsigned
+
+AForm::UnsignedFormException::UnsignedFormException() : _msg("This form is unsigned") {}
+
+AForm::UnsignedFormException::~UnsignedFormException() throw() {}
+
+const char* AForm::UnsignedFormException::what() const throw() { return _msg.c_str(); }
 
 // ostream
 

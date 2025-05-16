@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   main1.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:53:09 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/16 20:30:29 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/16 21:13:54 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 int main()
 {
-    std::cout << "Create Intern & Form" << std::endl;
+    std::cout << "===== Create Intern & Form =====" << std::endl;
     Intern  intern0;
     AForm*  form_president_1 = intern0.makeForm(__PRESIDENTIAL_PARDON_FORM_NAME__, "brr brr patapim");
     AForm*  form_robotomy_1 = intern0.makeForm(__ROBOTOMY_REQUEST_FORM_NAME__, "Sacred Servitor");
@@ -43,7 +43,7 @@ int main()
     }
 
     std::cout << std::endl;
-    std::cout << "Create Bureuacrats" << std::endl;
+    std::cout << "===== Create Bureuacrats =====" << std::endl;
     Bureaucrat  b0("Super Entities", __FORM_HIGHEST_GRADE__);
     Bureaucrat  b1("Trainee", __FORM_LOWEST_GRADE__);
     Bureaucrat  b2("Vice President", __PRESIDENTIAL_PARDON_FORM_SIGN_GRADE__);

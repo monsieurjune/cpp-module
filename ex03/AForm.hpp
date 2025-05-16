@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:41:33 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/15 08:43:58 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/16 21:08:07 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #define __AFORM_HPP__
 
 // Project Header
-#include "BaseBureaucraticException.hpp"
 #include "Bureaucrat.hpp"
 
 // CPP Header
@@ -62,31 +61,51 @@ class AForm
 
         // Exception
         // Grade Too High
-        class GradeTooHighException : public BaseBureaucraticException
+        class GradeTooHighException : public std::exception
         {
+            private:
+                std::string _msg;
+
             public:
                 explicit GradeTooHighException(std::string const& msg);
+                virtual ~GradeTooHighException() throw();
+                virtual const char* what() const throw();
         };
 
         // Grade Too Low
-        class GradeTooLowException : public BaseBureaucraticException
+        class GradeTooLowException : public std::exception
         {
+            private:
+                std::string _msg;
+
             public:
                 explicit GradeTooLowException(std::string const& msg);
+                virtual ~GradeTooLowException() throw();
+                virtual const char* what() const throw();
         };
 
         // Execution failed
-        class ExecutionFailedException : public BaseBureaucraticException
+        class ExecutionFailedException : public std::exception
         {
+            private:
+                std::string _msg;
+
             public:
                 explicit ExecutionFailedException(std::string const& msg);
+                virtual ~ExecutionFailedException() throw();
+                virtual const char* what() const throw();
         };
 
         // Unsign Error
-        class UnsignedFormException : public BaseBureaucraticException
+        class UnsignedFormException : public std::exception
         {
+            private:
+                std::string _msg;
+
             public:
                 explicit UnsignedFormException();
+                virtual ~UnsignedFormException() throw();
+                virtual const char* what() const throw();
         };
 
         // Getter
