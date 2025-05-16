@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:52:52 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/16 21:06:35 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/16 21:21:07 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ Bureaucrat::Bureaucrat() : _name(__BUREAUCRAT_DEFAULT_NAME__), _grade(__BUREAUCR
                 << std::endl;
 }
 
-Bureaucrat::Bureaucrat(std::string const name, int const grade) : _name(name), _grade(grade)
+Bureaucrat::Bureaucrat(std::string const& name, int const grade) : _name(name), _grade(grade)
 {
     sb_check_grade_too_low(_grade);
     sb_check_grade_too_high(_grade);

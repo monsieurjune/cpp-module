@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:53:02 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/16 20:56:03 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/16 21:19:58 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ class Bureaucrat
     
     public:
         Bureaucrat();
-        Bureaucrat(std::string const name, int const grade);
+        Bureaucrat(std::string const& name, int const grade);
         Bureaucrat(Bureaucrat const& obj);
         ~Bureaucrat();
         Bureaucrat& operator=(Bureaucrat const& rhs);
