@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:52:52 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/11 04:42:16 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:06:39 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void    Bureaucrat::signForm(Form& form)
     try
     {
         form.beSigned(*this);
+        std::cout << _name << " signed " << form.getName() << std::endl;
     }
     catch (Form::GradeTooLowException const& e)
     {
