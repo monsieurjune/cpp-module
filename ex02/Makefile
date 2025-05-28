@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 23:39:59 by tponutha          #+#    #+#              #
-#    Updated: 2025/05/20 13:12:26 by tponutha         ###   ########.fr        #
+#    Updated: 2025/05/28 15:46:59 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ MKDIR	:= mkdir -p
 
 # Compiler Properties
 CXX			:= c++
-CXX_WFLAG	:= -Wall -Werror -Wextra -pedantic
+CXX_WFLAG	:= -Wall -Werror -Wextra
 CXX_MFLAG	:= -MP -MD
 CXX_STDFLAG	:= -std=c++98
 CXXFLAG		:= $(CXX_WFLAG) $(CXX_STDFLAG)
