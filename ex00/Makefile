@@ -6,19 +6,19 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 23:39:59 by tponutha          #+#    #+#              #
-#    Updated: 2025/05/16 20:56:32 by tponutha         ###   ########.fr        #
+#    Updated: 2025/05/29 14:42:24 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Project Name & Properties
-NAME	:= ./Bureaucrat
+NAME	:= ./easyfind
 RM		:= rm -f
 RMDIR	:= rm -rf
 MKDIR	:= mkdir -p
 
 # Compiler Properties
 CXX			:= c++
-CXX_WFLAG	:= -Wall -Werror -Wextra
+CXX_WFLAG	:= -Wall -Werror -Wextra -pedantic
 CXX_MFLAG	:= -MP -MD
 CXX_STDFLAG	:= -std=c++98
 CXXFLAG		:= $(CXX_WFLAG) $(CXX_STDFLAG)
@@ -29,8 +29,7 @@ SRC_DIR		:= ./
 INCLUDE_DIR	:= ./
 
 # Source
-SRC		:= main.cpp \
-			Bureaucrat.cpp
+SRC		:= main.cpp
 SRCS	:= $(addprefix $(SRC_DIR), $(SRC))
 
 # Objects & Dependencies File
