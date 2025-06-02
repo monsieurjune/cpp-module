@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 03:08:42 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/03 02:45:55 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/03 02:59:37 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,14 +147,14 @@ static inline void  sb_queue()
     obj.push_back(4);
 
         // test
-    std::cout << "===== SET =====" << std::endl;
+    std::cout << "===== DEQUE =====" << std::endl;
     sb_find(obj, 0);
     sb_find(obj, 1);
     sb_find(obj, 2);
     sb_find(obj, 3);
     sb_find(obj, 4);
     sb_find(obj, 5);
-    std::cout << "===============" << std::endl << std::endl;
+    std::cout << "=================" << std::endl << std::endl;
 }
 
 int main()
