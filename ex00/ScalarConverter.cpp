@@ -6,13 +6,14 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:45:50 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/02 20:48:13 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/03 01:54:15 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
-#include <sstream>
+#include "Convert.hpp"
 #include <iostream>
+#include <sstream>
 #include <cmath>
 
 typedef enum e_type
@@ -21,103 +22,37 @@ typedef enum e_type
     CHAR,
     INT,
     FLOAT,
-    DOUBLE
+    DOUBLE,
+    SPECIAL_FLOAT,
+    SPECIAL_DOUBLE
 }   t_type;
 
-static inline bool  sb_is_int(std::string const& str)
+static inline void  sb_assign(char base, int *i, float *f, double *d)
 {
-    std::string::const_iterator begin = str.begin();
-
-    if (str[0] == '-' || str[0] == '+')
-    {
-        begin++;
-    }
-
-    for (std::string::const_iterator it = begin; it != str.end(); it++)
-    {
-        if (*it < '0' || *it > '9')
-        {
-            return false;
-        }
-    }
-
-    return true;
+    *i = static_cast<int>(base);
+    *f = static_cast<float>(base);
+    *d = static_cast<double>(base);
 }
 
-static inline bool  sb_is_special_floating(std::string const& str)
+static inline void  sb_assign(int base, char *c, float *f, double *d)
 {
-    if (str == "-inf" || str == "-inff")
-    {
-        return true;
-    }
-    else if (str == "+inf" || str == "+inff")
-    {
-        return true;
-    }
-    else if (str == "nan" || str == "nanf")
-    {
-        return true;
-    }
-    return false;
+    *c = static_cast<char>(base);
+    *f = static_cast<float>(base);
+    *d = static_cast<double>(base);
 }
 
-static inline bool  sb_is_double(std::string const& str)
+static inline void  sb_assign(float base, char *c, int *i, double *d)
 {
-    size_t                      decimal = 0;
-    std::string::const_iterator begin = str.begin();
-    std::string::const_iterator end = str.end();
-
-    if (sb_is_special_floating(str))
-    {
-        return true;
-    }
-
-    if (str[0] == '.')
-    {
-        return false;
-    }
-
-    if (str[0] == '-' || str[0] == '+')
-    {
-        begin++;
-    }
-
-    if (str[str.length() - 1] == 'f')
-    {
-        end--;
-    }
-
-    for (std::string::const_iterator it = begin; it != end; it++)
-    {
-        if (*it >= '0' && *it <= '9')
-        {
-            continue;
-        }
-        else if (*it == '.')
-        {
-            decimal++;
-            if (decimal > 1)
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    return true;
+    *c = static_cast<char>(base);
+    *i = static_cast<int>(base);
+    *d = static_cast<double>(base);
 }
 
-static inline bool  sb_is_float(std::string const& str)
+static inline void  sb_assign(double base, char *c, int *i, float *f)
 {
-    if (str[str.length() - 1] != 'f')
-    {
-        return false;
-    }
-
-    return sb_is_double(str);
+    *c = static_cast<char>(base);
+    *i = static_cast<int>(base);
+    *f = static_cast<float>(base);
 }
 
 static inline size_t   sb_find_first_non_ws_char(std::string const& str)
@@ -165,136 +100,100 @@ static inline std::string   sb_trimming_string(std::string const& str)
     return str.substr(first, last - first + 1);
 }
 
-static inline int   sb_to_int(std::string const& str)
+static inline void  sb_print_char(char c, t_type type)
 {
-    int                 ret;
     std::stringstream   ss;
 
-    ss << str;
-    ss >> ret;
-
-    return ret;
-}
-
-static inline float sb_to_special_float(std::string const& str)
-{
-    if (str == "-inf" || str == "-inff")
+    ss << "char: ";
+    if (type == IMPOSSIBLE || type == SPECIAL_FLOAT || type == SPECIAL_DOUBLE)
     {
-        return -INFINITY;
-    }
-    else if (str == "+inf" || str == "+inff")
-    {
-        return INFINITY;
-    }
-    else if (str == "nan" || str == "nanf")
-    {
-        return NAN;
-    }
-    return -NAN;
-}
-
-static inline float sb_to_float(std::string const& str)
-{
-    if (sb_is_special_floating(str))
-    {
-        return sb_to_special_float(str);
-    }
-
-    // convert normal case
-    float               ret;
-    std::stringstream   ss;
-
-    ss << str;
-    ss >> ret;
-
-    return ret;
-}
-
-static inline double sb_to_double(std::string const& str)
-{
-    if (sb_is_special_floating(str))
-    {
-        return static_cast<double>(sb_to_special_float(str));
-    }
-
-    // convert normal case
-    double              ret;
-    std::stringstream   ss;
-
-    ss << str;
-    ss >> ret;
-
-    return ret;
-}
-
-static inline void  sb_print_char(char c, t_type type, std::string const& str)
-{
-    std::cout << "char: ";
-
-    if (type == IMPOSSIBLE || sb_is_special_floating(str))
-    {
-        std::cout << "impossible";
+        ss << "impossible";
     }
     else if (c < '\x20' || c > '\x7e')
     {
-        std::cout << "Non displayable";
+        ss << "Non displayable";
     }
     else
     {
-        std::cout << c;
+        ss << '\'';
+        ss << c;
+        ss << '\'';
     }
-    std::cout << std::endl;
+
+    // print
+    std::cout << ss.str() << std::endl;
 }
 
-static inline void  sb_print_int(int i, t_type type, std::string const& str)
+static inline void  sb_print_int(int i, t_type type)
 {
-    std::cout << "int: ";
+    std::stringstream   ss;
 
-    if (type == IMPOSSIBLE || sb_is_special_floating(str))
+    ss << "int: ";
+    if (type == IMPOSSIBLE || type == SPECIAL_FLOAT || type == SPECIAL_DOUBLE)
     {
-        std::cout << "impossible";
+        ss << "impossible";
     }
     else
     {
-        std::cout << i;
+        ss << i;
     }
-    std::cout << std::endl;
+
+    // print
+    std::cout << ss.str() << std::endl;
 }
 
 static inline void  sb_print_float(float f, t_type type)
 {
-    std::cout << "float: ";
+    std::stringstream   ss;
 
+    ss << "float: ";
     if (type == IMPOSSIBLE)
     {
-        std::cout << "impossible" << std::endl;
-        return;
+        ss << "impossible";
+    }
+    else if (type == SPECIAL_FLOAT || type == SPECIAL_DOUBLE)
+    {
+        ss << f;
+        ss << "f";
+    }
+    else
+    {
+        ss << f;
+        if (std::floor(f) == f)
+        {
+            ss << ".0";
+        }
+        ss << "f";
     }
 
-    std::cout << f;
-    if (std::floor(f) == f)
-    {
-        std::cout << ".0";
-    }
-    std::cout << "f" << std::endl;
+    // print
+    std::cout << ss.str() << std::endl;
 }
 
 static inline void  sb_print_double(double d, t_type type)
 {
-    std::cout << "double: ";
+    std::stringstream   ss;
 
+    ss << "double: ";
     if (type == IMPOSSIBLE)
     {
-        std::cout << "impossible" << std::endl;
-        return;
+        ss << "impossible";
+    }
+    else if (type == SPECIAL_FLOAT || type == SPECIAL_DOUBLE)
+    {
+        ss << d;
+    }
+    else
+    {
+        ss << d;
+        if (std::floor(d) == d)
+        {
+            ss << ".0";
+        }
     }
 
-    std::cout << d;
-    if (std::floor(d) == d)
-    {
-        std::cout << ".0";
-    }
-    std::cout << std::endl;
+    // print
+    std::cout << ss.str() << std::endl;
 }
 
 void    ScalarConverter::convert(std::string const& str)
@@ -311,59 +210,44 @@ void    ScalarConverter::convert(std::string const& str)
     // check type
     if (trimmed_str.length() == 1 && (trimmed_str[0] < '0' || trimmed_str[0] > '9'))
     {
-        c = trimmed_str[0];
         type = CHAR;
+        c = trimmed_str[0];
+        sb_assign(c, &i, &f, &d);
     }
-    else if (sb_is_int(trimmed_str))
+    else if (is_int(trimmed_str))
     {
-        i = sb_to_int(trimmed_str);
         type = INT;
+        i = to_int(trimmed_str);
+        sb_assign(i, &c, &f, &d);
     }
-    else if (sb_is_float(trimmed_str))
+    else if (is_float(trimmed_str))
     {
-        f = sb_to_float(trimmed_str);
         type = FLOAT;
+        f = to_float(trimmed_str);
+        sb_assign(f, &c, &i, &d);
     }
-    else if (sb_is_double(trimmed_str))
+    else if (is_double(trimmed_str))
     {
-        d = sb_to_double(trimmed_str);
         type = DOUBLE;
+        d = to_double(trimmed_str);
+        sb_assign(d, &c, &i, &f);
     }
-
-    // check state
-    switch (type)
+    else if (is_special_float(trimmed_str))
     {
-        case CHAR:
-            i = static_cast<int>(c);
-            f = static_cast<float>(c);
-            d = static_cast<double>(c);
-            break;
-
-        case INT:
-            c = static_cast<char>(i);
-            f = static_cast<float>(i);
-            d = static_cast<double>(i);
-            break;
-
-        case FLOAT:
-            c = static_cast<char>(f);
-            i = static_cast<int>(f);
-            d = static_cast<double>(f);
-            break;
-
-        case DOUBLE:
-            c = static_cast<char>(d);
-            i = static_cast<int>(d);
-            f = static_cast<float>(d);
-            break;
-
-        default:
-            break;
+        type = SPECIAL_FLOAT;
+        f = to_special_float(trimmed_str);
+        sb_assign(f, &c, &i, &d);
+    }
+    else if (is_special_double(trimmed_str))
+    {
+        type = SPECIAL_DOUBLE;
+        d = to_special_double(trimmed_str);
+        sb_assign(d, &c, &i, &f);
     }
 
     // print
-    sb_print_char(c, type, trimmed_str);
-    sb_print_int(i, type, trimmed_str);
+    sb_print_char(c, type);
+    sb_print_int(i, type);
     sb_print_float(f, type);
     sb_print_double(d, type);
 }

@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 23:39:59 by tponutha          #+#    #+#              #
-#    Updated: 2025/05/28 15:45:14 by tponutha         ###   ########.fr        #
+#    Updated: 2025/06/03 01:38:20 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ INCLUDE_DIR	:= ./
 
 # Source
 SRC		:= main.cpp \
-			ScalarConverter.cpp
+			ScalarConverter.cpp \
+			Convert.cpp
 SRCS	:= $(addprefix $(SRC_DIR), $(SRC))
 
 # Objects & Dependencies File
