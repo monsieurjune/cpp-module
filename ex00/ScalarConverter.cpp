@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:45:50 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/20 11:57:42 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:48:13 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static inline bool  sb_is_double(std::string const& str)
 {
     size_t                      decimal = 0;
     std::string::const_iterator begin = str.begin();
+    std::string::const_iterator end = str.end();
 
     if (sb_is_special_floating(str))
     {
@@ -81,7 +82,12 @@ static inline bool  sb_is_double(std::string const& str)
         begin++;
     }
 
-    for (std::string::const_iterator it = begin; it != str.end(); it++)
+    if (str[str.length() - 1] == 'f')
+    {
+        end--;
+    }
+
+    for (std::string::const_iterator it = begin; it != end; it++)
     {
         if (*it >= '0' && *it <= '9')
         {
