@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 23:39:59 by tponutha          #+#    #+#              #
-#    Updated: 2025/05/29 14:59:50 by tponutha         ###   ########.fr        #
+#    Updated: 2025/06/03 04:46:20 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ SRC_DIR		:= ./
 INCLUDE_DIR	:= ./
 
 # Source
-SRC		:= main.cpp
+SRC		:= main.cpp \
+			Span.cpp
 SRCS	:= $(addprefix $(SRC_DIR), $(SRC))
 
 # Objects & Dependencies File

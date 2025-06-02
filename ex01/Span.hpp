@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 15:01:14 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/03 03:22:27 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/03 04:44:11 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,11 @@ class Span
         // no span
         class NoSpanCanBeFoundException : public std::exception
         {
+            private:
+                std::string _msg;
+
             public:
-                explicit NoSpanCanBeFoundException();
+                explicit NoSpanCanBeFoundException(std::string const& msg);
                 virtual ~NoSpanCanBeFoundException() throw();
                 virtual const char* what() const throw();
         };
@@ -42,15 +45,22 @@ class Span
         // full
         class CannotInsertToSpanException : public std::exception
         {
+            private:
+                std::string _msg;
+
             public:
-                explicit CannotInsertToSpanException();
+                explicit CannotInsertToSpanException(std::string const& msg);
                 virtual ~CannotInsertToSpanException() throw();
                 virtual const char* what() const throw();
         };
 
+        // getter
+        std::multiset<int> const&   getStorage() const;
+        unsigned int                getN() const;
+
         // span
-        int shortestSpan() const;
-        int longestSpan() const;
+        unsigned int shortestSpan() const;
+        unsigned int longestSpan() const;
 
         // add
         void    addNumber(int val);
@@ -68,7 +78,7 @@ class Span
             // check
             if (total_size > _n)
             {
-                throw CannotInsertToSpanException();
+                throw Span::CannotInsertToSpanException("Storage isn\'t enough to append whole elements from this container");
             }
 
             // insert
@@ -88,7 +98,7 @@ class Span
             // check
             if (total_size > _n)
             {
-                throw CannotInsertToSpanException();
+                throw Span::CannotInsertToSpanException("Storage isn\'t enough to append whole elements from these iterators");
             }
 
             // insert
