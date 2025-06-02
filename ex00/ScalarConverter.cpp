@@ -6,12 +6,13 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:45:50 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/03 01:54:15 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/03 02:18:45 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
 #include "Convert.hpp"
+#include "Format.hpp"
 #include <iostream>
 #include <sstream>
 #include <cmath>
@@ -55,50 +56,6 @@ static inline void  sb_assign(double base, char *c, int *i, float *f)
     *f = static_cast<float>(base);
 }
 
-static inline size_t   sb_find_first_non_ws_char(std::string const& str)
-{
-    for (size_t i = 0; i < str.length(); i++)
-    {
-        if (str[i] != '\r' && str[i] != '\n' && str[i] != ' ' && str[i] != '\v' && str[i] != '\t' && str[i] != '\f')
-        {
-            return i;
-        }
-    }
-
-    return std::string::npos;
-}
-
-static inline size_t   sb_find_last_non_ws_char(std::string const& str)
-{
-    for (size_t i = str.length() - 1; i > 0; i--)
-    {
-        if (str[i] != '\r' && str[i] != '\n' && str[i] != ' ' && str[i] != '\v' && str[i] != '\t' && str[i] != '\f')
-        {
-            return i;
-        }
-    }
-
-    // check i = 0
-    if (str[0] != '\r' && str[0] != '\n' && str[0] != ' ' && str[0] != '\v' && str[0] != '\t' && str[0] != '\f')
-    {
-        return 0;
-    }
-
-    return std::string::npos;
-}
-
-static inline std::string   sb_trimming_string(std::string const& str)
-{
-    size_t  first = sb_find_first_non_ws_char(str);
-    size_t  last = sb_find_last_non_ws_char(str);
-
-    if (first == std::string::npos || last == std::string::npos)
-    {
-        return str;
-    }
-
-    return str.substr(first, last - first + 1);
-}
 
 static inline void  sb_print_char(char c, t_type type)
 {
@@ -205,7 +162,7 @@ void    ScalarConverter::convert(std::string const& str)
     double  d;
 
     // trim space out
-    std::string trimmed_str = sb_trimming_string(str);
+    std::string trimmed_str = trim_whitespace(str);
 
     // check type
     if (trimmed_str.length() == 1 && (trimmed_str[0] < '0' || trimmed_str[0] > '9'))
