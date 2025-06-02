@@ -6,20 +6,20 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 15:01:14 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/29 17:27:33 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/03 03:22:27 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __SPAN_HPP__
 #define __SPAN_HPP__
-#include <vector>
+#include <set>
 #include <string>
 #include <exception>
 
 class Span
 {
     private:
-        std::vector<int>    _vec;
+        std::multiset<int>  _storage;
         unsigned int        _n;
 
     public:
@@ -40,11 +40,11 @@ class Span
         };
 
         // full
-        class NoSpaceLeftInSpanException : public std::exception
+        class CannotInsertToSpanException : public std::exception
         {
             public:
-                explicit NoSpaceLeftInSpanException();
-                virtual ~NoSpaceLeftInSpanException() throw();
+                explicit CannotInsertToSpanException();
+                virtual ~CannotInsertToSpanException() throw();
                 virtual const char* what() const throw();
         };
 
@@ -54,6 +54,46 @@ class Span
 
         // add
         void    addNumber(int val);
+
+        template <typename C>
+        void    addNumber(C const& container)
+        {
+            std::multiset<int>  tmp_set;
+            unsigned int        total_size = _storage.size();
+
+            // insert to tmp
+            tmp_set.insert(container.begin(), container.end());
+            total_size += tmp_set.size();
+
+            // check
+            if (total_size > _n)
+            {
+                throw CannotInsertToSpanException();
+            }
+
+            // insert
+            _storage.insert(tmp_set.begin(), tmp_set.end());
+        }
+
+        template <typename C>
+        void    addNumber(typename C::const_iterator begin, typename C::const_iterator end)
+        {
+            std::multiset<int>  tmp_set;
+            unsigned int        total_size = _storage.size();
+
+            // insert to tmp
+            tmp_set.insert(begin, end);
+            total_size += tmp_set.size();
+
+            // check
+            if (total_size > _n)
+            {
+                throw CannotInsertToSpanException();
+            }
+
+            // insert
+            _storage.insert(tmp_set.begin(), tmp_set.end());
+        }
 };
 
 #endif
