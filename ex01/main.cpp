@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:02:58 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/28 17:46:07 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/03 20:30:23 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,22 @@ static void change(char* c)
     if (c[0] != '\0')
     {
         c[0] = '!';
-        std::cout << c << std::endl;
     }
 }
 
 int main(int argc, char* argv[])
 {
-    std::cout << "==== PRINT ====" << std::endl;
+    // print before
+    std::cout << "==== PRINT1 ====" << std::endl;
     ::iter(argv, argc, &print);
     std::cout << std::endl;
 
-    std::cout << "==== CHANGE ====" << std::endl;
+    // change
     ::iter(argv, argc, &change);
+
+    // print after
+    std::cout << "==== PRINT2 ====" << std::endl;
+    ::iter(argv, argc, &print);
 
     return 0;
 }
