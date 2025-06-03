@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 02:03:53 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/03 21:35:00 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/03 22:07:35 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,19 @@ int main(int, char**)
     {
         Array<int> tmp = numbers;
         Array<int> test(tmp);
+
+        // throw rand value
+        for (int i = 0; i < MAX_VAL; i++)
+        {
+            test[i] = 1;
+            tmp[i] = 2;
+        }
+
+        // print check
+        for (int i = 0; i < MAX_VAL; i++)
+        {
+            std::cout << numbers[i] << ", " << test[i] << ", " << tmp[i] << std::endl;
+        }
     }
 
     // check value
@@ -64,7 +77,7 @@ int main(int, char**)
     }
     catch(const std::exception& e)
     {
-        std::cerr << e.what() << '\n';
+        std::cerr << e.what() << std::endl;
     }
 
     for (int i = 0; i < MAX_VAL; i++)

@@ -6,19 +6,25 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 02:14:02 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/03 20:29:06 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/03 22:09:04 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __ARRAY_TPP__
 #define __ARRAY_TPP__
-#include <stdexcept>
+#include <exception>
 
 template <typename T>
 Array<T>::Array() : _array(new T[0]), _n(0) {}
 
 template <typename T>
-Array<T>::Array(unsigned int n) : _array(new T[n]), _n(n) {}
+Array<T>::Array(unsigned int n) : _array(new T[n]), _n(n)
+{
+    for (unsigned int i = 0; i < _n; i++)
+    {
+        _array[i] = 0;
+    }
+}
 
 template <typename T>
 Array<T>::Array(Array<T>& rhs) : _array(new T[rhs.size()]), _n(rhs.size())
@@ -70,7 +76,7 @@ T&  Array<T>::operator[](unsigned int i)
 {
     if (i >= _n)
     {
-        throw std::out_of_range("Try to access out of range index");
+        throw std::exception();
     }
 
     return _array[i];

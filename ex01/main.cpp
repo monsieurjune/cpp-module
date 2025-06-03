@@ -6,19 +6,19 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:02:58 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/03 20:30:23 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/03 22:01:28 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "iter.hpp"
 #include <iostream>
 
-static void print(char* c)
+static void print(char* const& c)
 {
     std::cout << c << std::endl;
 }
 
-static void change(char* c)
+static void change(char* & c)
 {
     if (c[0] != '\0')
     {
