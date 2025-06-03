@@ -6,56 +6,72 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 02:03:53 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/29 03:03:20 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/03 21:35:00 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Array.hpp"
 #include <iostream>
+#include <cstdlib>
+#include <Array.hpp>
 
-int main()
+#define MAX_VAL 750
+int main(int, char**)
 {
-    Array<int>  empty;
-    Array<int>  normal1(10);
-    Array<int>  normal2(20);
+    Array<int>  numbers(MAX_VAL);
+    int*        mirror = new int[MAX_VAL];
 
-    std::cout << "Empty: " << empty.size() << std::endl;
-    std::cout << "Normal1: " << normal1.size() << std::endl;
-    std::cout << "Normal2: " << normal2.size() << std::endl;
+    // set seed
+    srand(time(NULL));
 
-    // modify
-    for (unsigned int i = 0; i < normal1.size(); i++)
+    // init array
+    for (int i = 0; i < MAX_VAL; i++)
     {
-        normal1[i] = i;
-        normal2[i] = i * 4;
+        const int value = rand();
+        numbers[i] = value;
+        mirror[i] = value;
     }
 
-    // see
-    std::cout << "Normal 1 list" << std::endl;
-    for (unsigned int i = 0; i < normal1.size(); i++)
+    //SCOPE (maybe check deep copy)
     {
-        std::cout << i << ".) " << normal1[i] << std::endl;
+        Array<int> tmp = numbers;
+        Array<int> test(tmp);
     }
 
-    // assign to normal2
-    Array<int>  tmp(normal2);
-
-    normal2 = normal1;
-    std::cout << "Normal 2 list (old vs new)" << std::endl;
-    for (unsigned int i = 0; i < normal1.size(); i++)
+    // check value
+    for (int i = 0; i < MAX_VAL; i++)
     {
-        std::cout << i << ".) " << tmp[i] << " - " << normal2[i] << std::endl;
+        if (mirror[i] != numbers[i])
+        {
+            std::cerr << "didn't save the same value!!" << std::endl;
+            return 1;
+        }
     }
 
-    // try to access wrong place
+    // access negative index
     try
     {
-        normal1[11] = 1;
+        numbers[-2] = 0;
     }
-    catch (std::exception const&)
+    catch(const std::exception& e)
     {
-        std::cout << "Access Wrong place" << std::endl;
+        std::cerr << e.what() << std::endl;
     }
+
+    // access MAX_INDEX + 1
+    try
+    {
+        numbers[MAX_VAL] = 0;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+
+    for (int i = 0; i < MAX_VAL; i++)
+    {
+        numbers[i] = rand();
+    }
+    delete [] mirror;
 
     return 0;
 }

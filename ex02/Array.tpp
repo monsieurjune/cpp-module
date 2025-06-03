@@ -6,13 +6,13 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 02:14:02 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/29 03:04:23 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/03 20:29:06 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __ARRAY_TPP__
 #define __ARRAY_TPP__
-#include <exception>
+#include <stdexcept>
 
 template <typename T>
 Array<T>::Array() : _array(new T[0]), _n(0) {}
@@ -38,6 +38,13 @@ Array<T>::~Array()
 template <typename T>
 Array<T>&   Array<T>::operator=(Array<T>& rhs)
 {
+    // prevent reallocate same object
+    if (&rhs == this)
+    {
+        return *this;
+    }
+
+    // normal part
     T*  tmp = new T[rhs.size()];
 
     delete[] _array;
@@ -63,7 +70,7 @@ T&  Array<T>::operator[](unsigned int i)
 {
     if (i >= _n)
     {
-        throw std::exception();
+        throw std::out_of_range("Try to access out of range index");
     }
 
     return _array[i];
