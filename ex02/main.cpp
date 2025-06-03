@@ -6,43 +6,47 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 03:08:42 by tponutha          #+#    #+#             */
-/*   Updated: 2025/05/29 14:43:35 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/03 06:55:42 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "easyfind.hpp"
+#include "MutantStack.hpp"
+#include <stack>
 #include <iostream>
-#include <vector>
 
-static void sb_find(std::vector<int> const& vec, int find)
+static void sb_stack()
 {
-    try
-    {
-        int found = ::easyfind(vec, find);
+    MutantStack<int> mstack;
 
-        std::cout << "Find: " << find << " [found: " << found << "]" << std::endl;
-    }
-    catch (std::exception const&)
+    mstack.push(5);
+    mstack.push(17);
+
+    std::cout << mstack.top() << std::endl;
+    mstack.pop();
+    std::cout << mstack.size() << std::endl;
+
+    mstack.push(3);
+    mstack.push(5);
+    mstack.push(737);
+    mstack.push(0);
+
+    MutantStack<int>::iterator it = mstack.begin();
+    MutantStack<int>::iterator ite = mstack.end();
+
+    ++it;
+    --it;
+
+    while (it != ite)
     {
-        std::cout << "Find: " << find << " [not found]" << std::endl;
+        std::cout << *it << std::endl;
+        ++it;
     }
+
+    std::stack<int> s(mstack);
 }
 
 int main()
 {
-    std::vector<int> vec;
-
-    // assign
-    vec.push_back(1);
-    vec.push_back(2);
-    vec.push_back(3);
-    vec.push_back(4);
-
-    sb_find(vec, 0);
-    sb_find(vec, 1);
-    sb_find(vec, 2);
-    sb_find(vec, 3);
-    sb_find(vec, 4);
-    sb_find(vec, 5);
+    sb_stack();
     return 0;
 }
