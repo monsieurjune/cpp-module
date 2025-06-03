@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:45:50 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/03 02:18:45 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:11:03 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,16 +156,22 @@ static inline void  sb_print_double(double d, t_type type)
 void    ScalarConverter::convert(std::string const& str)
 {
     t_type  type = IMPOSSIBLE;
-    char    c;
-    int     i;
-    float   f;
-    double  d;
+    char    c = '\0';
+    int     i = 0;
+    float   f = 0.0f;
+    double  d = 0.0;
 
     // trim space out
     std::string trimmed_str = trim_whitespace(str);
 
     // check type
-    if (trimmed_str.length() == 1 && (trimmed_str[0] < '0' || trimmed_str[0] > '9'))
+    if (trimmed_str.empty())
+    {
+        type = CHAR;
+        c = '\0';
+        sb_assign(c, &i, &f, &d);
+    }
+    else if (trimmed_str.length() == 1 && (trimmed_str[0] < '0' || trimmed_str[0] > '9'))
     {
         type = CHAR;
         c = trimmed_str[0];
