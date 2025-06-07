@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 03:08:42 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/04 16:41:19 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/07 19:35:33 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,76 @@
 #include <stack>
 #include <list>
 #include <iostream>
+#include <sstream>
+
+static void	sb_print(MutantStack<int> const& sp1, MutantStack<int> const& sp2)
+{
+	// iterator
+	MutantStack<int>::const_iterator	s1_it = sp1.begin();
+	MutantStack<int>::const_iterator	s1_end = sp1.end();
+	MutantStack<int>::const_iterator	s2_it = sp2.begin();
+	MutantStack<int>::const_iterator	s2_end = sp2.end();
+
+	std::cout << " s1 | s2 " << std::endl;
+	while (s1_it != s1_end || s2_it != s2_end)
+	{
+		std::stringstream	ss;
+
+		// increment s1
+		if (s1_it != s1_end)
+		{
+			ss << *s1_it;
+			s1_it++;
+		}
+		else
+		{
+			ss << "[NONE]";
+		}
+
+		// center
+		ss << " - ";
+
+		// increment s2
+		if (s2_it != s2_end)
+		{
+			ss << *s2_it;
+			s2_it++;
+		}
+		else
+		{
+			ss << "[NONE]";
+		}
+
+		std::cout << ss.str() << std::endl;
+	}
+    std::cout << std::endl;
+}
+
+static void sb_deepcopy()
+{
+    MutantStack<int>    mstack;
+    MutantStack<int>    mstack1;
+
+    mstack1.push(0);
+    mstack.push(5);
+    mstack.push(17);
+
+    sb_print(mstack, mstack1);
+    mstack1 = mstack;
+    sb_print(mstack, mstack1);
+    mstack1.pop();
+    mstack1.push(1);
+    mstack.pop();
+    sb_print(mstack, mstack1);
+
+    {
+        MutantStack<int>    mstack2(mstack1);
+
+        mstack2.push(3);
+        mstack2.push(4);
+        sb_print(mstack1, mstack2);
+    }
+}
 
 static void sb_stack()
 {
@@ -96,6 +166,12 @@ static void sb_list()
 
 int main()
 {
+    // deepcopy
+    std::cout << "===== DEEPCOPY ====" << std::endl;
+    sb_deepcopy();
+    std::cout << "===================" << std::endl;
+    std::cout << std::endl;
+
     // stack
     std::cout << "===== STACK ====" << std::endl;
     sb_stack();
