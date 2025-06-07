@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 15:01:29 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/04 16:42:10 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/05 18:21:28 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ Span&   Span::operator=(Span const& rhs)
     }
 
     //copy
-    std::multiset<int> const&   obj = rhs.getStorage();
-
-    _storage.clear();
-    _storage.insert(obj.begin(), obj.end());
+    _storage = rhs.getStorage();
     _n = rhs.getN();
 
     return *this;

@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 15:01:14 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/04 16:42:15 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/07 19:14:24 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,26 +64,6 @@ class Span
 
         // add
         void    addNumber(int val);
-
-        template <typename C>
-        void    addNumber(C const& container)
-        {
-            std::multiset<int>  tmp_set;
-            unsigned int        total_size = _storage.size();
-
-            // insert to tmp
-            tmp_set.insert(container.begin(), container.end());
-            total_size += tmp_set.size();
-
-            // check
-            if (total_size > _n)
-            {
-                throw Span::CannotInsertToSpanException("Storage isn\'t enough to append whole elements from this container");
-            }
-
-            // insert
-            _storage.insert(tmp_set.begin(), tmp_set.end());
-        }
 
         template <typename C>
         void    addNumber(typename C::const_iterator begin, typename C::const_iterator end)
