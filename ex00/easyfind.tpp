@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:50:02 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/04 16:42:34 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/11 19:12:18 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include <algorithm>
 #include <stdexcept>
 
-template <typename C>
-int easyfind(C const& data, int val)
+template <typename T>
+int easyfind(T data, int val)
 {
-    typename C::const_iterator it = std::find(data.begin(), data.end(), val);
+    typename T::const_iterator it = std::find(data.begin(), data.end(), val);
 
     if (it == data.end())
     {
