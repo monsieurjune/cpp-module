@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 02:28:48 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/12 01:45:46 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/12 01:53:03 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,12 +127,17 @@ std::map<std::string, double> const&    BitcoinExchange::getMapPriceByDate() con
 
 void    BitcoinExchange::checkDateFormat(std::string const& date)
 {
+    std::string err_msg("bad input");
+
+    err_msg.append(" => ");
+    err_msg.append(date);
+
     // check '-'
     size_t  count_minus = sb_count(date, '-');
 
     if (count_minus != 2)
     {
-        return;
+        throw std::runtime_error(err_msg);
     }
 
     // split
@@ -140,13 +145,13 @@ void    BitcoinExchange::checkDateFormat(std::string const& date)
 
     if (vec.size() != 3)
     {
-        return;
+        throw std::runtime_error(err_msg);
     }
 
     // check raw date
     if (sb_is_raw_date(vec[0], std::string::npos) && sb_is_raw_date(vec[1], 2) && sb_is_raw_date(vec[2], 2))
     {
-        return;
+        throw std::runtime_error(err_msg);
     }
 
     // get date (year-month-day)
@@ -158,19 +163,19 @@ void    BitcoinExchange::checkDateFormat(std::string const& date)
     // check year
     if (year < 1)
     {
-        return;
+        throw std::runtime_error(err_msg);
     }
 
     // check month
     if (month < 1 || month > 12)
     {
-        return;
+        throw std::runtime_error(err_msg);
     }
 
     // check lower end of day
     if (day < 1)
     {
-        return;
+        throw std::runtime_error(err_msg);
     }
 
     // check upper end of day
@@ -182,14 +187,14 @@ void    BitcoinExchange::checkDateFormat(std::string const& date)
         {
             if (day > 29)
             {
-                return;
+                throw std::runtime_error(err_msg);
             }
         }
         else
         {
             if (day > 28)
             {
-                return;
+                throw std::runtime_error(err_msg);
             }
         }
     }
@@ -197,14 +202,14 @@ void    BitcoinExchange::checkDateFormat(std::string const& date)
     {
         if (day > 31)
         {
-            return;
+            throw std::runtime_error(err_msg);
         }
     }
     else
     {
         if (day > 30)
         {
-            return;
+            throw std::runtime_error(err_msg);
         }
     }
 }
