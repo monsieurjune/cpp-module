@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 03:08:42 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/07 19:14:04 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:10:54 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ static void	sb_minmax()
 static void	sb_exception(std::vector<int> const& vec)
 {
 	// start
-	std::cout << "==== LIMIT ====" << std::endl;
+	std::cout << "==== EXCEPTION ====" << std::endl;
 
 	try
 	{
@@ -153,10 +153,13 @@ static void	sb_exception(std::vector<int> const& vec)
 
 		std::cout << "Add [0, 3]" << std::endl;
 		sp0.addNumber<std::vector<int> >(vec.begin(), vec.begin() + 4);
+
 		std::cout << "Add [4, 15]" << std::endl;
 		sp0.addNumber<std::vector<int> >(vec.begin(), vec.begin() + 20);
+
 		std::cout << "Add [16, 17]" << std::endl;
 		sp0.addNumber<std::vector<int> >(vec.begin(), vec.begin() + 20);
+
 		std::cout << "Add [17, 30]" << std::endl;
 		sp0.addNumber<std::vector<int> >(vec.begin(), vec.begin() + 20);
 	}
@@ -167,10 +170,14 @@ static void	sb_exception(std::vector<int> const& vec)
 
 	try
 	{
-		Span	sp0 = Span(16);
+		Span			sp0 = Span(16);
+		unsigned int 	shortest;
+		unsigned int	longest;
 
-		std::cout << "SHORTEST: " << sp0.shortestSpan() << std::endl;
-		std::cout << "LONGEST: " << sp0.longestSpan() << std::endl;
+		shortest = sp0.shortestSpan();
+		longest = sp0.longestSpan();
+		std::cout << "SHORTEST: " << shortest << std::endl;
+		std::cout << "LONGEST: " << longest << std::endl;
 	}
 	catch (Span::NoSpanCanBeFoundException const& e)
 	{
@@ -179,11 +186,15 @@ static void	sb_exception(std::vector<int> const& vec)
 
 	try
 	{
-		Span	sp0 = Span(16);
+		Span			sp0	= Span(16);
+		unsigned int 	shortest;
+		unsigned int	longest;
 
 		sp0.addNumber(1);
-		std::cout << "SHORTEST: " << sp0.shortestSpan() << std::endl;
-		std::cout << "LONGEST: " << sp0.longestSpan() << std::endl;
+		shortest = sp0.shortestSpan();
+		longest = sp0.longestSpan();
+		std::cout << "SHORTEST: " << shortest << std::endl;
+		std::cout << "LONGEST: " << longest << std::endl;
 	}
 	catch (Span::NoSpanCanBeFoundException const& e)
 	{
@@ -196,7 +207,7 @@ static void	sb_exception(std::vector<int> const& vec)
 
 static void	sb_normal(std::vector<int> const& vec)
 {
-	int		n = 10;
+	int		n = 10001;
 	Span	sp0 = Span(n);
 
 	// start
@@ -208,14 +219,16 @@ static void	sb_normal(std::vector<int> const& vec)
 		try
 		{
 			sp0.addNumber(std::rand());
-			std::cout << "SHORTEST: " << sp0.shortestSpan() << std::endl;
-			std::cout << "LONGEST: " << sp0.longestSpan() << std::endl;
 		}
 		catch (Span::CannotInsertToSpanException const& e)
 		{
 			break;
 		}
 	}
+
+	// print
+	std::cout << "SHORTEST: " << sp0.shortestSpan() << std::endl;
+	std::cout << "LONGEST: " << sp0.longestSpan() << std::endl;
 
 	// end
 	std::cout << "==================" << std::endl << std::endl;
