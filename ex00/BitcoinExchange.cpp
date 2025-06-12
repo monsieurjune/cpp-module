@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 02:28:48 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/13 05:53:03 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/13 06:14:11 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 #include <stdexcept>
 #include <sstream>
 #include <iostream>
+
+double  BitcoinExchange::_min_value = 0.0;
+double  BitcoinExchange::_max_value = 1000.0;
 
 static inline void  sb_get_token(std::stringstream& ss, std::string& getter, char delim, std::string const& err_msg)
 {
@@ -338,6 +341,7 @@ void    BitcoinExchange::checkInputLine(std::string const& line)
     std::string         raw_value;
     size_t              date;
     double              value;
+    double              price;
 
     // check delim
     sb_throw(sb_count(line, ' ') != 2, e);
@@ -358,31 +362,42 @@ void    BitcoinExchange::checkInputLine(std::string const& line)
 
     // get value
     value = sb_to_double(raw_value);
-    sb_throw(value < 0.0 || value > 1000.0, e);
+    sb_throw(value < _min_value || value > _max_value, e);
 
     // get right price for right time
+    price = getExactOrNearestPastPrice(date);
+
+    // print date => value = value * price
+    std::cout << date / 10000 << '-' 
+                << (date % 10000) / 100 << '-' 
+                << date % 100 << " => "
+                << value << " = " << value * price
+                << std::endl;
+}
+
+double  BitcoinExchange::getExactOrNearestPastPrice(size_t date)
+{
+    std::string         err_msg("Database is Empty.");
+    std::runtime_error  e(err_msg);
+
+    sb_throw(_mapPriceByDate.empty(), e);
+
+    // normal part
     std::map<size_t, double>::iterator  it = _mapPriceByDate.lower_bound(date);
 
     if (it == _mapPriceByDate.end())
     {
         it--; // too future date, get most recent one
     }
-    else if (it != _mapPriceByDate.begin())
+    else if (it != _mapPriceByDate.begin() && it->first > date)
     {
         // decrement back to recent past, not recent future
         // because lower_bound() get either exact date or recent future date
-        if (it->first > date)
-        {
-            it--;
-        }
+        // in this case, the recent future
+        it--;
     }
 
-    // print date => value = value * price
-    std::cout << date / 10000 << '-' 
-                << (date % 10000) / 100 << '-' 
-                << date % 100 << " => "
-                << value << " = " << value * it->second
-                << std::endl;
+    return it->second;
 }
 
 void    BitcoinExchange::readDB(std::ifstream& dbfile)
@@ -414,6 +429,12 @@ void    BitcoinExchange::readDB(std::ifstream& dbfile)
 
 void    BitcoinExchange::analyze(std::ifstream& infile)
 {
+    if (!_isObjValid)
+    {
+        return;
+    }
+
+    // normal part
     std::string line;
 
     // read input header

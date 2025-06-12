@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 02:28:45 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/13 05:42:23 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/13 06:13:07 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 class BitcoinExchange
 {
     private:
+        static double   _min_value;
+        static double   _max_value;
+
         std::map<size_t, double>    _mapPriceByDate;
         bool                        _isObjValid;
 
@@ -29,6 +32,8 @@ class BitcoinExchange
 
         void    checkInputHeader(std::string const& line);
         void    checkInputLine(std::string const& line);
+
+        double  getExactOrNearestPastPrice(size_t date);
 
     public:
         BitcoinExchange();
