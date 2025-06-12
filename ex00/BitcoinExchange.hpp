@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 02:28:45 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/05 07:37:46 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/12 08:02:31 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@
 class BitcoinExchange
 {
     private:
-        bool                            _isObjValid;
-        std::map<std::string, double>   _mapPriceByDate;
+        std::map<size_t, double>    _mapPriceByDate;
+        bool                        _isObjValid;
 
-        void    checkDateFormat(std::string const& date);
+        size_t  checkDateFormat(std::string const& date);
 
         void    checkCSVHeader(std::string const& line);
         void    checkCSVLine(std::string const& line);
@@ -38,8 +38,8 @@ class BitcoinExchange
         ~BitcoinExchange();
         BitcoinExchange&    operator=(BitcoinExchange const& rhs);
 
-        bool                                    isValid() const;
-        std::map<std::string, double> const&    getMapPriceByDate() const;
+        bool                                isValid() const;
+        std::map<size_t, double> const&     getMapPriceByDate() const;
 
         void    readDB(std::ifstream const& dbfile);
         void    analyze(std::ifstream const& infile);

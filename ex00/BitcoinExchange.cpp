@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 02:28:48 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/12 01:53:03 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/12 08:01:55 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ static size_t   sb_count(std::string const& str, char c)
     return n;
 }
 
-static bool sb_is_raw_date(std::string const& str, size_t max_length)
+static bool sb_is_raw_date(std::string const& str, size_t min_length, size_t max_length)
 {
-    if (str.length() > max_length)
+    if (str.length() > max_length || str.length() < min_length)
     {
         return false;
     }
@@ -66,10 +66,51 @@ static bool sb_is_raw_date(std::string const& str, size_t max_length)
     return true;
 }
 
-static ssize_t  sb_to_long(std::string const& num)
+static bool sb_is_number(std::string const& str)
+{
+    size_t                      decimal_point_n = 0;
+    std::string::const_iterator begin = str.begin();
+
+    // skip '-'
+    if (str[0] == '-')
+    {
+        begin++;
+    }
+
+    // check if first isn't omitted decimal or just weird decimal (9.)
+    if (*begin == '.' || str[str.length() - 1] == '.')
+    {
+        return false;
+    }
+
+    // iterate string
+    for (std::string::const_iterator it = begin; it != str.end(); it++)
+    {
+        if (*it >= '0' && *it <= '9')
+        {
+            continue;
+        }
+        else if (*it == '.')
+        {
+            decimal_point_n++;
+            if (decimal_point_n > 1)
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+static size_t   sb_to_ulong(std::string const& num)
 {
     std::stringstream   ss;
-    ssize_t             ret;
+    size_t              ret;
 
     ss << num;
     ss >> ret;
@@ -120,12 +161,14 @@ bool    BitcoinExchange::isValid() const
     return _isObjValid;
 }
 
-std::map<std::string, double> const&    BitcoinExchange::getMapPriceByDate() const
+std::map<size_t, double> const&    BitcoinExchange::getMapPriceByDate() const
 {
     return _mapPriceByDate;
 }
 
-void    BitcoinExchange::checkDateFormat(std::string const& date)
+// TODO: use size_t on date
+
+size_t  BitcoinExchange::checkDateFormat(std::string const& date)
 {
     std::string err_msg("bad input");
 
@@ -149,19 +192,19 @@ void    BitcoinExchange::checkDateFormat(std::string const& date)
     }
 
     // check raw date
-    if (sb_is_raw_date(vec[0], std::string::npos) && sb_is_raw_date(vec[1], 2) && sb_is_raw_date(vec[2], 2))
+    if (sb_is_raw_date(vec[0], 1, std::string::npos) && sb_is_raw_date(vec[1], 2, 2) && sb_is_raw_date(vec[2], 2, 2))
     {
         throw std::runtime_error(err_msg);
     }
 
     // get date (year-month-day)
-    ssize_t year = sb_to_long(vec[0]);
-    ssize_t month = sb_to_long(vec[1]);
-    ssize_t day = sb_to_long(vec[2]);
+    size_t  year = sb_to_ulong(vec[0]);
+    size_t  month = sb_to_ulong(vec[1]);
+    size_t  day = sb_to_ulong(vec[2]);
     bool    is_leap_year = false;
 
-    // check year
-    if (year < 1)
+    // check year (NOT ABOVE OVERFLOW)
+    if (year < 1 || year > (__UINT64_MAX__ / 10000))
     {
         throw std::runtime_error(err_msg);
     }
@@ -212,4 +255,79 @@ void    BitcoinExchange::checkDateFormat(std::string const& date)
             throw std::runtime_error(err_msg);
         }
     }
+
+    return (year * 10000) + (month * 100) + day;
+}
+
+void    BitcoinExchange::checkCSVHeader(std::string const& line)
+{
+    std::string                 err_msg("bad header");
+    std::vector<std::string>    vec = sb_split(line, ',');
+
+    err_msg.append(" => ");
+    err_msg.append(line);
+
+    if (vec.size() != 2)
+    {
+        throw std::runtime_error(err_msg);
+    }
+
+    if (vec[0] != "date")
+    {
+        throw std::runtime_error(err_msg);
+    }
+
+    if (vec[1] != "exchange_rate")
+    {
+        throw std::runtime_error(err_msg);
+    }
+}
+
+void    BitcoinExchange::checkCSVLine(std::string const& line)
+{
+    std::vector<std::string>    vec = sb_split(line, ',');
+
+    if (vec.size() != 2)
+    {
+        return;
+    }
+
+    try
+    {
+        // check date
+        size_t  date = checkDateFormat(vec[0]);
+
+        // check raw exchange_rate
+        if (!sb_is_number(vec[1]))
+        {
+            return;
+        }
+
+        // check exchange_rate number
+        double  price = sb_to_double(vec[1]);
+
+        if (price <= -0.0 || price > 2147483647.0)
+        {
+            return;
+        }
+
+        // add date,exchange_rate to stl
+        if (_mapPriceByDate.find(date) == _mapPriceByDate.end())
+        {
+            _mapPriceByDate[date] = price;
+        }
+    }
+    catch (std::exception const&)
+    {
+        // ignore
+        return;
+    }
+}
+
+void    BitcoinExchange::checkInputHeader(std::string const& line)
+{
+}
+
+void    BitcoinExchange::checkInputLine(std::string const& line)
+{
 }
