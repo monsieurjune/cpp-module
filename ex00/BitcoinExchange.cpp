@@ -6,32 +6,29 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 02:28:48 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/12 23:32:40 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/13 01:52:02 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
 #include <stdexcept>
 #include <sstream>
-#include <vector>
 #include <iostream>
 
-static std::vector<std::string>    sb_split(std::string const& str, char delim)
+static inline void  sb_get_token(std::stringstream& ss, std::string& getter, char delim, std::string const& err_msg)
 {
-    std::vector<std::string>    vec;
-    std::stringstream           ss(str);
-    std::string                 getter;
-
-    while (std::getline(ss, getter, delim))
+    if (!std::getline(ss, getter, delim))
     {
-        if (getter.empty())
-        {
-            continue;
-        }
-        vec.push_back(getter);
+        throw std::runtime_error(err_msg);
     }
+}
 
-    return vec;
+static inline void sb_throw(bool condition, std::exception const& e)
+{
+    if (condition)
+    {
+        throw e;
+    }
 }
 
 static size_t   sb_count(std::string const& str, char c)
@@ -169,124 +166,93 @@ std::map<size_t, double> const&    BitcoinExchange::getMapPriceByDate() const
 
 size_t  BitcoinExchange::checkDateFormat(std::string const& date)
 {
-    std::string err_msg("bad input");
-
-    err_msg.append(" => ");
-    err_msg.append(date);
+    std::string         err_msg = std::string("bad input => ") + date;
+    std::runtime_error  e(err_msg);
+    bool                is_valid_raw_date = true;
+    bool                is_leap_year = false;
+    bool                is_invalid_day = false;
 
     // check '-'
-    size_t  count_minus = sb_count(date, '-');
+    sb_throw(sb_count(date, '-') != 2, e);
 
-    if (count_minus != 2)
-    {
-        throw std::runtime_error(err_msg);
-    }
+    // get raw data
+    std::stringstream   ss(date);
+    std::string         raw_year;
+    std::string         raw_month;
+    std::string         raw_day;
 
-    // split
-    std::vector<std::string>    vec = sb_split(date, '-');
-
-    if (vec.size() != 3)
-    {
-        throw std::runtime_error(err_msg);
-    }
+    sb_get_token(ss, raw_year, '-', err_msg);
+    sb_get_token(ss, raw_month, '-', err_msg);
+    sb_get_token(ss, raw_day, '-', err_msg);
 
     // check raw date
-    if (sb_is_raw_date(vec[0], 1, std::string::npos) && sb_is_raw_date(vec[1], 2, 2) && sb_is_raw_date(vec[2], 2, 2))
-    {
-        throw std::runtime_error(err_msg);
-    }
+    is_valid_raw_date &= sb_is_raw_date(raw_year, 1, std::string::npos);
+    is_valid_raw_date &= sb_is_raw_date(raw_month, 2, 2);
+    is_valid_raw_date &= sb_is_raw_date(raw_day, 2, 2);
+    sb_throw(!is_valid_raw_date, e);
 
     // get date (year-month-day)
-    size_t  year = sb_to_ulong(vec[0]);
-    size_t  month = sb_to_ulong(vec[1]);
-    size_t  day = sb_to_ulong(vec[2]);
-    bool    is_leap_year = false;
+    size_t  year = sb_to_ulong(raw_year);
+    size_t  month = sb_to_ulong(raw_month);
+    size_t  day = sb_to_ulong(raw_day);
 
     // check year (NOT ABOVE OVERFLOW)
-    if (year < 1 || year > (__UINT64_MAX__ / 10000))
-    {
-        throw std::runtime_error(err_msg);
-    }
+    sb_throw(year < 1 || year > (__UINT64_MAX__ / 10000), e);
 
     // check month
-    if (month < 1 || month > 12)
-    {
-        throw std::runtime_error(err_msg);
-    }
+    sb_throw(month < 1 || month > 12, e);
 
     // check lower end of day
-    if (day < 1)
-    {
-        throw std::runtime_error(err_msg);
-    }
+    sb_throw(day < 1, e);
 
     // check upper end of day
     is_leap_year = ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0);
 
     if (month == 2)
     {
-        if (is_leap_year)
-        {
-            if (day > 29)
-            {
-                throw std::runtime_error(err_msg);
-            }
-        }
-        else
-        {
-            if (day > 28)
-            {
-                throw std::runtime_error(err_msg);
-            }
-        }
+        is_invalid_day = day > (is_leap_year ? 29 : 28);
     }
     else if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
     {
-        if (day > 31)
-        {
-            throw std::runtime_error(err_msg);
-        }
+        is_invalid_day = day > 31;
     }
     else
     {
-        if (day > 30)
-        {
-            throw std::runtime_error(err_msg);
-        }
+        is_invalid_day = day > 30;
     }
+    sb_throw(is_invalid_day, e);
 
     return (year * 10000) + (month * 100) + day;
 }
 
 void    BitcoinExchange::checkCSVHeader(std::string const& line)
 {
-    std::string                 err_msg("bad header");
-    std::vector<std::string>    vec = sb_split(line, ',');
+    std::stringstream   ss(line);
+    std::string         err_msg = std::string("bad CSV header => ") + line;
+    std::runtime_error  e(err_msg);
+    std::string         raw_date_header;
+    std::string         raw_exchange_rate_header;
 
-    err_msg.append(" => ");
-    err_msg.append(line);
+    // check delim
+    sb_throw(sb_count(line, ',') != 1, e);
 
-    if (vec.size() != 2)
-    {
-        throw std::runtime_error(err_msg);
-    }
+    // ger raw data
+    sb_get_token(ss, raw_date_header, ',', err_msg);
+    sb_get_token(ss, raw_exchange_rate_header, ',', err_msg);
 
-    if (vec[0] != "date")
-    {
-        throw std::runtime_error(err_msg);
-    }
-
-    if (vec[1] != "exchange_rate")
-    {
-        throw std::runtime_error(err_msg);
-    }
+    // check header
+    sb_throw(raw_date_header != "date", e);
+    sb_throw(raw_exchange_rate_header != "exchange_rate", e);
 }
 
 void    BitcoinExchange::checkCSVLine(std::string const& line)
 {
-    std::vector<std::string>    vec = sb_split(line, ',');
+    std::stringstream   ss(line);
+    std::string         raw_date;
+    std::string         raw_exchange_rate;
 
-    if (vec.size() != 2)
+    // check delim
+    if (sb_count(line, ',') != 1)
     {
         return;
     }
@@ -294,17 +260,19 @@ void    BitcoinExchange::checkCSVLine(std::string const& line)
     try
     {
         // check date
-        size_t  date = checkDateFormat(vec[0]);
+        size_t  date = checkDateFormat(raw_date);
+        double  price;
 
         // check raw exchange_rate
-        if (!sb_is_number(vec[1]))
+        if (!sb_is_number(raw_exchange_rate))
         {
             return;
         }
 
         // check exchange_rate number
-        double  price = sb_to_double(vec[1]);
+        price = sb_to_double(raw_exchange_rate);
 
+        // too small or too big
         if (price <= 0.0 || price > 2147483647.0)
         {
             return;
@@ -318,86 +286,76 @@ void    BitcoinExchange::checkCSVLine(std::string const& line)
     }
     catch (std::exception const&)
     {
-        // ignore
-        return;
+        return; // ignore
     }
 }
 
 void    BitcoinExchange::checkInputHeader(std::string const& line)
 {
-    std::string                 bad_line_err;
-    std::vector<std::string>    vec = sb_split(line, ' ');
+    std::stringstream   ss(line);
+    std::string         bad_line_err = std::string("bad input header => ") + line;
+    std::runtime_error  e(bad_line_err);
+    std::string         raw_date_header;
+    std::string         raw_delim_header;
+    std::string         raw_value_header;
 
-    // check vec
-    if (vec.size() != 3)
-    {
-        throw std::runtime_error(bad_line_err);
-    }
+    // check delim
+    sb_throw(sb_count(line, ' ') != 2, e);
 
-    // check main delim
-    if (vec[1] != "|")
-    {
-        throw std::runtime_error(bad_line_err);
-    }
+    // get raw data
+    sb_get_token(ss, raw_date_header, ' ', bad_line_err);
+    sb_get_token(ss, raw_delim_header, ' ', bad_line_err);
+    sb_get_token(ss, raw_value_header, ' ', bad_line_err);
 
-    // check date
-    if (vec[0] != "date")
-    {
-        throw std::runtime_error(bad_line_err);
-    }
-
-    // check value
-    if (vec[0] != "value")
-    {
-        throw std::runtime_error(bad_line_err);
-    }
+    // check header
+    sb_throw(raw_date_header != "date", e);
+    sb_throw(raw_delim_header != "|", e);
+    sb_throw(raw_value_header != "value", e);
 }
 
 void    BitcoinExchange::checkInputLine(std::string const& line)
 {
-    std::string                 bad_line_err;
-    std::vector<std::string>    vec = sb_split(line, ' ');
+    std::stringstream   ss(line);
+    std::string         bad_line_err = std::string("bad input => ") + line;
+    std::runtime_error  e(bad_line_err);
+    std::string         raw_date;
+    std::string         raw_delim;
+    std::string         raw_value;
+    size_t              date;
+    double              value;
 
-    // check vec
-    if (vec.size() != 3)
-    {
-        throw std::runtime_error(bad_line_err);
-    }
+    // check delim
+    sb_throw(sb_count(line, ' ') != 2, e);
+
+    // get raw data
+    sb_get_token(ss, raw_date, ' ', bad_line_err);
+    sb_get_token(ss, raw_delim, ' ', bad_line_err);
+    sb_get_token(ss, raw_value, ' ', bad_line_err);
 
     // check main delim
-    if (vec[1] != "|")
-    {
-        throw std::runtime_error(bad_line_err);
-    }
+    sb_throw(raw_delim != "|", e);
 
     // check date
-    size_t  date = checkDateFormat(vec[0]);
+    date = checkDateFormat(raw_date);
 
     // check value
-    if (!sb_is_number(vec[2]))
-    {
-        throw std::runtime_error(bad_line_err);
-    }
+    sb_throw(!sb_is_number(raw_value), e);
 
     // get value
-    double  value = sb_to_double(vec[2]);
-
-    if (value < 0.0 || value > 2147483647.0)
-    {
-        throw std::runtime_error(bad_line_err);
-    }
+    value = sb_to_double(raw_value);
+    sb_throw(value < 0.0 || value > 2147483647.0, e);
 
     // get right price for right time
     std::map<size_t, double>::iterator  it = _mapPriceByDate.lower_bound(date);
 
     if (it == _mapPriceByDate.end())
     {
-        // too future date
-        it--;
+        it--; // too future date, get most recent one
     }
     else if (it != _mapPriceByDate.begin())
     {
         // decrement back to recent past, not recent future
+        // because lower_bound() get either exact date or recent future date
         if (it->first > date)
         {
             it--;
