@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 02:28:48 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/13 01:52:02 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/13 05:53:03 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,16 +127,31 @@ static double   sb_to_double(std::string const& num)
     return ret;
 }
 
-BitcoinExchange::BitcoinExchange() : _isObjValid(true) {}
+BitcoinExchange::BitcoinExchange() : _isObjValid(false) {}
 
 BitcoinExchange::BitcoinExchange(BitcoinExchange const& rhs) : _mapPriceByDate(rhs.getMapPriceByDate()),\
                                                                 _isObjValid(rhs.isValid())
 {
 }
 
-BitcoinExchange::BitcoinExchange(std::ifstream const& dbfile)
+BitcoinExchange::BitcoinExchange(std::string const& filename)
 {
-    readDB(dbfile);
+    std::ifstream   ifile(filename.c_str());
+
+    // check file
+    if (!ifile.is_open())
+    {
+        ifile.close();
+        _isObjValid = false;
+        std::cout << "Error: could not open file." << std::endl;
+        return;
+    }
+
+    // read file
+    readDB(ifile);
+
+    ifile.close();
+    _isObjValid = true;
 }
 
 BitcoinExchange::~BitcoinExchange() {}
@@ -278,7 +293,7 @@ void    BitcoinExchange::checkCSVLine(std::string const& line)
             return;
         }
 
-        // add date,exchange_rate to stl
+        // add date,exchange_rate to stl, if doesn't exist
         if (_mapPriceByDate.find(date) == _mapPriceByDate.end())
         {
             _mapPriceByDate[date] = price;
@@ -343,7 +358,7 @@ void    BitcoinExchange::checkInputLine(std::string const& line)
 
     // get value
     value = sb_to_double(raw_value);
-    sb_throw(value < 0.0 || value > 2147483647.0, e);
+    sb_throw(value < 0.0 || value > 1000.0, e);
 
     // get right price for right time
     std::map<size_t, double>::iterator  it = _mapPriceByDate.lower_bound(date);
@@ -368,4 +383,58 @@ void    BitcoinExchange::checkInputLine(std::string const& line)
                 << date % 100 << " => "
                 << value << " = " << value * it->second
                 << std::endl;
+}
+
+void    BitcoinExchange::readDB(std::ifstream& dbfile)
+{
+    std::string line;
+
+    // read CSV Header
+    if (!std::getline(dbfile, line))
+    {
+        std::cout << "Error: could not read file." << std::endl;
+        return;
+    }
+
+    try
+    {
+        checkCSVHeader(line);
+
+        // read whole file
+        while (std::getline(dbfile, line))
+        {
+            checkCSVLine(line);
+        }
+    }
+    catch (std::exception const& e)
+    {
+        std::cout << "Error: " << e.what() << std::endl;
+    }
+}
+
+void    BitcoinExchange::analyze(std::ifstream& infile)
+{
+    std::string line;
+
+    // read input header
+    if (!std::getline(infile, line))
+    {
+        std::cout << "Error: could not read file." << std::endl;
+        return;
+    }
+
+    try
+    {
+        checkInputHeader(line);
+
+        // read whole file
+        while (std::getline(infile, line))
+        {
+            checkInputLine(line);
+        }
+    }
+    catch (std::exception const& e)
+    {
+        std::cout << "Error: " << e.what() << std::endl;
+    }
 }

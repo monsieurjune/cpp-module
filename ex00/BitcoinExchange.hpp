@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 02:28:45 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/12 22:50:43 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/13 05:42:23 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ class BitcoinExchange
 
     public:
         BitcoinExchange();
-        BitcoinExchange(std::ifstream const& dbfile);
+        BitcoinExchange(std::string const& filename);
         BitcoinExchange(BitcoinExchange const& rhs);
         ~BitcoinExchange();
         BitcoinExchange&    operator=(BitcoinExchange const& rhs);
@@ -40,8 +40,8 @@ class BitcoinExchange
         bool                                isValid() const;
         std::map<size_t, double> const&     getMapPriceByDate() const;
 
-        void    readDB(std::ifstream const& dbfile);
-        void    analyze(std::ifstream const& infile);
+        void    readDB(std::ifstream& dbfile);
+        void    analyze(std::ifstream& infile);
 
 };
 
