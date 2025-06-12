@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 02:28:48 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/12 08:01:55 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/12 23:32:40 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdexcept>
 #include <sstream>
 #include <vector>
+#include <iostream>
 
 static std::vector<std::string>    sb_split(std::string const& str, char delim)
 {
@@ -166,8 +167,6 @@ std::map<size_t, double> const&    BitcoinExchange::getMapPriceByDate() const
     return _mapPriceByDate;
 }
 
-// TODO: use size_t on date
-
 size_t  BitcoinExchange::checkDateFormat(std::string const& date)
 {
     std::string err_msg("bad input");
@@ -306,7 +305,7 @@ void    BitcoinExchange::checkCSVLine(std::string const& line)
         // check exchange_rate number
         double  price = sb_to_double(vec[1]);
 
-        if (price <= -0.0 || price > 2147483647.0)
+        if (price <= 0.0 || price > 2147483647.0)
         {
             return;
         }
@@ -326,8 +325,89 @@ void    BitcoinExchange::checkCSVLine(std::string const& line)
 
 void    BitcoinExchange::checkInputHeader(std::string const& line)
 {
+    std::string                 bad_line_err;
+    std::vector<std::string>    vec = sb_split(line, ' ');
+
+    // check vec
+    if (vec.size() != 3)
+    {
+        throw std::runtime_error(bad_line_err);
+    }
+
+    // check main delim
+    if (vec[1] != "|")
+    {
+        throw std::runtime_error(bad_line_err);
+    }
+
+    // check date
+    if (vec[0] != "date")
+    {
+        throw std::runtime_error(bad_line_err);
+    }
+
+    // check value
+    if (vec[0] != "value")
+    {
+        throw std::runtime_error(bad_line_err);
+    }
 }
 
 void    BitcoinExchange::checkInputLine(std::string const& line)
 {
+    std::string                 bad_line_err;
+    std::vector<std::string>    vec = sb_split(line, ' ');
+
+    // check vec
+    if (vec.size() != 3)
+    {
+        throw std::runtime_error(bad_line_err);
+    }
+
+    // check main delim
+    if (vec[1] != "|")
+    {
+        throw std::runtime_error(bad_line_err);
+    }
+
+    // check date
+    size_t  date = checkDateFormat(vec[0]);
+
+    // check value
+    if (!sb_is_number(vec[2]))
+    {
+        throw std::runtime_error(bad_line_err);
+    }
+
+    // get value
+    double  value = sb_to_double(vec[2]);
+
+    if (value < 0.0 || value > 2147483647.0)
+    {
+        throw std::runtime_error(bad_line_err);
+    }
+
+    // get right price for right time
+    std::map<size_t, double>::iterator  it = _mapPriceByDate.lower_bound(date);
+
+    if (it == _mapPriceByDate.end())
+    {
+        // too future date
+        it--;
+    }
+    else if (it != _mapPriceByDate.begin())
+    {
+        // decrement back to recent past, not recent future
+        if (it->first > date)
+        {
+            it--;
+        }
+    }
+
+    // print date => value = value * price
+    std::cout << date / 10000 << '-' 
+                << (date % 10000) / 100 << '-' 
+                << date % 100 << " => "
+                << value << " = " << value * it->second
+                << std::endl;
 }

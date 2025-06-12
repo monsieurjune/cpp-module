@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 02:28:45 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/12 08:02:31 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/12 22:50:43 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #define __BITCOIN_EXCHANGE_HPP__
 #include <string>
 #include <fstream>
-#include <set>
 #include <map>
 
 class BitcoinExchange
