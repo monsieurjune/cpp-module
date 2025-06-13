@@ -6,13 +6,15 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:52:22 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/13 11:25:39 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/13 14:18:34 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RPN.hpp"
 #include <iostream>
+#include <string>
 #include <sstream>
+#include <stdexcept>
 
 int main(const int argc, const char* argv[])
 {
@@ -25,19 +27,32 @@ int main(const int argc, const char* argv[])
     // the rest
     std::string         buff;
     std::stringstream   ss(argv[1]);
+    RPN                 rpn;
 
-    while (std::getline(ss, buff, ' '))
+    try
     {
-        if (buff.empty())
+        while (std::getline(ss, buff, ' '))
         {
-            continue;
-        }
+            if (buff.empty())
+            {
+                continue;
+            }
 
-        if (buff.length() > 1)
-        {
-            std::cout << "Error" << std::endl;
-            break;
+            rpn.add(buff);
         }
+        std::cout << rpn.ans() << std::endl;
+    }
+    catch (std::runtime_error const& e)
+    {
+        std::cout << "Error" << std::endl;
+    }
+    catch (std::logic_error const& e)
+    {
+        std::cout << e.what() << std::endl;
+    }
+    catch (std::exception const& e)
+    {
+        std::cout << e.what() << std::endl;
     }
 
     return 0;
