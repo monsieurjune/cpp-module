@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 02:28:48 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/13 06:14:11 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/13 09:37:15 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdexcept>
 #include <sstream>
 #include <iostream>
+#include <fstream>
 
 double  BitcoinExchange::_min_value = 0.0;
 double  BitcoinExchange::_max_value = 1000.0;
@@ -139,22 +140,7 @@ BitcoinExchange::BitcoinExchange(BitcoinExchange const& rhs) : _mapPriceByDate(r
 
 BitcoinExchange::BitcoinExchange(std::string const& filename)
 {
-    std::ifstream   ifile(filename.c_str());
-
-    // check file
-    if (!ifile.is_open())
-    {
-        ifile.close();
-        _isObjValid = false;
-        std::cout << "Error: could not open file." << std::endl;
-        return;
-    }
-
-    // read file
-    readDB(ifile);
-
-    ifile.close();
-    _isObjValid = true;
+    readDB(filename);
 }
 
 BitcoinExchange::~BitcoinExchange() {}
@@ -290,8 +276,8 @@ void    BitcoinExchange::checkCSVLine(std::string const& line)
         // check exchange_rate number
         price = sb_to_double(raw_exchange_rate);
 
-        // too small or too big
-        if (price <= 0.0 || price > 2147483647.0)
+        // too small
+        if (price < 0.0)
         {
             return;
         }
@@ -400,56 +386,85 @@ double  BitcoinExchange::getExactOrNearestPastPrice(size_t date)
     return it->second;
 }
 
-void    BitcoinExchange::readDB(std::ifstream& dbfile)
+void    BitcoinExchange::readDB(std::string const& db_file)
 {
+    std::ifstream   file(db_file.c_str());
+
+    if (!file.is_open())
+    {
+        std::cout << "Error: could not open DB file." << std::endl;
+        file.close();
+        return;
+    }
+
+    // after open file
     std::string line;
 
     // read CSV Header
-    if (!std::getline(dbfile, line))
+    if (!std::getline(file, line))
     {
-        std::cout << "Error: could not read file." << std::endl;
+        std::cout << "Error: could not read DB file." << std::endl;
+        file.close();
         return;
     }
 
     try
     {
+        // read header
         checkCSVHeader(line);
 
         // read whole file
-        while (std::getline(dbfile, line))
+        while (std::getline(file, line))
         {
             checkCSVLine(line);
         }
+
+        _isObjValid = true;
     }
     catch (std::exception const& e)
     {
         std::cout << "Error: " << e.what() << std::endl;
+        _isObjValid = false;
     }
+    file.close();
 }
 
-void    BitcoinExchange::analyze(std::ifstream& infile)
+void    BitcoinExchange::analyze(std::string const& input_file)
 {
+    // check db vallidation
     if (!_isObjValid)
     {
         return;
     }
 
-    // normal part
+    // open file
+    std::ifstream   file(input_file.c_str());
+
+    if (!file.is_open())
+    {
+        std::cout << "Error: could not open file." << std::endl;
+        file.close();
+        return;
+    }
+
+    // after open file
     std::string line;
 
     // read input header
-    if (!std::getline(infile, line))
+    if (!std::getline(file, line))
     {
         std::cout << "Error: could not read file." << std::endl;
+        file.close();
         return;
     }
 
     try
     {
+        // read header
         checkInputHeader(line);
 
         // read whole file
-        while (std::getline(infile, line))
+        while (std::getline(file, line))
         {
             checkInputLine(line);
         }
@@ -458,4 +473,5 @@ void    BitcoinExchange::analyze(std::ifstream& infile)
     {
         std::cout << "Error: " << e.what() << std::endl;
     }
+    file.close();
 }

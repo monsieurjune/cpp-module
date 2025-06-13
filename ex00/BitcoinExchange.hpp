@@ -6,14 +6,13 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 02:28:45 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/13 06:13:07 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/13 09:28:14 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __BITCOIN_EXCHANGE_HPP__
 #define __BITCOIN_EXCHANGE_HPP__
 #include <string>
-#include <fstream>
 #include <map>
 
 class BitcoinExchange
@@ -45,8 +44,8 @@ class BitcoinExchange
         bool                                isValid() const;
         std::map<size_t, double> const&     getMapPriceByDate() const;
 
-        void    readDB(std::ifstream& dbfile);
-        void    analyze(std::ifstream& infile);
+        void    readDB(std::string const& db_file);
+        void    analyze(std::string const& input_file);
 
 };
 
