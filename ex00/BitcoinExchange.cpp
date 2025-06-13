@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 02:28:48 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/13 09:37:15 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/13 10:32:34 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static inline void  sb_get_token(std::stringstream& ss, std::string& getter, cha
     }
 }
 
-static inline void sb_throw(bool condition, std::exception const& e)
+static inline void sb_throw(bool condition, std::runtime_error const& e)
 {
     if (condition)
     {
@@ -251,6 +251,7 @@ void    BitcoinExchange::checkCSVHeader(std::string const& line)
 
 void    BitcoinExchange::checkCSVLine(std::string const& line)
 {
+    std::string         err_msg;
     std::stringstream   ss(line);
     std::string         raw_date;
     std::string         raw_exchange_rate;
@@ -263,6 +264,10 @@ void    BitcoinExchange::checkCSVLine(std::string const& line)
 
     try
     {
+        // ger raw data
+        sb_get_token(ss, raw_date, ',', err_msg);
+        sb_get_token(ss, raw_exchange_rate, ',', err_msg);
+
         // check date
         size_t  date = checkDateFormat(raw_date);
         double  price;
@@ -322,6 +327,8 @@ void    BitcoinExchange::checkInputLine(std::string const& line)
     std::stringstream   ss(line);
     std::string         bad_line_err = std::string("bad input => ") + line;
     std::runtime_error  e(bad_line_err);
+    std::runtime_error  e_neg("not a positive number.");
+    std::runtime_error  e_too_much("too large a number.");
     std::string         raw_date;
     std::string         raw_delim;
     std::string         raw_value;
@@ -329,36 +336,44 @@ void    BitcoinExchange::checkInputLine(std::string const& line)
     double              value;
     double              price;
 
-    // check delim
-    sb_throw(sb_count(line, ' ') != 2, e);
+    try
+    {
+        // check delim
+        sb_throw(sb_count(line, ' ') != 2, e);
 
-    // get raw data
-    sb_get_token(ss, raw_date, ' ', bad_line_err);
-    sb_get_token(ss, raw_delim, ' ', bad_line_err);
-    sb_get_token(ss, raw_value, ' ', bad_line_err);
+        // get raw data
+        sb_get_token(ss, raw_date, ' ', bad_line_err);
+        sb_get_token(ss, raw_delim, ' ', bad_line_err);
+        sb_get_token(ss, raw_value, ' ', bad_line_err);
 
-    // check main delim
-    sb_throw(raw_delim != "|", e);
+        // check main delim
+        sb_throw(raw_delim != "|", e);
 
-    // check date
-    date = checkDateFormat(raw_date);
+        // check date
+        date = checkDateFormat(raw_date);
 
-    // check value
-    sb_throw(!sb_is_number(raw_value), e);
+        // check value
+        sb_throw(!sb_is_number(raw_value), e);
 
-    // get value
-    value = sb_to_double(raw_value);
-    sb_throw(value < _min_value || value > _max_value, e);
+        // get value
+        value = sb_to_double(raw_value);
+        sb_throw(value < _min_value, e_neg);
+        sb_throw(value > _max_value, e_too_much);
 
-    // get right price for right time
-    price = getExactOrNearestPastPrice(date);
+        // get right price for right time
+        price = getExactOrNearestPastPrice(date);
 
-    // print date => value = value * price
-    std::cout << date / 10000 << '-' 
-                << (date % 10000) / 100 << '-' 
-                << date % 100 << " => "
-                << value << " = " << value * price
-                << std::endl;
+        // print date => value = value * price
+        std::cout << date / 10000 << '-' 
+                    << (date % 10000) / 100 << '-' 
+                    << date % 100 << " => "
+                    << value << " = " << value * price
+                    << std::endl;
+    }
+    catch (std::exception const& e)
+    {
+        std::cout << "Error: " << e.what() << std::endl;
+    }
 }
 
 double  BitcoinExchange::getExactOrNearestPastPrice(size_t date)
@@ -366,6 +381,7 @@ double  BitcoinExchange::getExactOrNearestPastPrice(size_t date)
     std::string         err_msg("Database is Empty.");
     std::runtime_error  e(err_msg);
 
+    // do nothing, if DB is empty
     sb_throw(_mapPriceByDate.empty(), e);
 
     // normal part
