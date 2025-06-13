@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 15:01:14 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/07 19:14:24 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/13 12:11:10 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ class Span
         // add
         void    addNumber(int val);
 
-        template <typename C>
-        void    addNumber(typename C::const_iterator begin, typename C::const_iterator end)
+        template <typename Iterator>
+        void    addNumber(Iterator begin, Iterator end)
         {
             std::multiset<int>  tmp_set;
             unsigned int        total_size = _storage.size();

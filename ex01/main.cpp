@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 03:08:42 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/11 20:10:54 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/13 12:12:10 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ static void	sb_deepcopy(std::vector<int> const& vec)
 	std::cout << "==== DEEPCOPY ====" << std::endl;
 
 	// fill
-	sp0.addNumber<std::vector<int> >(vec.begin(), vec.begin() + 4);
-	sp1.addNumber<std::vector<int> >(vec.begin() + 6, vec.begin() + 7);
+	sp0.addNumber(vec.begin(), vec.begin() + 4);
+	sp1.addNumber(vec.begin() + 6, vec.begin() + 7);
 
 	// print
 	sb_print(sp0, sp1);
@@ -101,12 +101,13 @@ static void	sb_deepcopy(std::vector<int> const& vec)
 	// print
 	std::cout << std::endl;
 	sb_print(sp0, sp1);
+	std::cout << std::endl;
 
 	// scope
 	{
 		Span	sp2(sp1);
 
-		sp2.addNumber<std::vector<int> >(vec.begin() + 8, vec.begin() + 9);
+		sp2.addNumber(vec.begin() + 8, vec.begin() + 9);
 
 		// print
 		sb_print(sp1, sp2);
@@ -152,16 +153,16 @@ static void	sb_exception(std::vector<int> const& vec)
 		Span	sp0 = Span(16);
 
 		std::cout << "Add [0, 3]" << std::endl;
-		sp0.addNumber<std::vector<int> >(vec.begin(), vec.begin() + 4);
+		sp0.addNumber(vec.begin(), vec.begin() + 4);
 
 		std::cout << "Add [4, 15]" << std::endl;
-		sp0.addNumber<std::vector<int> >(vec.begin(), vec.begin() + 20);
+		sp0.addNumber(vec.begin(), vec.begin() + 20);
 
 		std::cout << "Add [16, 17]" << std::endl;
-		sp0.addNumber<std::vector<int> >(vec.begin(), vec.begin() + 20);
+		sp0.addNumber(vec.begin(), vec.begin() + 20);
 
 		std::cout << "Add [17, 30]" << std::endl;
-		sp0.addNumber<std::vector<int> >(vec.begin(), vec.begin() + 20);
+		sp0.addNumber(vec.begin(), vec.begin() + 20);
 	}
 	catch (Span::CannotInsertToSpanException const& e)
 	{
@@ -213,7 +214,7 @@ static void	sb_normal(std::vector<int> const& vec)
 	// start
 	std::cout << "==== NORMAL ====" << std::endl;
 
-	sp0.addNumber<std::vector<int> >(vec.begin(), vec.begin() + 2);
+	sp0.addNumber(vec.begin(), vec.begin() + 2);
 	for (int i = 0; i < n; i++)
 	{
 		try
