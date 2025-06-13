@@ -1,0 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/13 14:22:00 by tponutha          #+#    #+#             */
+/*   Updated: 2025/06/13 19:26:47 by tponutha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "PmergeMe.hpp"
+#include <iostream>
+#include <stdexcept>
+
+int main(const int argc, const char* argv[])
+{
+    try
+    {
+        PmergeMe    obj(argc, argv);
+
+        obj.print_vector("Before:");
+        obj.print_vector("After:");
+    }
+    catch (std::runtime_error const& e)
+    {
+        std::cout << "Error: " << e.what() << std::endl;
+    }
+    catch (std::logic_error const& e)
+    {
+        std::cout << "Error: " << e.what() << std::endl;
+    }
+    catch (std::exception const& e)
+    {
+        std::cout << "Error: " << e.what() << std::endl;
+    }
+
+    return 0;
+}
