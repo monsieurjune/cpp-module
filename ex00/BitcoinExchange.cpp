@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 02:28:48 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/13 10:32:34 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/13 10:45:26 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -365,7 +365,9 @@ void    BitcoinExchange::checkInputLine(std::string const& line)
 
         // print date => value = value * price
         std::cout << date / 10000 << '-' 
+                    << (((date % 10000) / 100) > 10 ? "" : "0")
                     << (date % 10000) / 100 << '-' 
+                    << ((date % 100) > 10 ? "" : "0")
                     << date % 100 << " => "
                     << value << " = " << value * price
                     << std::endl;
