@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:22:00 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/13 19:26:47 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/14 19:08:51 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@ int main(const int argc, const char* argv[])
         PmergeMe    obj(argc, argv);
 
         obj.print_vector("Before:");
+        obj.ford_johnson_sort_vector();
+        obj.ford_johnson_sort_deque();
         obj.print_vector("After:");
+        obj.print_sort_time_vector();
+        obj.print_sort_time_deque();
     }
     catch (std::runtime_error const& e)
     {

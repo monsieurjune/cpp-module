@@ -6,13 +6,14 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:21:57 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/13 19:25:02 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/14 19:03:17 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 #include <cmath>
 #include <ctime>
+#include <algorithm>
 #include <stdexcept>
 #include <sstream>
 #include <iostream>
@@ -43,7 +44,37 @@ size_t  PmergeMe::jacobsthal(size_t n)
     return (static_cast<size_t>(std::pow(2, n)) - static_cast<size_t>(std::pow(-1, n))) / 3;
 }
 
-PmergeMe::PmergeMe() {}
+void PmergeMe::inspect_vector(std::string const& head, std::vector<size_t>::const_iterator begin, std::vector<size_t>::const_iterator end)
+{
+    std::stringstream   ss;
+
+    ss << head;
+    for (std::vector<size_t>::const_iterator it = begin; it != end; it++)
+    {
+        ss << ' ' << *it;
+    }
+
+    std::cout << ss.str() << std::endl;
+}
+
+void PmergeMe::inspect_deque(std::string const& head, std::deque<size_t>::const_iterator begin, std::deque<size_t>::const_iterator end)
+{
+    std::stringstream   ss;
+
+    ss << head;
+    for (std::deque<size_t>::const_iterator it = begin; it != end; it++)
+    {
+        ss << ' ' << *it;
+    }
+
+    std::cout << ss.str() << std::endl;
+}
+
+PmergeMe::PmergeMe()
+{
+    _sort_time_vec_us = 0;
+    _sort_time_deque_us = 0;
+}
 
 PmergeMe::PmergeMe(const int n, const char* arr[])
 {
@@ -59,11 +90,20 @@ PmergeMe::PmergeMe(const int n, const char* arr[])
         _main_vec.push_back(val);
     }
 
+    // set time
+    _sort_time_vec_us = 0;
+    _sort_time_deque_us = 0;
+
     // if arr is fine, then insert thing to deque later. for performance
     _main_deque.insert(_main_deque.begin() ,_main_vec.begin(), _main_vec.end());
 }
 
-PmergeMe::PmergeMe(PmergeMe const& obj) : _main_vec(obj.getVector()), _main_deque(obj.getDeque()) {}
+PmergeMe::PmergeMe(PmergeMe const& obj) : _main_vec(obj.getVector()), \
+                                            _main_deque(obj.getDeque()), \
+                                            _sort_time_vec_us(obj.getSortTimeVecUS()),
+                                            _sort_time_deque_us(obj.getSortTImeDequeUS())
+{
+}
 
 PmergeMe::~PmergeMe() {}
 
@@ -77,6 +117,8 @@ PmergeMe&   PmergeMe::operator=(PmergeMe const& rhs)
     // normal
     _main_vec = rhs.getVector();
     _main_deque = rhs.getDeque();
+    _sort_time_vec_us = rhs.getSortTimeVecUS();
+    _sort_time_deque_us = rhs.getSortTImeDequeUS();
 
     return *this;
 }
@@ -89,6 +131,16 @@ std::vector<size_t> const&  PmergeMe::getVector() const
 std::deque<size_t> const&   PmergeMe::getDeque() const
 {
     return _main_deque;
+}
+
+size_t  PmergeMe::getSortTimeVecUS() const
+{
+    return _sort_time_vec_us;
+}
+
+size_t  PmergeMe::getSortTImeDequeUS() const
+{
+    return _sort_time_deque_us;
 }
 
 static size_t   sb_delta_usec(struct timespec* start, struct timespec* end)
@@ -104,16 +156,15 @@ void    PmergeMe::ford_johnson_sort_vector()
     struct timespec t_start;
     struct timespec t_end;
 
+    // get start
     clock_gettime(CLOCK_REALTIME, &t_start);
 
     // do something
+    sort_vector(_main_vec, 1);
 
+    // get end
     clock_gettime(CLOCK_REALTIME, &t_end);
-    std::cout << "Time to process a range of " 
-                << _main_vec.size() 
-                << " elements with std::vector : " 
-                << sb_delta_usec(&t_start, &t_end) << " us"
-                << std::endl;
+    _sort_time_vec_us = sb_delta_usec(&t_start, &t_end);
 }
 
 void    PmergeMe::ford_johnson_sort_deque()
@@ -121,16 +172,17 @@ void    PmergeMe::ford_johnson_sort_deque()
     struct timespec t_start;
     struct timespec t_end;
 
+    // get start
     clock_gettime(CLOCK_REALTIME, &t_start);
 
     // do something
+    sort_deque(_main_deque, 1);
 
+    // get end
     clock_gettime(CLOCK_REALTIME, &t_end);
-    std::cout << "Time to process a range of " 
-                << _main_vec.size() 
-                << " elements with std::deque : " 
-                << sb_delta_usec(&t_start, &t_end) << " us"
-                << std::endl;
+    _sort_time_deque_us = sb_delta_usec(&t_start, &t_end);
+
+    
 }
 
 void    PmergeMe::verify_vector() const
@@ -177,26 +229,85 @@ void    PmergeMe::verify_deque() const
 
 void    PmergeMe::print_vector(std::string const& head) const
 {
-    std::stringstream   ss;
-
-    ss << head;
-    for (std::vector<size_t>::const_iterator it = _main_vec.begin(); it != _main_vec.end(); it++)
-    {
-        ss << " " << *it;
-    }
-
-    std::cout << ss.str() << std::endl;
+    inspect_vector(head, _main_vec.begin(), _main_vec.end());
 }
 
 void    PmergeMe::print_deque(std::string const& head) const
 {
-    std::stringstream   ss;
+    inspect_deque(head, _main_deque.begin(), _main_deque.end());
+}
 
-    ss << head;
-    for (std::deque<size_t>::const_iterator it = _main_deque.begin(); it != _main_deque.end(); it++)
+void    PmergeMe::print_sort_time_vector() const
+{
+    std::cout << "Time to process a range of " 
+                << _main_vec.size() 
+                << " elements with std::vector : " 
+                << _sort_time_vec_us << " us"
+                << std::endl;
+}
+
+void    PmergeMe::print_sort_time_deque() const
+{
+    std::cout << "Time to process a range of " 
+                << _main_vec.size() 
+                << " elements with std::deque : " 
+                << _sort_time_deque_us << " us"
+                << std::endl;
+}
+
+// sort vec
+
+void    PmergeMe::sort_vector(std::vector<size_t>& vec, size_t small_pair_size)
+{
+    size_t  big_pair_size = small_pair_size * 2;
+
+    // recursive check
+    if (big_pair_size > vec.size())
     {
-        ss << " " << *it;
+        return;
     }
 
-    std::cout << ss.str() << std::endl;
+    // merge sort pair
+    size_t  big_pair_head_pos = 0;
+
+    while (big_pair_head_pos < vec.size())
+    {
+        size_t  first_tail_pos = big_pair_head_pos + small_pair_size - 1;
+        size_t  second_head_pos = first_tail_pos + 1;
+        size_t  second_tail_pos = big_pair_head_pos + big_pair_size - 1;
+
+        // if second doesn't exist, then just stop
+        if (second_tail_pos >= vec.size())
+        {
+            break;
+        }
+
+        // swap if first > second
+        if (vec[first_tail_pos] > vec[second_tail_pos])
+        {
+            std::vector<size_t>::iterator   first = vec.begin() + big_pair_head_pos;
+            std::vector<size_t>::iterator   middle = vec.begin() + second_head_pos;
+            std::vector<size_t>::iterator   end = vec.begin() + second_tail_pos + 1;
+
+            std::rotate(first, middle, end);
+        }
+
+        // increment to next big pair
+        big_pair_head_pos += big_pair_size;
+    }
+
+    // recursive
+    sort_vector(vec, big_pair_size);
+
+    // create main & pend
+
+    // binary insertion
+}
+
+// sort deque
+
+void    PmergeMe::sort_deque(std::deque<size_t>& deque, size_t small_pair_size)
+{
+    (void)deque;
+    (void)small_pair_size;
 }
