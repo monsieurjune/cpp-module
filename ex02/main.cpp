@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:22:00 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/14 19:08:51 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/16 06:06:39 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int main(const int argc, const char* argv[])
         obj.print_vector("After:");
         obj.print_sort_time_vector();
         obj.print_sort_time_deque();
+        obj.verify_vector();
     }
     catch (std::runtime_error const& e)
     {
