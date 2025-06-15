@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:21:57 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/15 15:46:52 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/15 17:47:40 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static inline void sb_inspect_vector(std::string const& head, std::vector<size_t
         ss << ' ' << *it;
     }
 
+    ss << " -> " << std::distance(begin, end);
     std::cout << ss.str() << std::endl;
 }
 
@@ -317,11 +318,13 @@ static inline void  sb_filter_pend_out(
     // normal
     std::vector<size_t> aux_main;
     size_t              last_b_head_pos = main_vec.size() - small_pair_size + 1;
+    size_t              last_a_head_pos = last_b_head_pos - small_pair_size;
 
     //  small_pair_amount is odd, then last pair is Bm
     //  otherwise, last pair is An
     if (small_pair_amount % 2 == 0)
     {
+        last_a_head_pos = last_b_head_pos;
         last_b_head_pos -= small_pair_size;
     }
 
@@ -339,7 +342,7 @@ static inline void  sb_filter_pend_out(
     aux_main.assign(main_vec.begin(), main_vec.begin() + small_pair_size);  // copy B1
 
     //  copy A[1..n]
-    for (size_t i = small_pair_size; i <= last_b_head_pos - small_pair_size; i += big_pair_size)
+    for (size_t i = small_pair_size; i <= last_a_head_pos; i += big_pair_size)
     {
         aux_main.insert(
             aux_main.end(), 
@@ -397,10 +400,15 @@ void    PmergeMe::sort_vector(std::vector<size_t>& vec, size_t small_pair_size)
     //  jacobsthal logic, binary insert each [Jn, Jn-1), until Jn > M (M is max Bn)
     //  since An > Bn, then end boundary is either An or iterator's end if An doesn't exist
     size_t  jacobsthal_i = 3;
-    size_t  jacobsthal_val = jacobsthal(jacobsthal_i);
     size_t  b_m_max = pend.size() / small_pair_size + 1;
+    size_t  b_insert_amount = b_m_max - 1;
+    size_t  jacobsthal_val = jacobsthal(jacobsthal_i);
 
-    while (jacobsthal_val <= b_m_max)
+    // cap out jacobsthal number
+    jacobsthal_val = jacobsthal_val > b_m_max ? b_m_max : jacobsthal_val;
+
+    // insert B from pend back to main
+    while (b_insert_amount > 0)
     {
         size_t  prev_jacobsthal_val = jacobsthal(jacobsthal_i - 1);
 
@@ -418,10 +426,12 @@ void    PmergeMe::sort_vector(std::vector<size_t>& vec, size_t small_pair_size)
                 pend.begin() + pend_b_tail_pos + 1
             );
             jacobsthal_val--;
+            b_insert_amount--;
         }
 
         jacobsthal_i++;
         jacobsthal_val = jacobsthal(jacobsthal_i);
+        jacobsthal_val = jacobsthal_val > b_m_max ? b_m_max : jacobsthal_val;
     }
 
     // append non_participate_psudo_stack back
