@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:21:57 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/15 07:02:26 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/15 07:04:58 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -342,6 +342,7 @@ void    PmergeMe::sort_vector(std::vector<size_t>& vec, size_t small_pair_size)
         }
 
         // swap aux_main & main
+        std::swap(aux_main, vec);
     }
 
     // inspector
