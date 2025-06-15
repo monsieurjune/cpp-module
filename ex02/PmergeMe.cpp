@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:21:57 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/15 07:04:58 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/15 08:51:15 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,44 @@
 #include <stdexcept>
 #include <sstream>
 #include <iostream>
+
+// helper
+
+static inline void sb_inspect_vector(std::string const& head, std::vector<size_t>::const_iterator begin, std::vector<size_t>::const_iterator end)
+{
+    std::stringstream   ss;
+
+    ss << head;
+    for (std::vector<size_t>::const_iterator it = begin; it != end; it++)
+    {
+        ss << ' ' << *it;
+    }
+
+    std::cout << ss.str() << std::endl;
+}
+
+static inline void sb_inspect_deque(std::string const& head, std::deque<size_t>::const_iterator begin, std::deque<size_t>::const_iterator end)
+{
+    std::stringstream   ss;
+
+    ss << head;
+    for (std::deque<size_t>::const_iterator it = begin; it != end; it++)
+    {
+        ss << ' ' << *it;
+    }
+
+    std::cout << ss.str() << std::endl;
+}
+
+static size_t   sb_delta_usec(struct timespec* start, struct timespec* end)
+{
+    size_t  u_start = start->tv_sec * 1000000 + start->tv_nsec / 1000;
+    size_t  u_end = end->tv_sec * 1000000 + end->tv_nsec / 1000;
+
+    return u_end - u_start;
+}
+
+// utils
 
 size_t  PmergeMe::to_ulong(std::string const& str)
 {
@@ -44,31 +82,7 @@ size_t  PmergeMe::jacobsthal(size_t n)
     return (static_cast<size_t>(std::pow(2, n)) - static_cast<size_t>(std::pow(-1, n))) / 3;
 }
 
-void PmergeMe::inspect_vector(std::string const& head, std::vector<size_t>::const_iterator begin, std::vector<size_t>::const_iterator end)
-{
-    std::stringstream   ss;
-
-    ss << head;
-    for (std::vector<size_t>::const_iterator it = begin; it != end; it++)
-    {
-        ss << ' ' << *it;
-    }
-
-    std::cout << ss.str() << std::endl;
-}
-
-void PmergeMe::inspect_deque(std::string const& head, std::deque<size_t>::const_iterator begin, std::deque<size_t>::const_iterator end)
-{
-    std::stringstream   ss;
-
-    ss << head;
-    for (std::deque<size_t>::const_iterator it = begin; it != end; it++)
-    {
-        ss << ' ' << *it;
-    }
-
-    std::cout << ss.str() << std::endl;
-}
+// orthodox
 
 PmergeMe::PmergeMe()
 {
@@ -123,6 +137,8 @@ PmergeMe&   PmergeMe::operator=(PmergeMe const& rhs)
     return *this;
 }
 
+// getter
+
 std::vector<size_t> const&  PmergeMe::getVector() const
 {
     return _main_vec;
@@ -143,13 +159,7 @@ size_t  PmergeMe::getSortTImeDequeUS() const
     return _sort_time_deque_us;
 }
 
-static size_t   sb_delta_usec(struct timespec* start, struct timespec* end)
-{
-    size_t  u_start = start->tv_sec * 1000000 + start->tv_nsec / 1000;
-    size_t  u_end = end->tv_sec * 1000000 + end->tv_nsec / 1000;
-
-    return u_end - u_start;
-}
+// public sorter
 
 void    PmergeMe::ford_johnson_sort_vector()
 {
@@ -181,9 +191,9 @@ void    PmergeMe::ford_johnson_sort_deque()
     // get end
     clock_gettime(CLOCK_REALTIME, &t_end);
     _sort_time_deque_us = sb_delta_usec(&t_start, &t_end);
-
-    
 }
+
+// verify container
 
 void    PmergeMe::verify_vector() const
 {
@@ -227,14 +237,16 @@ void    PmergeMe::verify_deque() const
     }
 }
 
+// printer
+
 void    PmergeMe::print_vector(std::string const& head) const
 {
-    inspect_vector(head, _main_vec.begin(), _main_vec.end());
+    sb_inspect_vector(head, _main_vec.begin(), _main_vec.end());
 }
 
 void    PmergeMe::print_deque(std::string const& head) const
 {
-    inspect_deque(head, _main_deque.begin(), _main_deque.end());
+    sb_inspect_deque(head, _main_deque.begin(), _main_deque.end());
 }
 
 void    PmergeMe::print_sort_time_vector() const

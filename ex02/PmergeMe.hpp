@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:21:54 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/14 19:04:43 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/15 08:50:42 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,6 @@ class PmergeMe
         // method
         static size_t  to_ulong(std::string const& str);
         static size_t  jacobsthal(size_t n);
-
-        // inspector
-        static void inspect_vector(std::string const& head, std::vector<size_t>::const_iterator begin, std::vector<size_t>::const_iterator end);
-        static void inspect_deque(std::string const& head, std::deque<size_t>::const_iterator begin, std::deque<size_t>::const_iterator end);
 
         // vec sort
         static void    sort_vector(std::vector<size_t>& vec, size_t small_pair_size);
