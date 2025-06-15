@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:21:57 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/14 19:03:17 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/15 07:02:26 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,9 +299,80 @@ void    PmergeMe::sort_vector(std::vector<size_t>& vec, size_t small_pair_size)
     // recursive
     sort_vector(vec, big_pair_size);
 
-    // create main & pend
+    // create pend & non_participate_psudo_stack
+    std::vector<size_t> pend;
+    std::vector<size_t> non_participate_psudo_stack;
+    size_t              small_pair_amount = vec.size() / small_pair_size;
+    size_t              non_participate_head = small_pair_size * small_pair_amount;
+
+    //  non_participate_psudo_stack
+    for (size_t i = vec.size() - 1; i >= non_participate_head; i--)
+    {
+        size_t  item = vec.back();
+
+        non_participate_psudo_stack.push_back(item);
+        vec.pop_back();
+    }
+
+    //  pend
+    //  small_pair_amount is odd, then last pair is b
+    //  otherwise, last pair is a
+
+    if (small_pair_amount > 2)
+    {
+        std::vector<size_t> aux_main;
+        std::vector<size_t> b;
+        size_t              last_b_head_pos = small_pair_amount % 2 ? (vec.size() - small_pair_size + 1) : (vec.size() - big_pair_size + 1);
+
+        // b1's head position is always 0, and pending must exclude b1 [b2, b3, b4, ... bM]
+        for (size_t i = big_pair_size; i <= last_b_head_pos; i += big_pair_size)
+        {
+            b.assign(vec.begin() + i, vec.begin() + i + small_pair_size);
+            pend.insert(pend.end(), vec.begin() + i, vec.begin() + i + small_pair_size);
+        }
+
+        // copy b1 & a[1, N] to aux_main with following order [b1, a1, a2, ... aN]
+        //  copy b1
+        aux_main.assign(vec.begin(), vec.begin() + small_pair_size);
+
+        //  copy a[1..N]
+        for (size_t i = small_pair_size; i <= last_b_head_pos - small_pair_size; i += big_pair_size)
+        {
+            aux_main.insert(aux_main.end(), vec.begin() + i, vec.begin() + i + small_pair_size);
+        }
+
+        // swap aux_main & main
+    }
+
+    // inspector
+    // std::cout << "Recursive Level: " << log2(small_pair_size) + 1 << std::endl;
+    // inspect_vector("Vector:", vec.begin(), vec.end());
+    // inspect_vector("Main:", aux_main.begin(), aux_main.end());
+    // inspect_vector("Pending:", pend.begin(), pend.end());
+    // inspect_vector("Non Participate [reverse]:", non_participate_psudo_stack.begin(), non_participate_psudo_stack.end());
+    // std::cout << std::endl;
 
     // binary insertion
+    //  jacobsthal logic, binary insert each [Jn, Jn-1), until Jn > M (M is max Bn)
+    //  since An > Bn, then end boundary is either An or iterator's end if An doesn't exist
+    size_t  jacobsthal_i = 3;
+    size_t  jacobsthal_val = jacobsthal(jacobsthal_i);
+    size_t  b_m_max = pend.size() / small_pair_size + 1;
+
+    while (jacobsthal_val > b_m_max)
+    {
+        jacobsthal_i++;
+        jacobsthal_val = jacobsthal(jacobsthal_i);
+    }
+
+    // append non_participate_psudo_stack back
+    while (!non_participate_psudo_stack.empty())
+    {
+        size_t  item = non_participate_psudo_stack.back();
+
+        vec.push_back(item);
+        non_participate_psudo_stack.pop_back();
+    }
 }
 
 // sort deque
