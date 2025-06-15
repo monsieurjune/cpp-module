@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:21:57 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/15 08:51:15 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/15 11:33:33 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,6 +269,11 @@ void    PmergeMe::print_sort_time_deque() const
 
 // sort vec
 
+size_t  PmergeMe::bsearch_upper_vector(std::vector<size_t> const& vec, size_t key, size_t scale_low_pos, size_t scale_high_pos)
+{
+    return 0;
+}
+
 void    PmergeMe::sort_vector(std::vector<size_t>& vec, size_t small_pair_size)
 {
     size_t  big_pair_size = small_pair_size * 2;
@@ -329,7 +334,6 @@ void    PmergeMe::sort_vector(std::vector<size_t>& vec, size_t small_pair_size)
     //  pend
     //  small_pair_amount is odd, then last pair is b
     //  otherwise, last pair is a
-
     if (small_pair_amount > 2)
     {
         std::vector<size_t> aux_main;
@@ -374,6 +378,18 @@ void    PmergeMe::sort_vector(std::vector<size_t>& vec, size_t small_pair_size)
 
     while (jacobsthal_val > b_m_max)
     {
+        size_t  prev_jacobsthal_val = jacobsthal(jacobsthal_i - 1);
+
+        while (jacobsthal_val > prev_jacobsthal_val)
+        {
+            size_t  pend_i = (jacobsthal_val - 1) * small_pair_size - 1;
+            size_t  b_n_head = pend_i - small_pair_size + 1;
+            size_t  scale_high_pos = vec.size() / small_pair_size - 1;
+            size_t  insert_pos = bsearch_upper_vector(vec, pend[pend_i], 0, scale_high_pos);
+
+            vec.insert(vec.begin() + insert_pos, pend.begin() + b_n_head, pend.begin() + pend_i + 1);
+        }
+
         jacobsthal_i++;
         jacobsthal_val = jacobsthal(jacobsthal_i);
     }

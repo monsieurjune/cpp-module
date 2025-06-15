@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:21:54 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/15 08:50:42 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/15 09:12:39 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,19 @@ class PmergeMe
         std::deque<size_t>  _main_deque;
 
         // time
-        size_t              _sort_time_vec_us;
-        size_t              _sort_time_deque_us;
+        size_t  _sort_time_vec_us;
+        size_t  _sort_time_deque_us;
 
         // method
-        static size_t  to_ulong(std::string const& str);
-        static size_t  jacobsthal(size_t n);
+        static size_t   to_ulong(std::string const& str);
+        static size_t   jacobsthal(size_t n);
 
         // vec sort
-        static void    sort_vector(std::vector<size_t>& vec, size_t small_pair_size);
+        static size_t   bsearch_upper_vector(std::vector<size_t> const& vec, size_t key, size_t scale_low_pos, size_t scale_high_pos);
+        static void     sort_vector(std::vector<size_t>& vec, size_t small_pair_size);
 
         // deque sort
-        static void    sort_deque(std::deque<size_t>& deque, size_t small_pair_size);
+        static void     sort_deque(std::deque<size_t>& deque, size_t small_pair_size);
 
     public:
         PmergeMe();
