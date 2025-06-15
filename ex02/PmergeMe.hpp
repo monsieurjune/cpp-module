@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:21:54 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/15 09:12:39 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/15 17:57:40 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ class PmergeMe
 
         // vec sort
         static size_t   bsearch_upper_vector(std::vector<size_t> const& vec, size_t key, size_t scale_low_pos, size_t scale_high_pos);
+        static void     insert_b_vector(std::vector<size_t>& main_vec, std::vector<size_t>& pend_vec, size_t small_pair_size);
         static void     sort_vector(std::vector<size_t>& vec, size_t small_pair_size);
 
         // deque sort

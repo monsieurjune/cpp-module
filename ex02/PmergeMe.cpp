@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:21:57 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/15 17:47:40 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/15 18:03:36 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -357,11 +357,51 @@ static inline void  sb_filter_pend_out(
 
 size_t  PmergeMe::bsearch_upper_vector(std::vector<size_t> const& vec, size_t key, size_t scale_low_pos, size_t scale_high_pos)
 {
+    // since An > Bn, then end boundary is either An or iterator's end if An doesn't exist
     (void)vec;
     (void)key;
     (void)scale_low_pos;
     (void)scale_high_pos;
     return 0;
+}
+
+void PmergeMe::insert_b_vector(std::vector<size_t>& main_vec, std::vector<size_t>& pend_vec, size_t small_pair_size)
+{
+    //jacobsthal's logic, binary insert each [Jn, Jn-1), until Jn > M (M is max Bn)
+    size_t  jacobsthal_i = 3;
+    size_t  b_m_max = pend_vec.size() / small_pair_size + 1;
+    size_t  b_insert_amount = b_m_max - 1;
+    size_t  jacobsthal_val = jacobsthal(jacobsthal_i);
+
+    // cap out jacobsthal number
+    jacobsthal_val = jacobsthal_val > b_m_max ? b_m_max : jacobsthal_val;
+
+    // insert B from pend back to main
+    while (b_insert_amount > 0)
+    {
+        size_t  prev_jacobsthal_val = jacobsthal(jacobsthal_i - 1);
+
+        // find & insert Bn to coorect place in main line
+        while (jacobsthal_val > prev_jacobsthal_val)
+        {
+            size_t  pend_b_tail_pos = (jacobsthal_val - 1) * small_pair_size - 1;
+            size_t  pend_b_head_pos = pend_b_tail_pos - small_pair_size + 1;
+            size_t  scale_high_pos = main_vec.size() / small_pair_size - 1;
+            size_t  insert_pos = bsearch_upper_vector(main_vec, pend_vec[pend_b_tail_pos], 0, scale_high_pos);
+
+            main_vec.insert(
+                main_vec.begin() + insert_pos, 
+                pend_vec.begin() + pend_b_head_pos, 
+                pend_vec.begin() + pend_b_tail_pos + 1
+            );
+            jacobsthal_val--;
+            b_insert_amount--;
+        }
+
+        jacobsthal_i++;
+        jacobsthal_val = jacobsthal(jacobsthal_i);
+        jacobsthal_val = jacobsthal_val > b_m_max ? b_m_max : jacobsthal_val;
+    }
 }
 
 void    PmergeMe::sort_vector(std::vector<size_t>& vec, size_t small_pair_size)
@@ -397,42 +437,7 @@ void    PmergeMe::sort_vector(std::vector<size_t>& vec, size_t small_pair_size)
     sb_filter_pend_out(vec, pend, small_pair_size, big_pair_size, small_pair_amount);
 
     // binary insertion
-    //  jacobsthal logic, binary insert each [Jn, Jn-1), until Jn > M (M is max Bn)
-    //  since An > Bn, then end boundary is either An or iterator's end if An doesn't exist
-    size_t  jacobsthal_i = 3;
-    size_t  b_m_max = pend.size() / small_pair_size + 1;
-    size_t  b_insert_amount = b_m_max - 1;
-    size_t  jacobsthal_val = jacobsthal(jacobsthal_i);
-
-    // cap out jacobsthal number
-    jacobsthal_val = jacobsthal_val > b_m_max ? b_m_max : jacobsthal_val;
-
-    // insert B from pend back to main
-    while (b_insert_amount > 0)
-    {
-        size_t  prev_jacobsthal_val = jacobsthal(jacobsthal_i - 1);
-
-        // find & insert Bn to coorect place in main line
-        while (jacobsthal_val > prev_jacobsthal_val)
-        {
-            size_t  pend_b_tail_pos = (jacobsthal_val - 1) * small_pair_size - 1;
-            size_t  pend_b_head_pos = pend_b_tail_pos - small_pair_size + 1;
-            size_t  scale_high_pos = vec.size() / small_pair_size - 1;
-            size_t  insert_pos = bsearch_upper_vector(vec, pend[pend_b_tail_pos], 0, scale_high_pos);
-
-            vec.insert(
-                vec.begin() + insert_pos, 
-                pend.begin() + pend_b_head_pos, 
-                pend.begin() + pend_b_tail_pos + 1
-            );
-            jacobsthal_val--;
-            b_insert_amount--;
-        }
-
-        jacobsthal_i++;
-        jacobsthal_val = jacobsthal(jacobsthal_i);
-        jacobsthal_val = jacobsthal_val > b_m_max ? b_m_max : jacobsthal_val;
-    }
+    insert_b_vector(vec, pend, small_pair_size);
 
     // append non_participate_psudo_stack back
     while (!non_participate_psudo_stack.empty())
