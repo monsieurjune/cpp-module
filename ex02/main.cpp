@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:22:00 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/16 15:34:01 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/16 15:44:50 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,21 @@ int main(const int argc, const char* argv[])
     }
     catch (std::runtime_error const& e)
     {
-        std::cout << "Error: " << e.what() << std::endl;
+        std::cerr << "Error: " << e.what() << std::endl;
     }
     catch (std::logic_error const& e)
     {
-        std::cout << std::endl;
-        std::cout << "===== LOGIC ERROR ====" << std::endl;
-        std::cout << "Error: " << e.what() << std::endl;
-        std::cout << "======================" << std::endl;
+        std::cerr << std::endl;
+        std::cerr << "===== LOGIC ERROR ====" << std::endl;
+        std::cerr << "Error: " << e.what() << std::endl;
+        std::cerr << "======================" << std::endl;
     }
     catch (std::exception const& e)
     {
-        std::cout << std::endl;
-        std::cout << "===== NORMAL ERROR ====" << std::endl;
-        std::cout << "Error: " << e.what() << std::endl;
-        std::cout << "=======================" << std::endl;
+        std::cerr << std::endl;
+        std::cerr << "===== NORMAL ERROR ====" << std::endl;
+        std::cerr << "Error: " << e.what() << std::endl;
+        std::cerr << "=======================" << std::endl;
     }
 
     return 0;
