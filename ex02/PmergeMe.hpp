@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:21:54 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/16 08:04:53 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/16 15:19:32 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ class PmergeMe
         static void     sort_vector(std::vector<size_t>& vec, size_t small_pair_size);
 
         // deque sort
+        static size_t   bsearch_deque(std::deque<size_t> const& deque, size_t key, size_t scale_low_pos, size_t scale_high_pos, size_t small_pair_size);
+        static void     insert_b_deque(std::deque<size_t>& main_deque, std::deque<size_t>& pend_deque, size_t small_pair_size);
         static void     sort_deque(std::deque<size_t>& deque, size_t small_pair_size);
 
     public:

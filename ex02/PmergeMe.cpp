@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:21:57 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/16 08:04:53 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/16 15:22:41 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,7 +269,7 @@ void    PmergeMe::print_sort_time_deque() const
 
 // sort vec
 
-static inline void  sb_sort_pair(std::vector<size_t>& vec, size_t small_pair_size, size_t big_pair_size)
+static inline void  sb_sort_pair_vector(std::vector<size_t>& vec, size_t small_pair_size, size_t big_pair_size)
 {
     size_t  big_pair_head_pos = 0;
 
@@ -300,7 +300,7 @@ static inline void  sb_sort_pair(std::vector<size_t>& vec, size_t small_pair_siz
     }
 }
 
-static inline void  sb_filter_pend_out(
+static inline void  sb_filter_pend_out_vector(
                         std::vector<size_t>& main_vec, 
                         std::vector<size_t>& pend_vec, 
                         size_t small_pair_size,
@@ -365,7 +365,7 @@ size_t  PmergeMe::bsearch_vector(
     // search scale: (scale_down_index + 1) * small_pair_size - 1
     // return scale (>): (scale_down_index + 1) * small_pair_size
     // return scale (<): (scale_down_index) * small_pair_size
-    int actual_low_pos = (scale_low_pos + 1) * small_pair_size - 1;
+    size_t actual_low_pos = (scale_low_pos + 1) * small_pair_size - 1;
 
     if (scale_high_pos <= scale_low_pos)
     {
@@ -455,7 +455,7 @@ void    PmergeMe::sort_vector(std::vector<size_t>& vec, size_t small_pair_size)
     }
 
     // merge sort pair
-    sb_sort_pair(vec, small_pair_size, big_pair_size);
+    sb_sort_pair_vector(vec, small_pair_size, big_pair_size);
 
     // recursive
     sort_vector(vec, big_pair_size);
@@ -474,7 +474,7 @@ void    PmergeMe::sort_vector(std::vector<size_t>& vec, size_t small_pair_size)
     }
 
     //  pend
-    sb_filter_pend_out(vec, pend, small_pair_size, big_pair_size, small_pair_amount);
+    sb_filter_pend_out_vector(vec, pend, small_pair_size, big_pair_size, small_pair_amount);
 
     // binary insertion
     //  since An > Bn, then end boundary is either An or iterator's end if An doesn't exist
@@ -490,8 +490,221 @@ void    PmergeMe::sort_vector(std::vector<size_t>& vec, size_t small_pair_size)
 
 // sort deque
 
+static inline void  sb_sort_pair_deque(std::deque<size_t>& deque, size_t small_pair_size, size_t big_pair_size)
+{
+    size_t  big_pair_head_pos = 0;
+
+    while (big_pair_head_pos < deque.size())
+    {
+        size_t  first_tail_pos = big_pair_head_pos + small_pair_size - 1;
+        size_t  second_head_pos = first_tail_pos + 1;
+        size_t  second_tail_pos = big_pair_head_pos + big_pair_size - 1;
+
+        // if second doesn't exist, then just stop
+        if (second_tail_pos >= deque.size())
+        {
+            break;
+        }
+
+        // swap if first > second
+        if (deque[first_tail_pos] > deque[second_tail_pos])
+        {
+            std::deque<size_t>::iterator   first = deque.begin() + big_pair_head_pos;
+            std::deque<size_t>::iterator   middle = deque.begin() + second_head_pos;
+            std::deque<size_t>::iterator   end = deque.begin() + second_tail_pos + 1;
+
+            std::rotate(first, middle, end);
+        }
+
+        // increment to next big pair
+        big_pair_head_pos += big_pair_size;
+    }
+}
+
+static inline void  sb_filter_pend_out_deque(
+                        std::deque<size_t>& main_deque, 
+                        std::deque<size_t>& pend_deque, 
+                        size_t small_pair_size,
+                        size_t big_pair_size,
+                        size_t small_pair_amount
+                    )
+{
+    // if only [B1, A1] or [A1] exist in container, then just do nothing
+    if (small_pair_amount <= 2)
+    {
+        return;
+    }
+
+    // normal
+    std::deque<size_t>  aux_main;
+    size_t              last_b_head_pos = main_deque.size() - small_pair_size + 1;
+    size_t              last_a_head_pos = last_b_head_pos - small_pair_size;
+
+    //  small_pair_amount is odd, then last pair is Bm
+    //  otherwise, last pair is An
+    if (small_pair_amount % 2 == 0)
+    {
+        last_a_head_pos = last_b_head_pos;
+        last_b_head_pos -= small_pair_size;
+    }
+
+    // B1's head position is always 0, and pending must exclude B1 [B2, B3, B4, ... Bm]
+    for (size_t i = big_pair_size; i <= last_b_head_pos; i += big_pair_size)
+    {
+        pend_deque.insert(
+            pend_deque.end(), 
+            main_deque.begin() + i, 
+            main_deque.begin() + i + small_pair_size
+        );
+    }
+
+    // copy b1 & a[1, N] to aux_main with following order [B1, A1, A2, ... An]
+    aux_main.assign(main_deque.begin(), main_deque.begin() + small_pair_size);  // copy B1
+
+    //  copy A[1..n]
+    for (size_t i = small_pair_size; i <= last_a_head_pos; i += big_pair_size)
+    {
+        aux_main.insert(
+            aux_main.end(), 
+            main_deque.begin() + i, 
+            main_deque.begin() + i + small_pair_size
+        );
+    }
+
+    // swap aux_main & main
+    std::swap(aux_main, main_deque);
+}
+
+size_t   PmergeMe::bsearch_deque(
+                    std::deque<size_t> const& deque, 
+                    size_t key, 
+                    size_t scale_low_pos, 
+                    size_t scale_high_pos, 
+                    size_t small_pair_size
+                )
+{
+    // search scale: (scale_down_index + 1) * small_pair_size - 1
+    // return scale (>): (scale_down_index + 1) * small_pair_size
+    // return scale (<): (scale_down_index) * small_pair_size
+    size_t actual_low_pos = (scale_low_pos + 1) * small_pair_size - 1;
+
+    if (scale_high_pos <= scale_low_pos)
+    {
+        if (key > deque[actual_low_pos])
+        {
+            return (scale_low_pos + 1) * small_pair_size;
+        }
+        else
+        {
+            return (scale_low_pos) * small_pair_size;
+        }
+    }
+
+    // normal
+    size_t  scale_mid_pos = (scale_low_pos + scale_high_pos) / 2;
+    size_t  actual_mid_pos = (scale_mid_pos + 1) * small_pair_size - 1;
+
+    if (key < deque[actual_mid_pos])
+    {
+        return bsearch_deque(deque, key, scale_low_pos, scale_mid_pos, small_pair_size);
+    }
+
+    if (key > deque[actual_mid_pos])
+    {
+        return bsearch_deque(deque, key, scale_mid_pos + 1, scale_high_pos, small_pair_size);
+    }
+
+    return (scale_mid_pos + 1) * small_pair_size;
+}
+
+void    PmergeMe::insert_b_deque(std::deque<size_t>& main_deque, std::deque<size_t>& pend_deque, size_t small_pair_size)
+{
+    size_t  jacobsthal_i = 3;
+    size_t  b_m_max = pend_deque.size() / small_pair_size + 1;
+    size_t  b_insert_amount = b_m_max - 1;
+    size_t  jacobsthal_val = jacobsthal(jacobsthal_i);
+
+    // cap out jacobsthal number
+    jacobsthal_val = jacobsthal_val > b_m_max ? b_m_max : jacobsthal_val;
+
+    //jacobsthal's logic, binary insert each [Jn, Jn-1), until Jn > M (M is max Bn)
+    // insert B from pend back to main
+    while (b_insert_amount > 0)
+    {
+        size_t  prev_jacobsthal_val = jacobsthal(jacobsthal_i - 1);
+
+        // find & insert Bn to coorect place in main line
+        while (jacobsthal_val > prev_jacobsthal_val)
+        {
+            size_t  pend_b_tail_pos = (jacobsthal_val - 1) * small_pair_size - 1;
+            size_t  pend_b_head_pos = pend_b_tail_pos - small_pair_size + 1;
+            size_t  scale_high_pos = main_deque.size() / small_pair_size - 1;
+            size_t  insert_pos;
+
+            // search for actaul position to insert
+            insert_pos = bsearch_deque(
+                                main_deque, 
+                                pend_deque[pend_b_tail_pos], 
+                                0, 
+                                scale_high_pos,
+                                small_pair_size
+                            );
+
+            main_deque.insert(
+                main_deque.begin() + insert_pos, 
+                pend_deque.begin() + pend_b_head_pos, 
+                pend_deque.begin() + pend_b_tail_pos + 1
+            );
+            jacobsthal_val--;
+            b_insert_amount--;
+        }
+
+        jacobsthal_i++;
+        jacobsthal_val = jacobsthal(jacobsthal_i);
+        jacobsthal_val = jacobsthal_val > b_m_max ? b_m_max : jacobsthal_val;
+    }
+}
+
 void    PmergeMe::sort_deque(std::deque<size_t>& deque, size_t small_pair_size)
 {
-    (void)deque;
-    (void)small_pair_size;
+    size_t  big_pair_size = small_pair_size * 2;
+
+    // recursive check
+    if (big_pair_size > deque.size())
+    {
+        return;
+    }
+
+    // merge sort pair
+    sb_sort_pair_deque(deque, small_pair_size, big_pair_size);
+
+    // recursive
+    sort_deque(deque, big_pair_size);
+
+    // create pend & non_participate_psudo_stack
+    std::deque<size_t>  pend;
+    std::deque<size_t>  non_participate_psudo_stack;
+    size_t              small_pair_amount = deque.size() / small_pair_size;
+    size_t              non_participate_head = small_pair_size * small_pair_amount;
+
+    //  non_participate_psudo_stack
+    for (size_t i = deque.size() - 1; i >= non_participate_head; i--)
+    {
+        non_participate_psudo_stack.push_back(deque.back());
+        deque.pop_back();
+    }
+
+    //  pend
+    sb_filter_pend_out_deque(deque, pend, small_pair_size, big_pair_size, small_pair_amount);
+
+    // binary insertion
+    //  since An > Bn, then end boundary is either An or iterator's end if An doesn't exist
+    insert_b_deque(deque, pend, small_pair_size);
+
+    // append non_participate_psudo_stack back
+    while (!non_participate_psudo_stack.empty())
+    {
+        deque.push_back(non_participate_psudo_stack.back());
+        non_participate_psudo_stack.pop_back();
+    }
 }
