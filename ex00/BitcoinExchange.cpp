@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 02:28:48 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/13 10:45:26 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:17:30 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -400,6 +400,13 @@ double  BitcoinExchange::getExactOrNearestPastPrice(size_t date)
         // in this case, the recent future
         it--;
     }
+    else if (it == _mapPriceByDate.begin() && it->first > date)
+    {
+        // if map's date still more than input's date 
+        // (i.e. input is 867-01-01 and oldest date in db is 2000-01-01)
+        // then return 0, as the sign of too old
+        return 0;
+    }
 
     return it->second;
 }
@@ -484,6 +491,10 @@ void    BitcoinExchange::analyze(std::string const& input_file)
         // read whole file
         while (std::getline(file, line))
         {
+            if (line.empty())
+            {
+                continue;
+            }
             checkInputLine(line);
         }
     }
