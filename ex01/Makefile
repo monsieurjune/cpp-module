@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 23:39:59 by tponutha          #+#    #+#              #
-#    Updated: 2025/06/13 10:52:18 by tponutha         ###   ########.fr        #
+#    Updated: 2025/06/16 17:44:41 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ MKDIR	:= mkdir -p
 
 # Compiler Properties
 CXX			:= c++
-CXX_WFLAG	:= -Wall -Werror -Wextra -pedantic
+CXX_WFLAG	:= -Wall -Werror -Wextra
 CXX_MFLAG	:= -MP -MD
 CXX_STDFLAG	:= -std=c++98
 CXXFLAG		:= $(CXX_WFLAG) $(CXX_STDFLAG)
@@ -58,5 +58,21 @@ fclean:	clean
 	$(RM) $(NAME)
 
 re:	fclean all
+
+test:	$(NAME)
+	$(NAME) "1 2 +"
+	$(NAME) "3 4 -"
+	$(NAME) "2 3 *"
+	$(NAME) "8 4 /"
+	$(NAME) "5 1 2 + 4 * + 3 -"
+	$(NAME) "8 9 * 9 - 9 - 9 - 4 - 1 +"
+	$(NAME) "7 7 * 7 -"
+	$(NAME) "1 2 * 2 / 2 * 2 4 - +"
+	$(NAME) "5 1 2 + 4 * + 3 - 2 /"
+	$(NAME) "1 2 + 3 4 + * 5 + 6 7 + * 8 +"
+	$(NAME) "1 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 +"
+	$(NAME) "1 2 + 3 * 0 / 4 + 5 +"
+	$(NAME) "1 2 + 3 4 +"
+	$(NAME) "2 3 + + "
 
 -include $(DEPS)

@@ -6,13 +6,12 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 11:27:03 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/13 14:16:23 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/16 15:53:27 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RPN.hpp"
 #include <stdexcept>
-#include <iostream>
 
 RPN::RPN() {}
 
@@ -41,7 +40,7 @@ void    RPN::add(std::string const& str)
 {
     if (str.length() != 1)
     {
-        throw std::runtime_error("Error: Try to push >1 wide string to stack");
+        throw std::runtime_error("Try to push >1 wide string to stack");
     }
 
     // normal
@@ -50,6 +49,14 @@ void    RPN::add(std::string const& str)
     if (!pushNumber(c))
     {
         pushOperator(c);
+
+        // check if stack_size >= 3
+        if (_stack.size() < 3)
+        {
+            throw std::runtime_error("Try to calculate with stack's size < 3");
+        }
+
+        // calculate
         calculate();
     }
 }
@@ -58,7 +65,7 @@ ssize_t    RPN::ans()
 {
     if (_stack.size() != 1)
     {
-        throw std::logic_error("Error: Call RPN::ans() when stack hasn't exactly 1 member (fix bug!)");
+        throw std::runtime_error("Stack Size isn't equal to 1 when calculation is over");
     }
 
     return _stack.top();
@@ -82,7 +89,7 @@ void    RPN::pushOperator(char c)
 {
     if (c != '+' && c != '-' && c != '*' && c != '/')
     {
-        throw std::runtime_error("Error: Try to push unknown operator");
+        throw std::runtime_error("Try to push unknown operator");
     }
 
     _stack.push(static_cast<ssize_t>(c));
@@ -120,11 +127,11 @@ void    RPN::calculate()
             break;
         case '/':
             if (y == 0)
-                throw std::runtime_error("Error: Try to divide by zero");
+                throw std::runtime_error("Try to divide by zero");
             z = x / y;
             break;
         default:
-            throw std::logic_error("Error: Somehow detect unknown operator in RPN::calculator() (fix bug!)");
+            throw std::logic_error("Detect unknown operator in RPN::calculator() (fix bug!)");
     }
 
     _stack.push(z);

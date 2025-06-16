@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:52:22 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/13 14:18:34 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/16 15:45:23 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,15 @@ int main(const int argc, const char* argv[])
     }
     catch (std::runtime_error const& e)
     {
-        std::cout << "Error" << std::endl;
+        std::cerr << "Error" << std::endl;
     }
     catch (std::logic_error const& e)
     {
-        std::cout << e.what() << std::endl;
+        std::cerr << e.what() << std::endl;
     }
     catch (std::exception const& e)
     {
-        std::cout << e.what() << std::endl;
+        std::cerr << e.what() << std::endl;
     }
 
     return 0;
