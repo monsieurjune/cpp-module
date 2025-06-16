@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:21:57 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/16 06:16:16 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/16 08:04:53 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,7 +354,7 @@ static inline void  sb_filter_pend_out(
     std::swap(aux_main, main_vec);
 }
 
-size_t  PmergeMe::bsearch_upper_vector(
+size_t  PmergeMe::bsearch_vector(
                     std::vector<size_t> const& vec, 
                     size_t key, 
                     size_t scale_low_pos, 
@@ -385,12 +385,12 @@ size_t  PmergeMe::bsearch_upper_vector(
 
     if (key < vec[actual_mid_pos])
     {
-        return bsearch_upper_vector(vec, key, scale_low_pos, scale_mid_pos, small_pair_size);
+        return bsearch_vector(vec, key, scale_low_pos, scale_mid_pos, small_pair_size);
     }
 
     if (key > vec[actual_mid_pos])
     {
-        return bsearch_upper_vector(vec, key, scale_mid_pos + 1, scale_high_pos, small_pair_size);
+        return bsearch_vector(vec, key, scale_mid_pos + 1, scale_high_pos, small_pair_size);
     }
 
     return (scale_mid_pos + 1) * small_pair_size;
@@ -421,7 +421,7 @@ void PmergeMe::insert_b_vector(std::vector<size_t>& main_vec, std::vector<size_t
             size_t  insert_pos;
 
             // search for actaul position to insert
-            insert_pos = bsearch_upper_vector(
+            insert_pos = bsearch_vector(
                                 main_vec, 
                                 pend_vec[pend_b_tail_pos], 
                                 0, 

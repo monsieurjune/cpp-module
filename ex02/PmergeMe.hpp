@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:21:54 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/15 19:09:21 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/16 08:04:53 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ class PmergeMe
         static size_t   jacobsthal(size_t n);
 
         // vec sort
-        static size_t   bsearch_upper_vector(std::vector<size_t> const& vec, size_t key, size_t scale_low_pos, size_t scale_high_pos, size_t small_pair_size);
+        static size_t   bsearch_vector(std::vector<size_t> const& vec, size_t key, size_t scale_low_pos, size_t scale_high_pos, size_t small_pair_size);
         static void     insert_b_vector(std::vector<size_t>& main_vec, std::vector<size_t>& pend_vec, size_t small_pair_size);
         static void     sort_vector(std::vector<size_t>& vec, size_t small_pair_size);
 
