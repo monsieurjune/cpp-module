@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:21:57 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/16 15:22:41 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/16 15:31:38 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ static inline void sb_inspect_deque(std::string const& head, std::deque<size_t>:
     std::cout << ss.str() << std::endl;
 }
 
-static size_t   sb_delta_usec(struct timespec* start, struct timespec* end)
+static double   sb_delta_usec(struct timespec* start, struct timespec* end)
 {
-    size_t  u_start = start->tv_sec * 1000000 + start->tv_nsec / 1000;
-    size_t  u_end = end->tv_sec * 1000000 + end->tv_nsec / 1000;
+    double  u_start = static_cast<double>(start->tv_sec) * 1000000.0 + static_cast<double>(start->tv_nsec) / 1000.0;
+    double  u_end = static_cast<double>(end->tv_sec) * 1000000.0 + static_cast<double>(end->tv_nsec) / 1000.0;
 
     return u_end - u_start;
 }
@@ -149,12 +149,12 @@ std::deque<size_t> const&   PmergeMe::getDeque() const
     return _main_deque;
 }
 
-size_t  PmergeMe::getSortTimeVecUS() const
+double  PmergeMe::getSortTimeVecUS() const
 {
     return _sort_time_vec_us;
 }
 
-size_t  PmergeMe::getSortTImeDequeUS() const
+double  PmergeMe::getSortTImeDequeUS() const
 {
     return _sort_time_deque_us;
 }

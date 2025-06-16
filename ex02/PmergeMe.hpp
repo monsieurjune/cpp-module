@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:21:54 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/16 15:19:32 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/16 15:25:12 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ class PmergeMe
         std::deque<size_t>  _main_deque;
 
         // time
-        size_t  _sort_time_vec_us;
-        size_t  _sort_time_deque_us;
+        double  _sort_time_vec_us;
+        double  _sort_time_deque_us;
 
         // method
         static size_t   to_ulong(std::string const& str);
@@ -67,8 +67,8 @@ class PmergeMe
         // getter
         std::vector<size_t> const&  getVector() const;
         std::deque<size_t> const&   getDeque() const;
-        size_t  getSortTimeVecUS() const;
-        size_t  getSortTImeDequeUS() const;
+        double  getSortTimeVecUS() const;
+        double  getSortTImeDequeUS() const;
 };
 
 #endif

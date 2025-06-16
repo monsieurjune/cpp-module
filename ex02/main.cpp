@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:22:00 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/16 15:20:09 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/16 15:34:01 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,17 @@ int main(const int argc, const char* argv[])
     }
     catch (std::logic_error const& e)
     {
+        std::cout << std::endl;
+        std::cout << "===== LOGIC ERROR ====" << std::endl;
         std::cout << "Error: " << e.what() << std::endl;
+        std::cout << "======================" << std::endl;
     }
     catch (std::exception const& e)
     {
+        std::cout << std::endl;
+        std::cout << "===== NORMAL ERROR ====" << std::endl;
         std::cout << "Error: " << e.what() << std::endl;
+        std::cout << "=======================" << std::endl;
     }
 
     return 0;
