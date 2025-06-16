@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:52:22 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/16 15:45:23 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:45:20 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int main(const int argc, const char* argv[])
 {
     if (argc != 2)
     {
-        std::cout << "Error" << std::endl;
+        std::cerr << "Error" << std::endl;
         return 1;
     }
 
