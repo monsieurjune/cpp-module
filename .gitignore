@@ -1,9 +1,5 @@
 # Project Executable (Depend on Branch)
-/**/btc
-/**/data.csv
-/**/input.txt
-/**/RPN
-/**/PmergeMe
+
 
 # Object files
 *.o

@@ -6,12 +6,11 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 02:29:28 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/13 09:48:37 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/10/01 17:56:03 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
-#include <iostream>
 
 int main(const int argc, const char* argv[])
 {
