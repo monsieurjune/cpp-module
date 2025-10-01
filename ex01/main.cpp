@@ -6,16 +6,18 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 03:08:42 by tponutha          #+#    #+#             */
-/*   Updated: 2025/06/13 12:12:10 by tponutha         ###   ########.fr       */
+/*   Updated: 2025/10/02 05:45:38 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
+
+#include <cstdlib>
+#include <ctime>
+
 #include <sstream>
 #include <iostream>
 #include <vector>
-#include <cstdlib>
-#include <ctime>
 
 static void	sb_print(Span const& sp1, Span const& sp2)
 {

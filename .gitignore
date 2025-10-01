@@ -1,7 +1,5 @@
 # Project Executable (Depend on Branch)
-/**/easyfind
-/**/span
-/**/abomination
+
 
 # Object files
 *.o
