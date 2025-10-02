@@ -1,7 +1,5 @@
 # Project Executable (Depend on Branch)
-/**/convert
-/**/serialize
-/**/type
+
 
 # Object files
 *.o
