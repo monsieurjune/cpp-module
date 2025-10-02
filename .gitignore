@@ -1,8 +1,5 @@
 # Project Executable (Depend on Branch)
-/**/Bureaucrat
-/**/Form
-/**/Intern
-/**/*_shrubbery
+
 
 # Object files
 *.o

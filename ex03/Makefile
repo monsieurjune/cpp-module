@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 23:39:59 by tponutha          #+#    #+#              #
-#    Updated: 2025/05/16 21:15:58 by tponutha         ###   ########.fr        #
+#    Updated: 2025/10/03 02:45:23 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ MKDIR	:= mkdir -p
 
 # Compiler Properties
 CXX			:= c++
-CXX_WFLAG	:= -Wall -Werror -Wextra
+CXX_WFLAG	:= -Wall -Werror -Wextra -pedantic
 CXX_MFLAG	:= -MP -MD
 CXX_STDFLAG	:= -std=c++98
 CXXFLAG		:= $(CXX_WFLAG) $(CXX_STDFLAG)
@@ -29,29 +29,35 @@ SRC_DIR		:= ./
 INCLUDE_DIR	:= ./
 
 # Source
-SRC		:= main.cpp \
-			Bureaucrat.cpp \
-			AForm.cpp \
-			ShrubberyCreationForm.cpp \
-			RobotomyRequestForm.cpp \
-			PresidentialPardonForm.cpp \
-			Intern.cpp
-SRCS	:= $(addprefix $(SRC_DIR), $(SRC))
+MAIN_DIR	:= $(SRC_DIR)
+MAIN_SRC	:= main.cpp \
+				Bureaucrat.cpp \
+				AForm.cpp \
+				PresidentialPardonForm.cpp \
+				RobotomyRequestForm.cpp \
+				ShrubberyCreationForm.cpp \
+				Intern.cpp
+MAIN_SRCS	:= $(addprefix $(MAIN_DIR), $(MAIN_SRC))
 
 # Objects & Dependencies File
-OBJS	:= $(SRCS:%.cpp=$(BUILD_DIR)/%.o)
-DEPS	:= $(OBJS:.o=.d)
+DIRS		:= $(MAIN_DIR)
+SRCS		:= $(MAIN_SRCS)
+OBJS		:= $(SRCS:%.cpp=$(BUILD_DIR)/%.o)
+OBJS_DIR	:= $(addprefix $(BUILD_DIR)/, $(DIRS))
+DEPS		:= $(OBJS:.o=.d)
 
 # Main Rules
 .PHONY:	all clean fclean re
 
 all:	$(NAME)
 
-$(NAME):	$(OBJS)
+$(NAME):	$(OBJS_DIR) $(OBJS)
 	$(CXX) $(CXXFLAG) $(OBJS) -o $(NAME)
 
+$(OBJS_DIR):
+	$(MKDIR) $@
+
 $(BUILD_DIR)/%.o:	%.cpp
-	$(MKDIR) $(@D)
 	$(CXX) $(CXXFLAG) $(CXX_MFLAG) -I$(INCLUDE_DIR) -c $< -o $@
 
 clean:
