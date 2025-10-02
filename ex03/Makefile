@@ -5,47 +5,67 @@
 #                                                     +:+ +:+         +:+      #
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/11/13 17:13:25 by tponutha          #+#    #+#              #
-#    Updated: 2023/11/13 23:53:05 by tponutha         ###   ########.fr        #
+#    Created: 2023/11/13 23:39:59 by tponutha          #+#    #+#              #
+#    Updated: 2025/10/03 05:57:22 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= DiamondTrap
+# Project Name & Properties
+NAME	:= ./DiamondTrap
+RM		:= rm -f
+RMDIR	:= rm -rf
+MKDIR	:= mkdir -p
 
-CXX		= c++
-CFLAG	= -Wall -Werror -Wextra -std=c++98
-RM		= rm -f
+# Compiler Properties
+CXX			:= c++
+CXX_WFLAG	:= -Wall -Werror -Wextra -pedantic
+CXX_MFLAG	:= -MP -MD
+CXX_STDFLAG	:= -std=c++98
+CXXFLAG		:= $(CXX_WFLAG) $(CXX_STDFLAG)
 
-DIR		= ./
-SRC		= main.cpp\
-			ClapTrap.cpp\
-			ScavTrap.cpp\
-			FragTrap.cpp\
-			DiamondTrap.cpp
-			
-HEADER	= ClapTrap.hpp\
-			ScavTrap.hpp\
-			FragTrap.hpp\
-			DiamondTrap.hpp
+# Directories
+BUILD_DIR	:= ./build
+SRC_DIR		:= ./
+INCLUDE_DIR	:= ./
 
-SRCS	= $(addprefix $(DIR), $(SRC))
-HEADERS	= $(addprefix $(DIR), $(HEADER))
+# Source
+MAIN_DIR	:= $(SRC_DIR)
+MAIN_SRC	:= main.cpp \
+				ClapTrap.cpp \
+				ScavTrap.cpp \
+				FragTrap.cpp \
+				DiamondTrap.cpp
+MAIN_SRCS	:= $(addprefix $(MAIN_DIR), $(MAIN_SRC))
 
-OBJ		= $(SRCS:.cpp=.o)
-.cpp.o:
-	$(CXX) $(CFLAG) -c $< -o $(<:.cpp=.o)
+# Objects & Dependencies File
+DIRS		:= $(MAIN_DIR)
+SRCS		:= $(MAIN_SRCS)
+OBJS		:= $(SRCS:%.cpp=$(BUILD_DIR)/%.o)
+OBJS_DIR	:= $(addprefix $(BUILD_DIR)/, $(DIRS))
+DEPS		:= $(OBJS:.o=.d)
+
+# Main Rules
+.PHONY:	all clean fclean re
 
 all:	$(NAME)
 
-$(NAME):	$(OBJ) $(HEADERS)
-	$(CXX) $(CFLAG) $(OBJ) -o $(NAME)
+$(NAME):	$(OBJS_DIR) $(OBJS)
+	$(CXX) $(CXXFLAG) $(OBJS) -o $(NAME)
+
+$(OBJS_DIR):
+	$(MKDIR) $@
+
+$(BUILD_DIR)/%.o:	%.cpp
+	$(CXX) $(CXXFLAG) $(CXX_MFLAG) -I$(INCLUDE_DIR) -c $< -o $@
 
 clean:
-	$(RM) $(OBJ)
+	$(RM) $(OBJS)
+	$(RM) $(DEPS)
+	$(RMDIR) $(BUILD_DIR)
 
 fclean:	clean
 	$(RM) $(NAME)
 
 re:	fclean all
 
-.PHONY:	all clean fclean re
+-include $(DEPS)
