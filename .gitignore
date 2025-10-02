@@ -1,7 +1,5 @@
 # Project Executable (Depend on Branch)
-/**/whatever
-/**/iter
-/**/array
+
 
 # Object files
 *.o
