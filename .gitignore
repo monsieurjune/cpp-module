@@ -1,69 +1,57 @@
-# Project Executable (Depend on Branch)
-
-
 # Object files
-*.o
-*.obj
+/**/*.o
+/**/*.obj
 
 # Executable files
-*.exe
-*.out
-*.app
-*.elf
+/**/*.exe
+/**/*.out
+/**/*.app
+/**/*.elf
 
 # Libraries
-*.a
-*.so
-*.dylib
-*.lib
-*.dll
+/**/*.a
+/**/*.so
+/**/*.dylib
+/**/*.lib
+/**/*.dll
 
 # Debug files
-*.dSYM/
-*.core
-*.pdb
-*.idb
+/**/*.dSYM/
+/**/*.core
+/**/*.pdb
+/**/*.idb
 
 # Dependency files
-*.d
+/**/*.d
 
 # Logs and temporary files
-*.log
-*.tmp
-*.swp
-*.swo
-*.bak
-*.old
-*.orig
+/**/*.log
+/**/*.tmp
+/**/*.swp
+/**/*.swo
+/**/*.bak
+/**/*.old
+/**/*.orig
 
 # IDE and editor files
-.vscode/
-*.code-workspace
-*.idea/
-*.sublime-workspace
-*.sublime-project
-*.user
-*.project
-*.classpath
-*.cproject
-*.launch
-
-# Version control directories
-.svn/
-.hg/
-.cvsignore
-*.git/
+/**/.DS_Store
+/**/.vscode/
+/**/*.code-workspace
+/**/*.idea/
+/**/*.sublime-workspace
+/**/*.sublime-project
+/**/*.user
+/**/*.project
+/**/*.classpath
+/**/*.cproject
+/**/*.launch
 
 # Build directories
-/build/
-/out/
+/**/build/
+/**/out/
 
 # Generated files
-tags
-TAGS
-cscope.out
-*.map
-
-# Custom rule for specific environments (optional)
-/node_modules/
-/.env
+/**/tags
+/**/TAGS
+/**/cscope.out
+/**/*.map
